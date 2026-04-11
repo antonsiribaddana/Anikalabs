@@ -11,8 +11,292 @@ body {
 }
 
 @font-face {
-  font-family: 'Gilroy';
-  src: url('/fonts/Gilroy-Medium.woff2') format('woff2');
+  font-family: 'Aeonik';
+  src: url('/fonts/Aeonik-Regular.woff2') format('woff2'),
+       url('/fonts/Aeonik-Regular.woff') format('woff');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Aeonik';
+  src: url('/fonts/Aeonik-Bold.woff2') format('woff2'),
+       url('/fonts/Aeonik-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Geometric Animation Grid — "What We Do" section
+   ═══════════════════════════════════════════════════════════ */
+.geo-frame {
+  width: min(480px, 100%);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.geo-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  width: 100%;
+}
+
+.geo-stage {
+  padding: 32px;
+  position: relative;
+  min-height: 280px;
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.geo-stage:nth-child(2n) {
+  border-right: 0;
+}
+
+.geo-stage:nth-last-child(-n + 2) {
+  border-bottom: 0;
+}
+
+.geo-label {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  column-gap: 12px;
+  align-items: start;
+  margin-bottom: 20px;
+}
+
+.geo-index {
+  opacity: 0.35;
+  font-size: 12px;
+  margin-top: 5px;
+  font-family: 'PP Neue Montreal', sans-serif;
+}
+
+.geo-title {
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.15;
+  letter-spacing: -0.5px;
+  margin: 0;
+  font-family: 'Aeonik', sans-serif;
+  color: #e9e9ea;
+}
+
+/* 01 — Command Path rings */
+.g1-ring-stage {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  margin-top: 8px;
+  perspective: 600px;
+}
+
+.g1-ring-group {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.g1-ring {
+  position: absolute;
+  width: 140px;
+  height: 140px;
+  border-radius: 50%;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.g1-ring-1 {
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  z-index: 1;
+}
+
+.g1-ring-2 {
+  border: 2px dashed rgba(255, 255, 255, 0.5);
+  z-index: 2;
+}
+
+.g1-ring-3 {
+  border: 3px solid #4a80ff;
+  z-index: 3;
+}
+
+/* 02 — Data Signals */
+.g2-ring-stage {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  margin-top: 8px;
+}
+
+.g2-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.g2-ring-outer {
+  width: 160px;
+  height: 160px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.g2-ring-inner-wrap {
+  position: absolute;
+  width: 160px;
+  height: 160px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.g2-ring-1,
+.g2-ring-2 {
+  width: 95px;
+  height: 95px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.g2-ring-1 {
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  left: 0;
+}
+
+.g2-ring-2 {
+  border: 2px solid #4a80ff;
+  left: auto;
+  right: 0;
+  transform: translateY(-50%);
+}
+
+/* 03 — Build Systems solo (large) */
+.g3-solo-stage {
+  position: relative;
+  width: 420px;
+  height: 420px;
+  overflow: visible;
+}
+
+.g3-solo-stage .g3-shape-1 {
+  width: 280px;
+  height: 280px;
+  left: 60px;
+  top: 160px;
+}
+
+.g3-solo-stage .g3-shape-2 {
+  width: 320px;
+  height: 320px;
+  left: 40px;
+  top: 110px;
+}
+
+.g3-solo-stage .g3-shape-3 {
+  width: 260px;
+  height: 260px;
+  left: 160px;
+  top: 30px;
+}
+
+/* 03 — Build Systems (grid version, kept for reference) */
+.g3-shape-stage {
+  position: relative;
+  width: 200px;
+  height: 220px;
+  margin-top: 8px;
+  overflow: hidden;
+}
+
+.g3-shape {
+  position: absolute;
+}
+
+.g3-shape-1 {
+  width: 130px;
+  height: 130px;
+  border: 2px solid rgba(255, 255, 255, 0.2);
+  left: 30px;
+  top: 80px;
+}
+
+.g3-shape-2 {
+  width: 150px;
+  height: 150px;
+  border: 2px solid #4a80ff;
+  border-radius: 50%;
+  left: 20px;
+  top: 60px;
+}
+
+.g3-shape-3 {
+  width: 130px;
+  height: 130px;
+  border: 2px dashed rgba(255, 255, 255, 0.6);
+  border-radius: 50%;
+  left: 80px;
+  top: 10px;
+}
+
+/* 04 — Discovery Map */
+.g4-globe {
+  position: relative;
+  width: 200px;
+  height: 180px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  perspective: 600px;
+}
+
+.g4-ring {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.g4-ring-outer {
+  width: 160px;
+  height: 160px;
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+}
+
+.g4-ring-wrap {
+  position: absolute;
+  inset: 0;
+  transform-style: preserve-3d;
+}
+
+.g4-ring-left,
+.g4-ring-center,
+.g4-ring-right {
+  width: 160px;
+  height: 160px;
+  border: 3px dashed rgba(255, 255, 255, 0.25);
+  opacity: 1;
+  backface-visibility: visible;
+}
+
+.g4-ring-center.is-default {
+  border-style: solid;
+  border-color: #4a80ff;
+  opacity: 1;
+}
+
+@font-face {
+  font-family: 'PP Neue Montreal';
+  src: url('/fonts/PPNeueMontreal-Medium.woff2') format('woff2'),
+       url('/fonts/PPNeueMontreal-Medium.woff') format('woff');
   font-weight: 500;
   font-style: normal;
+  font-display: swap;
 }
