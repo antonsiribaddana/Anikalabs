@@ -9,14 +9,14 @@ import SplitType from "split-type";
 gsap.registerPlugin(ScrollTrigger);
 
 const cards = [
-  { src: "/images/card-3.jpg", alt: "Shawarmaz", w: 480, h: 340, mt: 0 },
-  { src: "/images/card-2.jpg", alt: "In Space Design", w: 520, h: 370, mt: 40 },
-  { src: "/images/card-1.jpg", alt: "Wander Women", w: 460, h: 330, mt: 0 },
-  { src: "/images/card-5.jpg", alt: "Rays", w: 500, h: 355, mt: 50 },
-  { src: "/images/card-4.jpg", alt: "In Space Collateral", w: 480, h: 340, mt: 20 },
-  { src: "/images/card-3.jpg", alt: "Shawarmaz 2", w: 520, h: 370, mt: 0 },
-  { src: "/images/card-1.jpg", alt: "Wander 2", w: 460, h: 330, mt: 30 },
-  { src: "/images/card-2.jpg", alt: "In Space 2", w: 500, h: 355, mt: 0 },
+  { src: "/images/card-party.jpg", alt: "For Your Party", w: 480, h: 480, mt: 0 },
+  { src: "/images/card-party-2.png", alt: "For Your Party Full", w: 480, h: 480, mt: 40 },
+  { src: "/images/card-tennis.png", alt: "Gotta Tennis", w: 480, h: 480, mt: 20 },
+  { src: "/images/card-pools.png", alt: "Modern Pools", w: 480, h: 480, mt: 60 },
+  { src: "/images/card-fashion.png", alt: "Limitless Style", w: 480, h: 480, mt: 0 },
+  { src: "/images/card-1.jpg", alt: "Wander Women", w: 480, h: 480, mt: 40 },
+  { src: "/images/card-web-1.png", alt: "Camprodest 3", w: 480, h: 480, mt: 20 },
+  { src: "/images/card-gosage.png", alt: "GoSage Lawn Care", w: 480, h: 480, mt: 0 },
 ];
 
 export default function HorizontalCards() {
@@ -137,14 +137,14 @@ export default function HorizontalCards() {
           {cards.map((card, i) => (
             <div
               key={i}
-              className="relative flex-shrink-0 rounded-2xl overflow-hidden"
+              className="relative flex-shrink-0 overflow-hidden"
               style={{
                 width: `${card.w}px`,
                 height: `${card.h}px`,
                 marginTop: `${card.mt}px`,
               }}
             >
-              <Image src={card.src} alt={card.alt} fill className="object-cover" />
+              <Image src={card.src} alt={card.alt} fill className="object-cover" sizes={`${card.w}px`} />
             </div>
           ))}
         </div>
@@ -158,7 +158,7 @@ export default function HorizontalCards() {
           style={{
             fontSize: "clamp(22px, 3vw, 42px)",
             maxWidth: "55vw",
-            fontFamily: "'Aeonik', sans-serif",
+            fontFamily: "'NN Nouvelle Grotesk', sans-serif",
             fontWeight: 700,
             color: "rgba(2,2,30,0.15)",
           }}

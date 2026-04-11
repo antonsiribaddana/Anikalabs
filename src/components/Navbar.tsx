@@ -2,10 +2,38 @@
 
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
+import gsap from "gsap";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const lastScrollY = useRef(0);
+  const btnRef = useRef<HTMLAnchorElement>(null);
+  const blobRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    const btn = btnRef.current;
+    const blob = blobRef.current;
+    if (!btn || !blob) return;
+
+    const onMove = (e: MouseEvent) => {
+      const rect = btn.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+      gsap.to(blob, { x: x - 40, y: y - 40, duration: 0.3, ease: "power2.out" });
+    };
+
+    const onEnter = () => gsap.to(blob, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" });
+    const onLeave = () => gsap.to(blob, { opacity: 0, scale: 0.6, duration: 0.4, ease: "power2.in" });
+
+    btn.addEventListener("mousemove", onMove);
+    btn.addEventListener("mouseenter", onEnter);
+    btn.addEventListener("mouseleave", onLeave);
+    return () => {
+      btn.removeEventListener("mousemove", onMove);
+      btn.removeEventListener("mouseenter", onEnter);
+      btn.removeEventListener("mouseleave", onLeave);
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => {
@@ -72,8 +100,9 @@ export default function Navbar() {
 
         {/* CTA */}
         <a
+          ref={btnRef}
           href="#contact"
-          className="hidden lg:inline-flex items-center justify-center text-white font-medium rounded-full transition-all duration-500"
+          className="hidden lg:inline-flex items-center justify-center text-white font-medium rounded-full transition-all duration-500 relative overflow-hidden"
           style={{
             background: "#f17752",
             fontSize: scrolled ? "15px" : "18px",
@@ -82,7 +111,20 @@ export default function Navbar() {
             fontFamily: "'PP Neue Montreal', sans-serif",
           }}
         >
-          Book a Call
+          <span
+            ref={blobRef}
+            className="pointer-events-none absolute"
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: "50%",
+              background: "radial-gradient(circle, rgba(255,255,255,0.35) 0%, transparent 70%)",
+              opacity: 0,
+              scale: "0.6",
+              transform: "translate(0px, 0px)",
+            }}
+          />
+          <span className="relative z-10">Book a Call</span>
         </a>
       </nav>
     </div>
