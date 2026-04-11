@@ -9,14 +9,14 @@ import SplitType from "split-type";
 gsap.registerPlugin(ScrollTrigger);
 
 const cards = [
-  { src: "/images/card-3.jpg", alt: "Shawarmaz", w: 520, h: 293, mt: 0 },
-  { src: "/images/card-2.jpg", alt: "In Space Design", w: 560, h: 315, mt: 40 },
-  { src: "/images/card-1.jpg", alt: "Wander Women", w: 500, h: 281, mt: 0 },
-  { src: "/images/card-5.jpg", alt: "Rays", w: 540, h: 304, mt: 50 },
-  { src: "/images/card-4.jpg", alt: "In Space Collateral", w: 520, h: 293, mt: 20 },
-  { src: "/images/card-3.jpg", alt: "Shawarmaz 2", w: 560, h: 315, mt: 0 },
-  { src: "/images/card-1.jpg", alt: "Wander 2", w: 500, h: 281, mt: 30 },
-  { src: "/images/card-2.jpg", alt: "In Space 2", w: 540, h: 304, mt: 0 },
+  { src: "/images/card-3.jpg", alt: "Shawarmaz", w: 480, h: 340, mt: 0 },
+  { src: "/images/card-2.jpg", alt: "In Space Design", w: 520, h: 370, mt: 40 },
+  { src: "/images/card-1.jpg", alt: "Wander Women", w: 460, h: 330, mt: 0 },
+  { src: "/images/card-5.jpg", alt: "Rays", w: 500, h: 355, mt: 50 },
+  { src: "/images/card-4.jpg", alt: "In Space Collateral", w: 480, h: 340, mt: 20 },
+  { src: "/images/card-3.jpg", alt: "Shawarmaz 2", w: 520, h: 370, mt: 0 },
+  { src: "/images/card-1.jpg", alt: "Wander 2", w: 460, h: 330, mt: 30 },
+  { src: "/images/card-2.jpg", alt: "In Space 2", w: 500, h: 355, mt: 0 },
 ];
 
 export default function HorizontalCards() {
@@ -33,16 +33,16 @@ export default function HorizontalCards() {
     if (!section || !track) return;
 
     const ctx = gsap.context(() => {
-      const getOverflow = () => track.scrollWidth - window.innerWidth;
+      const getOverflow = () => (track.scrollWidth - window.innerWidth) * 0.4;
 
       gsap.to(track, {
         x: () => -getOverflow(),
         ease: "none",
         scrollTrigger: {
           trigger: section,
-          start: "top bottom",
-          end: "bottom top",
-          scrub: 1.2,
+          start: "top 80%",
+          end: "bottom 20%",
+          scrub: 1.5,
           invalidateOnRefresh: true,
         },
       });
@@ -163,9 +163,9 @@ export default function HorizontalCards() {
             color: "rgba(2,2,30,0.15)",
           }}
         >
-          Every brand we build starts from first principles, shaped by your goals,
-          your audience, and the space you want to own. We turn what makes you
-          different into a clear, consistent system that performs.
+          We design websites as structured systems first, built around your goals,
+          your audience, and the position you want to own. Branding follows to
+          make everything consistent, recognizable, and built to perform.
         </p>
       </div>
 
