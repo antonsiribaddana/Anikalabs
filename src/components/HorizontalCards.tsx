@@ -163,9 +163,9 @@ export default function HorizontalCards() {
             color: "rgba(2,2,30,0.15)",
           }}
         >
-          We design websites as structured systems first, built around your goals,
-          your audience, and the position you want to own. Branding follows to
-          make everything consistent, recognizable, and built to perform.
+          Every website is built around clear goals, defined audiences, and the
+          position you want to own. Branding follows to bring consistency,
+          recognition, and performance.
         </p>
       </div>
 
