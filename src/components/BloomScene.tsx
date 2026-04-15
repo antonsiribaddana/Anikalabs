@@ -17,6 +17,23 @@ export default function BloomScene({ triggerProgress }: BloomSceneProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const hasAnimated = useRef(false);
 
+  const blobRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const blob = blobRef.current;
+    if (!blob) return;
+
+    // Continuously pulsing blob
+    gsap.to(blob, {
+      scale: 1.25,
+      opacity: 0.55,
+      duration: 2.2,
+      ease: "sine.inOut",
+      yoyo: true,
+      repeat: -1,
+    });
+  }, []);
+
   useEffect(() => {
     if (triggerProgress < 0.3 || hasAnimated.current) return;
     hasAnimated.current = true;
@@ -46,10 +63,8 @@ export default function BloomScene({ triggerProgress }: BloomSceneProps) {
     <div
       ref={containerRef}
       style={{
-        position: "absolute",
-        right: 0,
-        top: 0,
-        width: "50%",
+        position: "relative",
+        width: "100%",
         height: "100%",
         display: "flex",
         alignItems: "center",
@@ -57,11 +72,26 @@ export default function BloomScene({ triggerProgress }: BloomSceneProps) {
         pointerEvents: "none",
       }}
     >
+      {/* Pulsing glow blob behind shapes */}
+      <div
+        ref={blobRef}
+        style={{
+          position: "absolute",
+          width: 480,
+          height: 480,
+          borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(74,128,255,0.22) 0%, rgba(74,128,255,0.08) 45%, transparent 70%)",
+          filter: "blur(40px)",
+          opacity: 0.35,
+          pointerEvents: "none",
+        }}
+      />
+
       {/* Build Systems — solo, large */}
-      <div className="g3-solo-stage">
-        <div className="g3-shape g3-shape-1" />
-        <div className="g3-shape g3-shape-2" />
-        <div className="g3-shape g3-shape-3" />
+      <div className="g3-solo-stage" style={{ width: 560, height: 560 }}>
+        <div className="g3-shape g3-shape-1" style={{ width: 360, height: 360, left: 80, top: 200 }} />
+        <div className="g3-shape g3-shape-2" style={{ width: 420, height: 420, left: 50, top: 130 }} />
+        <div className="g3-shape g3-shape-3" style={{ width: 340, height: 340, left: 200, top: 30 }} />
       </div>
     </div>
   );

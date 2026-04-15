@@ -11,6 +11,24 @@ body {
 }
 
 @font-face {
+  font-family: 'Die Grotesk';
+  src: url('/fonts/DiGrotesk-Black.woff2') format('woff2'),
+       url('/fonts/DiGrotesk-Black.woff') format('woff');
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Die Grotesk';
+  src: url('/fonts/DiGrotesk-Bold.woff2') format('woff2'),
+       url('/fonts/DiGrotesk-Bold.woff') format('woff');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
   font-family: 'Aeonik';
   src: url('/fonts/Aeonik-Regular.woff2') format('woff2'),
        url('/fonts/Aeonik-Regular.woff') format('woff');
@@ -36,6 +54,46 @@ body {
   font-display: swap;
 }
 
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/NeueHaasGrotesk-Thin.otf') format('opentype');
+  font-weight: 200;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Neue Haas Grotesk';
+  src: url('/fonts/NeueHaasGrotesk-Roman.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+
+/* ═══════════════════════════════════════════════════════════
+   Work section card hover
+   ═══════════════════════════════════════════════════════════ */
+.work-card:hover .work-card-img {
+  transform: scale(1.04);
+}
+.work-card:hover .work-card-overlay {
+  background: rgba(2,2,30,0.55) !important;
+}
+.work-card:hover .work-card-info {
+  opacity: 1 !important;
+  transform: translateY(0) !important;
+}
+
+/* Work section — stack half-width cards on mobile */
+@media (max-width: 768px) {
+  .work-row {
+    flex-direction: column !important;
+  }
+  .work-card {
+    aspect-ratio: 3/2 !important;
+  }
+}
 
 /* ═══════════════════════════════════════════════════════════
    Geometric Animation Grid — "What We Do" section
@@ -308,3 +366,25 @@ body {
   font-style: normal;
   font-display: swap;
 }
+
+/* ═══════════════════════════════════════════════════════════
+   Responsive blob sizes — WhatWeDo section
+   ═══════════════════════════════════════════════════════════ */
+.wwd-blob-1 { width: 700px; height: 700px; }
+.wwd-blob-2 { width: 600px; height: 600px; }
+.wwd-blob-mouse { width: 800px; height: 800px; }
+
+@media (max-width: 768px) {
+  .wwd-blob-1 { width: 400px; height: 400px; }
+  .wwd-blob-2 { width: 350px; height: 350px; }
+  .wwd-blob-mouse { width: 500px; height: 500px; }
+
+  /* Add card bottom borders on mobile stack */
+  .wwd-card {
+    border-bottom: 1px solid rgba(255,255,255,0.12);
+  }
+  .wwd-card:last-child {
+    border-bottom: none;
+  }
+}
+

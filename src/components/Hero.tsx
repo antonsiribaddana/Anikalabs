@@ -33,11 +33,11 @@ export default function Hero() {
         <div className="h-[116px]" />
 
         {/* ── Hero Content ── */}
-        <div className="relative z-10 flex items-center px-28" style={{ minHeight: "calc(100vh - 140px)" }}>
+        <div className="relative z-10 flex items-center" style={{ minHeight: "calc(100vh - 140px)", padding: "0 clamp(20px, 6vw, 112px)" }}>
           {/* Headline — true vertical center */}
           <h1
-            className="text-white font-bold leading-[1.02] tracking-[-2px]"
-            style={{ fontSize: "clamp(48px, 6.5vw, 100px)", fontFamily: "'NN Nouvelle Grotesk', sans-serif" }}
+            className="text-white leading-[1.02] tracking-[-2px]"
+            style={{ fontSize: "clamp(36px, 6.5vw, 100px)", fontFamily: "var(--font-inter), 'Inter', sans-serif", fontWeight: 200 }}
           >
             We Build Digital
             <br />
@@ -46,11 +46,11 @@ export default function Hero() {
             Convert
           </h1>
 
-          {/* Description — absolute bottom right */}
-          <div className="absolute bottom-16 right-28 max-w-[450px]">
+          {/* Description — absolute bottom right on desktop, static on mobile */}
+          <div className="absolute bottom-16 max-w-[450px] hidden md:block" style={{ right: "clamp(20px, 6vw, 112px)" }}>
             <p
               className="text-white/80 font-medium leading-[1.65] text-right"
-              style={{ fontSize: "20px", fontFamily: "'PP Neue Montreal', sans-serif" }}
+              style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontFamily: "'PP Neue Montreal', sans-serif" }}
             >
               Websites, brand identities, and digital systems built to guide
               people, remove confusion, and turn attention into action, creating
@@ -58,6 +58,57 @@ export default function Hero() {
             </p>
           </div>
         </div>
+
+        {/* Description — mobile only, below headline area */}
+        <div className="md:hidden relative z-10 pb-12" style={{ padding: "0 clamp(20px, 6vw, 112px) 48px" }}>
+          <p
+            className="text-white/80 font-medium leading-[1.65]"
+            style={{ fontSize: "16px", fontFamily: "'PP Neue Montreal', sans-serif", maxWidth: "400px" }}
+          >
+            Websites, brand identities, and digital systems built to guide
+            people, remove confusion, and turn attention into action, creating
+            clear paths from first impression to real results.
+          </p>
+        </div>
+
+        {/* Scroll indicator */}
+        <div
+          style={{
+            position: "absolute",
+            bottom: "32px",
+            left: "50%",
+            transform: "translateX(-50%)",
+            zIndex: 20,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "8px",
+          }}
+        >
+          <span style={{
+            fontFamily: "'PP Neue Montreal', sans-serif",
+            fontSize: "10px",
+            fontWeight: 500,
+            color: "rgba(255,255,255,0.3)",
+            letterSpacing: "0.2em",
+            textTransform: "uppercase",
+          }}>
+            Scroll
+          </span>
+          <div style={{
+            width: "1px",
+            height: "40px",
+            background: "linear-gradient(180deg, rgba(241,119,82,0.6) 0%, transparent 100%)",
+            animation: "scrollPulse 2s ease-in-out infinite",
+          }} />
+        </div>
+
+        <style>{`
+          @keyframes scrollPulse {
+            0%, 100% { opacity: 0.4; transform: scaleY(1); }
+            50% { opacity: 1; transform: scaleY(1.3); }
+          }
+        `}</style>
       </div>
 
     </section>
