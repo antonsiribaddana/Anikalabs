@@ -360,7 +360,6 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
             objectFit: "cover",
             pointerEvents: "none",
             zIndex: 1,
-            transform: project.imageScale ? `scale(${project.imageScale})` : undefined,
           }}
         />
       )}
