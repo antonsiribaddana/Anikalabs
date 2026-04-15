@@ -120,11 +120,11 @@ const projects = [
     image: "/images/limitless-laptop.png",
   },
   {
-    title: "Modern Pools",
+    title: "Morgan Consulting",
     tags: ["Web Design", "Branding"],
     color: "#c4d9e8",
     size: "half",
-    image: "/images/modern-pools-laptop.png",
+    image: "/images/morgan-consulting.png",
   },
   {
     title: "Gotta Tennis",
@@ -251,7 +251,7 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
     const circle = circleRef.current;
     if (!card || !circle) return;
 
-    const SIZE = 120;
+    const SIZE = 64;
 
     const onEnter = (e: MouseEvent) => {
       const rect = card.getBoundingClientRect();
@@ -322,10 +322,10 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
           position: "absolute",
           top: 0,
           left: 0,
-          width: "120px",
-          height: "120px",
+          width: "64px",
+          height: "64px",
           borderRadius: "50%",
-          background: "rgba(2,2,30,0.85)",
+          background: "rgba(2,2,30,0.9)",
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
@@ -337,10 +337,10 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
       >
         <span style={{
           fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "13px",
+          fontSize: "11px",
           fontWeight: 500,
           color: "#fff",
-          letterSpacing: "0.04em",
+          letterSpacing: "0.06em",
           userSelect: "none",
         }}>
           View
