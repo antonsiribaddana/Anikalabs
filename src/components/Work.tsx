@@ -627,7 +627,7 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
             left: "0",
             right: "55%",
             bottom: "clamp(60px, 8vw, 100px)",
-            top: "0",
+            top: "10%",
             width: "auto",
             height: "auto",
             maxHeight: "calc(100% - clamp(60px, 8vw, 100px))",
