@@ -177,7 +177,7 @@ export default function Services() {
             style={{
               position: "sticky",
               top: `${72 + i * 16}px`,
-              marginBottom: "24px",
+              marginBottom: i < services.length - 1 ? "-80px" : "0",
               zIndex: i + 1,
               borderRadius: "clamp(20px, 2.5vw, 28px)",
               overflow: "hidden",
