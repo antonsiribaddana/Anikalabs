@@ -89,16 +89,55 @@ export default function Services() {
   }, []);
 
   return (
-    <div ref={sectionRef} style={{ background: "#080818" }}>
+    <div ref={sectionRef} style={{ background: "#080818", position: "relative", overflow: "hidden" }}>
+      {/* Decorative background blobs — right corner */}
+      <div style={{
+        position: "absolute",
+        top: "-10%",
+        right: "-8%",
+        width: "clamp(400px, 45vw, 800px)",
+        height: "clamp(400px, 45vw, 800px)",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(161,130,255,0.12) 0%, rgba(161,130,255,0.04) 40%, transparent 70%)",
+        filter: "blur(60px)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+      <div style={{
+        position: "absolute",
+        top: "5%",
+        right: "5%",
+        width: "clamp(250px, 28vw, 500px)",
+        height: "clamp(250px, 28vw, 500px)",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(241,119,82,0.1) 0%, rgba(241,119,82,0.03) 45%, transparent 70%)",
+        filter: "blur(50px)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+      <div style={{
+        position: "absolute",
+        top: "15%",
+        right: "15%",
+        width: "clamp(120px, 14vw, 260px)",
+        height: "clamp(120px, 14vw, 260px)",
+        borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 60%)",
+        filter: "blur(40px)",
+        pointerEvents: "none",
+        zIndex: 0,
+      }} />
+
       {/* Heading */}
       <div style={{
-        padding: "clamp(100px, 12vw, 200px) clamp(20px, 6vw, 112px) clamp(48px, 5vw, 80px)",
+        padding: "clamp(70px, 8vw, 140px) clamp(20px, 6vw, 112px) clamp(48px, 5vw, 80px)",
         display: "flex",
         justifyContent: "space-between",
-        alignItems: "flex-end",
-        /* editorial line aligns near paragraph top via alignSelf on the span */
+        alignItems: "flex-start",
         gap: "clamp(24px, 4vw, 64px)",
         flexWrap: "wrap",
+        position: "relative",
+        zIndex: 1,
       }}>
         {/* Left — heading + subtext */}
         <div style={{ flex: "1 1 500px" }}>
@@ -128,26 +167,14 @@ export default function Services() {
         </p>
         </div>
 
-        {/* Right — editorial line */}
-        <span className="hidden md:block" style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "clamp(12px, 1vw, 15px)",
-          fontWeight: 400,
-          color: "rgba(255,255,255,0.35)",
-          lineHeight: 1.4,
-          textAlign: "right",
-          flexShrink: 0,
-          alignSelf: "flex-end",
-          marginBottom: "clamp(2px, 0.3vw, 6px)",
-        }}>
-          Where ideas meet structure.
-        </span>
       </div>
 
       {/* Sticky stacking cards — matched to site content width */}
       <div style={{
         padding: "0 clamp(20px, 5vw, 80px)",
         paddingBottom: "clamp(80px, 10vw, 160px)",
+        position: "relative",
+        zIndex: 1,
       }}>
         {services.map((s, i) => (
           <div
