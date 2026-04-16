@@ -69,7 +69,6 @@ export default function Services() {
           scrub: true,
           onUpdate: (self) => {
             const p = self.progress;
-            // Scale down into the background, darken
             gsap.set(wrapper, {
               scale: 1 - p * 0.04,
               filter: `brightness(${1 - p * 0.4})`,
@@ -133,7 +132,6 @@ export default function Services() {
         position: "relative",
         zIndex: 1,
       }}>
-        {/* Left — heading + subtext */}
         <div style={{ flex: "1 1 500px" }}>
           <h2 style={{
             fontFamily: "'Neue Haas Grotesk', sans-serif",
@@ -157,13 +155,12 @@ export default function Services() {
             maxWidth: "700px",
             textAlign: "left",
           }}>
-          We turn ideas into structured digital experiences, shaping design, brand, and interaction into something clear, intentional, and easy to understand.
-        </p>
+            We turn ideas into structured digital experiences, shaping design, brand, and interaction into something clear, intentional, and easy to understand.
+          </p>
         </div>
-
       </div>
 
-      {/* Sticky stacking cards — matched to site content width */}
+      {/* Sticky stacking cards */}
       <div style={{
         padding: "0 clamp(20px, 5vw, 80px)",
         paddingBottom: "clamp(80px, 10vw, 160px)",
@@ -177,7 +174,7 @@ export default function Services() {
             style={{
               position: "sticky",
               top: `${72 + i * 16}px`,
-              marginBottom: i < services.length - 1 ? "-80px" : "0",
+              marginBottom: "24px",
               zIndex: i + 1,
               borderRadius: "clamp(20px, 2.5vw, 28px)",
               overflow: "hidden",
@@ -188,7 +185,7 @@ export default function Services() {
             <div
               style={{
                 background: s.bg,
-                minHeight: "clamp(480px, 60vh, 680px)",
+                minHeight: "clamp(420px, 50vh, 580px)",
                 padding: "clamp(44px, 5vw, 80px) clamp(36px, 5vw, 80px)",
                 position: "relative",
                 display: "flex",
@@ -212,8 +209,7 @@ export default function Services() {
                 {s.num}
               </span>
 
-
-              {/* Top content */}
+              {/* Top content — title */}
               <div style={{ position: "relative", zIndex: 2 }}>
                 <h3 style={{
                   fontFamily: "'NN Nouvelle Grotesk', sans-serif",
