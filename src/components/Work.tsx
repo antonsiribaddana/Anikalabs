@@ -765,16 +765,20 @@ export default function Work() {
         ))}
       </div>
 
-      {/* Show All */}
-      <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginTop: "clamp(48px, 6vw, 80px)", position: "relative", zIndex: 1, display: "flex", justifyContent: "center" }}>
+      {/* Show All — fat line style */}
+      <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginTop: "clamp(48px, 6vw, 80px)", position: "relative", zIndex: 1 }}>
+        {/* Top fat line */}
+        <div style={{ height: "3px", background: "#02021e", borderRadius: "2px" }} />
+
         <a
           href="#"
           style={{
-            display: "inline-flex",
-            alignItems: "baseline",
-            gap: "14px",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            padding: "clamp(24px, 3vw, 48px) 0",
             textDecoration: "none",
-            transition: "opacity 0.2s",
+            transition: "opacity 0.25s",
           }}
           onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.5")}
           onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
@@ -790,25 +794,36 @@ export default function Work() {
           }}>
             Show All
           </span>
-          {/* Circled count */}
-          <span style={{
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            width: "clamp(36px, 3.5vw, 56px)",
-            height: "clamp(36px, 3.5vw, 56px)",
-            borderRadius: "50%",
-            border: "2px solid #02021e",
-            fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "clamp(13px, 1.2vw, 18px)",
-            fontWeight: 500,
-            color: "#02021e",
-            flexShrink: 0,
-            marginBottom: "clamp(6px, 0.8vw, 12px)",
-          }}>
-            {projects.length}
-          </span>
+
+          {/* Right side — count + arrow */}
+          <div style={{ display: "flex", alignItems: "center", gap: "clamp(12px, 1.5vw, 24px)" }}>
+            {/* Circled count */}
+            <span style={{
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              width: "clamp(40px, 4vw, 64px)",
+              height: "clamp(40px, 4vw, 64px)",
+              borderRadius: "50%",
+              border: "2px solid #02021e",
+              fontFamily: "'PP Neue Montreal', sans-serif",
+              fontSize: "clamp(14px, 1.3vw, 20px)",
+              fontWeight: 500,
+              color: "#02021e",
+              flexShrink: 0,
+            }}>
+              {projects.length}
+            </span>
+            {/* Arrow */}
+            <svg width="clamp(28,3vw,48)" height="clamp(28,3vw,48)" viewBox="0 0 24 24" fill="none" stroke="#02021e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "clamp(28px, 3vw, 48px)", height: "clamp(28px, 3vw, 48px)" }}>
+              <line x1="5" y1="12" x2="19" y2="12" />
+              <polyline points="12 5 19 12 12 19" />
+            </svg>
+          </div>
         </a>
+
+        {/* Bottom fat line */}
+        <div style={{ height: "3px", background: "#02021e", borderRadius: "2px" }} />
       </div>
     </section>
   );
