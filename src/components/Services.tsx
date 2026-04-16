@@ -6,9 +6,6 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const OrganicBackground = dynamic(() => import("./OrganicBackground"), { ssr: false });
-const RoundedBlob = dynamic(() => import("./shapes/RoundedBlob"), { ssr: false });
-const ThickRing = dynamic(() => import("./shapes/ThickRing"), { ssr: false });
-const SoftWaveBlock = dynamic(() => import("./shapes/SoftWaveBlock"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -16,44 +13,47 @@ const services = [
   {
     num: "01",
     title: "Define",
-    desc: "We get clear on what you're trying to say and who it's for before anything starts. Everything is shaped around your goals so the direction is simple and focused.",
+    desc: "We get sharp on what you're saying, who you're saying it to, and why it matters. The noise gets pulled apart so the right direction is obvious, and every decision after this lines up behind it.",
     includes: ["Brand direction", "Audience focus", "Visual references", "Clear plan"],
-    bg: "#f17752",
-    textColor: "#1a0e08",
-    numColor: "rgba(0,0,0,0.06)",
-    descColor: "rgba(0,0,0,0.5)",
-    tagBorder: "rgba(0,0,0,0.12)",
-    tagBg: "rgba(0,0,0,0.04)",
-    tagText: "rgba(0,0,0,0.6)",
-    shapeColor: "#d66544",
+    bg: "#e85d2f",
+    bgDark: "#b8431f",
+    textColor: "#ffffff",
+    numColor: "rgba(255,255,255,0.06)",
+    descColor: "rgba(255,255,255,0.65)",
+    tagBorder: "rgba(255,255,255,0.2)",
+    tagBg: "rgba(255,255,255,0.06)",
+    tagText: "rgba(255,255,255,0.8)",
+    shapeColor: "#ffffff",
   },
   {
     num: "02",
     title: "Design",
-    desc: "We shape everything into something that looks right and makes sense. Every decision is made to keep things clear, consistent, and easy to follow.",
+    desc: "We shape everything into something that looks right and actually gets out of its own way. Type, layout, colour and motion each earn their place, so the result feels confident, consistent, and unmistakably yours.",
     includes: ["Page design", "Brand visuals", "Layout and flow", "Prototypes"],
-    bg: "#a78bfa",
-    textColor: "#0e0a1f",
-    numColor: "rgba(0,0,0,0.06)",
-    descColor: "rgba(0,0,0,0.5)",
-    tagBorder: "rgba(0,0,0,0.12)",
-    tagBg: "rgba(0,0,0,0.04)",
-    tagText: "rgba(0,0,0,0.6)",
-    shapeColor: "#8e72dc",
+    bg: "#5d4bf0",
+    bgDark: "#3f2fc7",
+    textColor: "#ffffff",
+    numColor: "rgba(255,255,255,0.06)",
+    descColor: "rgba(255,255,255,0.65)",
+    tagBorder: "rgba(255,255,255,0.2)",
+    tagBg: "rgba(255,255,255,0.06)",
+    tagText: "rgba(255,255,255,0.8)",
+    shapeColor: "#ffffff",
   },
   {
     num: "03",
     title: "Build",
-    desc: "We bring it to life using the right tools so it works smoothly everywhere. It's set up to be responsive, easy to manage, and ready to grow with you.",
+    desc: "We bring it to life on a stack that's fast, clean, and built to last. Responsive where it matters, easy to update, and structured so the site can grow with you without falling apart underneath.",
     includes: ["Websites and pages", "Responsive setup", "Simple interactions", "Easy updates"],
-    bg: "#34d399",
-    textColor: "#082018",
-    numColor: "rgba(0,0,0,0.06)",
-    descColor: "rgba(0,0,0,0.5)",
-    tagBorder: "rgba(0,0,0,0.12)",
-    tagBg: "rgba(0,0,0,0.04)",
-    tagText: "rgba(0,0,0,0.6)",
-    shapeColor: "#22b483",
+    bg: "#1fa67e",
+    bgDark: "#138660",
+    textColor: "#ffffff",
+    numColor: "rgba(255,255,255,0.06)",
+    descColor: "rgba(255,255,255,0.65)",
+    tagBorder: "rgba(255,255,255,0.2)",
+    tagBg: "rgba(255,255,255,0.06)",
+    tagText: "rgba(255,255,255,0.8)",
+    shapeColor: "#ffffff",
   },
 ];
 
@@ -105,7 +105,7 @@ export default function Services() {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(180deg, rgba(8,8,24,0) 0%, rgba(8,8,24,0.15) 50%, rgba(8,8,24,0.85) 95%, rgba(8,8,24,1) 100%)",
+          background: "linear-gradient(180deg, rgba(8,8,24,0) 0%, rgba(8,8,24,0) 85%, rgba(8,8,24,0.3) 96%, rgba(8,8,24,0.85) 100%)",
           zIndex: 1,
           pointerEvents: "none",
         }} />
@@ -173,7 +173,7 @@ export default function Services() {
           >
             <div
               style={{
-                background: s.bg,
+                background: `linear-gradient(135deg, ${s.bg} 0%, ${s.bgDark} 100%)`,
                 minHeight: "clamp(420px, 50vh, 580px)",
                 padding: "clamp(44px, 5vw, 80px) clamp(36px, 5vw, 80px)",
                 position: "relative",
@@ -182,50 +182,16 @@ export default function Services() {
                 justifyContent: "space-between",
               }}
             >
-              {/* Giant number — top right */}
-              <span style={{
-                position: "absolute",
-                top: "clamp(-20px, -2vw, -30px)",
-                right: "clamp(20px, 4vw, 64px)",
-                fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-                fontSize: "clamp(140px, 18vw, 300px)",
-                fontWeight: 700,
-                lineHeight: 1,
-                color: s.numColor,
-                userSelect: "none",
-                pointerEvents: "none",
-              }}>
-                {s.num}
-              </span>
-
-              {/* Abstract shape — right side accent */}
-              <div
-                className="hidden md:block"
-                style={{
-                  position: "absolute",
-                  top: 0,
-                  right: 0,
-                  width: "clamp(320px, 38%, 520px)",
-                  height: "100%",
-                  zIndex: 1,
-                  pointerEvents: "none",
-                }}
-              >
-                {i === 0 && <RoundedBlob color={s.shapeColor} />}
-                {i === 1 && <ThickRing color={s.shapeColor} />}
-                {i === 2 && <SoftWaveBlock color={s.shapeColor} />}
-              </div>
-
-              {/* Top content — title */}
+{/* Top content — title */}
               <div style={{ position: "relative", zIndex: 2 }}>
                 <h3 style={{
-                  fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-                  fontSize: "clamp(52px, 7vw, 120px)",
-                  fontWeight: 700,
+                  fontFamily: "'Neue Haas Grotesk', sans-serif",
+                  fontSize: "clamp(44px, 5vw, 84px)",
+                  fontWeight: 200,
                   color: s.textColor,
                   lineHeight: 0.95,
                   margin: 0,
-                  letterSpacing: "-2px",
+                  letterSpacing: "-3px",
                 }}>
                   {s.title}
                 </h3>
@@ -239,32 +205,36 @@ export default function Services() {
                   color: s.descColor,
                   lineHeight: "1.7",
                   margin: "0 0 clamp(20px, 2.5vw, 36px)",
-                  maxWidth: "500px",
+                  maxWidth: "720px",
                   fontWeight: 500,
                 }}>
                   {s.desc}
                 </p>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                <ul style={{
+                  listStyle: "none",
+                  padding: 0,
+                  margin: 0,
+                  borderTop: `1px solid ${s.tagBorder}`,
+                  maxWidth: "720px",
+                }}>
                   {s.includes.map((item, j) => (
-                    <span
+                    <li
                       key={j}
                       style={{
-                        padding: "10px 22px",
-                        borderRadius: "100px",
-                        border: `1px solid ${s.tagBorder}`,
-                        background: s.tagBg,
+                        padding: "22px 4px",
+                        borderBottom: `1px solid ${s.tagBorder}`,
                         fontFamily: "'PP Neue Montreal', sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 500,
-                        color: s.tagText,
-                        whiteSpace: "nowrap",
+                        fontSize: "19px",
+                        fontWeight: 400,
+                        color: s.textColor,
+                        letterSpacing: "0.005em",
                       }}
                     >
                       {item}
-                    </span>
+                    </li>
                   ))}
-                </div>
+                </ul>
               </div>
             </div>
           </div>
