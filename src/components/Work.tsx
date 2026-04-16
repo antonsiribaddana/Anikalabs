@@ -797,16 +797,30 @@ export default function Work() {
         <div style={{ height: "2px", background: "#02021e", borderRadius: "1px" }} />
 
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "clamp(24px, 3vw, 48px) 0" }}>
-          <span style={{
-            fontFamily: "'Neue Haas Grotesk', sans-serif",
-            fontSize: "clamp(52px, 9vw, 140px)",
-            fontWeight: 200,
-            color: "#02021e",
-            lineHeight: 1,
-            letterSpacing: "-3px",
-            textTransform: "uppercase",
-          }}>
-            Show All
+          <span style={{ position: "relative", display: "inline-block" }}>
+            <span style={{
+              fontFamily: "'Neue Haas Grotesk', sans-serif",
+              fontSize: "clamp(52px, 9vw, 140px)",
+              fontWeight: 200,
+              color: "#02021e",
+              lineHeight: 1,
+              letterSpacing: "-3px",
+              textTransform: "uppercase",
+            }}>
+              Show All
+            </span>
+            <sup style={{
+              fontFamily: "'PP Neue Montreal', sans-serif",
+              fontSize: "clamp(13px, 1.4vw, 20px)",
+              fontWeight: 500,
+              color: "#f17752",
+              letterSpacing: "0.01em",
+              position: "absolute",
+              top: "clamp(6px, 1vw, 14px)",
+              marginLeft: "clamp(4px, 0.5vw, 8px)",
+            }}>
+              (09)
+            </sup>
           </span>
 
           {/* Pill button */}
