@@ -93,20 +93,55 @@ export default function Services() {
       {/* Heading */}
       <div style={{
         padding: "clamp(100px, 12vw, 200px) clamp(20px, 6vw, 112px) clamp(48px, 5vw, 80px)",
-        textAlign: "center",
+        display: "flex",
+        justifyContent: "space-between",
+        alignItems: "flex-end",
+        /* editorial line aligns near paragraph top via alignSelf on the span */
+        gap: "clamp(24px, 4vw, 64px)",
+        flexWrap: "wrap",
       }}>
-        <h2 style={{
-          fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-          fontSize: "clamp(42px, 6vw, 96px)",
-          fontWeight: 700,
-          color: "#fff",
-          lineHeight: 1.05,
-          letterSpacing: "-1px",
-          margin: 0,
+        {/* Left — heading + subtext */}
+        <div style={{ flex: "1 1 500px" }}>
+          <h2 style={{
+            fontFamily: "'Neue Haas Grotesk', sans-serif",
+            fontSize: "clamp(42px, 6vw, 96px)",
+            fontWeight: 200,
+            color: "#fff",
+            lineHeight: 1.05,
+            letterSpacing: "-1px",
+            margin: 0,
+            textAlign: "left",
+          }}>
+            Clarity-first digital work
+          </h2>
+          <p style={{
+            fontFamily: "'PP Neue Montreal', sans-serif",
+            fontSize: "clamp(16px, 1.8vw, 20px)",
+            fontWeight: 500,
+            color: "rgba(255,255,255,0.8)",
+            lineHeight: 1.65,
+            margin: "clamp(16px, 2vw, 28px) 0 0",
+            maxWidth: "700px",
+            textAlign: "left",
+          }}>
+          We turn ideas into structured digital experiences, shaping design, brand, and interaction into something clear, intentional, and easy to understand.
+        </p>
+        </div>
+
+        {/* Right — editorial line */}
+        <span className="hidden md:block" style={{
+          fontFamily: "'PP Neue Montreal', sans-serif",
+          fontSize: "clamp(12px, 1vw, 15px)",
+          fontWeight: 400,
+          color: "rgba(255,255,255,0.35)",
+          lineHeight: 1.4,
+          textAlign: "right",
+          flexShrink: 0,
+          alignSelf: "flex-end",
+          marginBottom: "clamp(2px, 0.3vw, 6px)",
         }}>
-          What we&apos;re<br />
-          <span style={{ color: "rgba(255,255,255,0.15)" }}>really good at</span>
-        </h2>
+          Where ideas meet structure.
+        </span>
       </div>
 
       {/* Sticky stacking cards — matched to site content width */}
