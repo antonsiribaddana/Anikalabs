@@ -82,44 +82,7 @@ export default function Services() {
   }, []);
 
   return (
-    <div ref={sectionRef} style={{ background: "#080818", position: "relative" }}>
-      {/* Decorative background blobs — right corner */}
-      <div style={{
-        position: "absolute",
-        top: "-10%",
-        right: "-8%",
-        width: "clamp(400px, 45vw, 800px)",
-        height: "clamp(400px, 45vw, 800px)",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(161,130,255,0.12) 0%, rgba(161,130,255,0.04) 40%, transparent 70%)",
-        filter: "blur(60px)",
-        pointerEvents: "none",
-        zIndex: 0,
-      }} />
-      <div style={{
-        position: "absolute",
-        top: "5%",
-        right: "5%",
-        width: "clamp(250px, 28vw, 500px)",
-        height: "clamp(250px, 28vw, 500px)",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(241,119,82,0.1) 0%, rgba(241,119,82,0.03) 45%, transparent 70%)",
-        filter: "blur(50px)",
-        pointerEvents: "none",
-        zIndex: 0,
-      }} />
-      <div style={{
-        position: "absolute",
-        top: "15%",
-        right: "15%",
-        width: "clamp(120px, 14vw, 260px)",
-        height: "clamp(120px, 14vw, 260px)",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(52,211,153,0.08) 0%, transparent 60%)",
-        filter: "blur(40px)",
-        pointerEvents: "none",
-        zIndex: 0,
-      }} />
+    <div ref={sectionRef} style={{ background: "#080818" }}>
 
       {/* Heading */}
       <div style={{
