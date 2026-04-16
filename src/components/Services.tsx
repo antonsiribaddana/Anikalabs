@@ -188,7 +188,7 @@ export default function Services() {
             <div
               style={{
                 background: s.bg,
-                minHeight: "clamp(420px, 50vh, 580px)",
+                minHeight: "clamp(480px, 60vh, 680px)",
                 padding: "clamp(44px, 5vw, 80px) clamp(36px, 5vw, 80px)",
                 position: "relative",
                 display: "flex",
