@@ -166,7 +166,7 @@ export default function WhatWeDo() {
                 className="text-white"
                 style={{
                   fontSize: "clamp(40px, 5vw, 80px)",
-                  fontFamily: "var(--font-inter), 'Inter', sans-serif",
+                  fontFamily: "'Neue Haas Grotesk', sans-serif",
                   fontWeight: 200,
                   letterSpacing: "0px",
                   lineHeight: 1.05,

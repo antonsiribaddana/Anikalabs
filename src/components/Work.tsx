@@ -134,7 +134,7 @@ export const projects = [
     image: "/images/morgan-consulting.png",
   },
   {
-    title: "Gotta Tennis",
+    title: "PopUp Sports",
     tags: ["Strategy", "Web Design", "SEO"],
     color: "#1a2a1a",
     size: "full",
@@ -146,6 +146,7 @@ export const projects = [
       "/images/tennis-slice-4.png",
     ],
     previewAlign: "right" as const,
+    leftGraphic: "/images/tennis-left-graphic.webp",
   },
   {
     title: "Camprodest",
@@ -169,15 +170,15 @@ export const projects = [
     image: "/images/camprodest-bg.webp",
   },
   {
-    title: "Sleeq",
-    tags: ["Branding", "Web Design"],
+    title: "ModernXPools",
+    tags: ["Design", "Development", "SEO"],
     color: "#e8ebc4",
     size: "half",
     image: "/images/sleeq-card.webp",
   },
   {
-    title: "BMA Design & Build",
-    tags: ["Strategy", "UX/UI Design", "Webflow"],
+    title: "GoSage",
+    tags: ["Design", "Development"],
     color: "#c4cfe8",
     size: "half",
     image: "/images/bma-card.webp",
@@ -616,8 +617,33 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
         />
       )}
 
+      {/* Left-side graphic (e.g. Gotta Tennis characters) */}
+      {(project as any).leftGraphic && (
+        <img
+          src={(project as any).leftGraphic}
+          alt=""
+          style={{
+            position: "absolute",
+            left: "0",
+            right: "55%",
+            bottom: "clamp(60px, 8vw, 100px)",
+            top: "0",
+            width: "auto",
+            height: "auto",
+            maxHeight: "calc(100% - clamp(60px, 8vw, 100px))",
+            margin: "auto",
+            objectFit: "contain",
+            objectPosition: "center",
+            zIndex: 3,
+            pointerEvents: "none",
+            userSelect: "none",
+          }}
+          draggable={false}
+        />
+      )}
+
       {/* Scrolling preview window */}
-      {project.scrollSlices && <ScrollingPreview slices={project.scrollSlices} size={previewSize} align={(project as any).previewAlign || previewAlign} stitchedSrc={project.title === "Gotta Tennis" ? "/images/tennis-stitched.webp" : "/images/gotta-stitched.webp"} stops={project.title === "Gotta Tennis" ? [0.0000, 0.3302, 0.5337, 0.7529] : undefined} />}
+      {project.scrollSlices && <ScrollingPreview slices={project.scrollSlices} size={previewSize} align={(project as any).previewAlign || previewAlign} stitchedSrc={project.title === "PopUp Sports" ? "/images/tennis-stitched.webp" : "/images/gotta-stitched.webp"} stops={project.title === "PopUp Sports" ? [0.0000, 0.3302, 0.5337, 0.7529] : undefined} />}
 
       {/* Bottom gradient overlay */}
       <div style={{
@@ -712,45 +738,45 @@ export default function Work() {
       <OrganicBlob />
 
       {/* Heading + tagline */}
-      <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginBottom: "clamp(36px, 5vw, 72px)", position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "flex-start" }}>
+      <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginBottom: "clamp(36px, 5vw, 72px)", position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h2 style={{
-            fontFamily: "var(--font-inter), 'Inter', sans-serif",
+            fontFamily: "'Neue Haas Grotesk', sans-serif",
             fontSize: "clamp(36px, 5.5vw, 88px)",
             fontWeight: 200,
-            lineHeight: 1.0,
+            lineHeight: 1.05,
             color: "#02021e",
             margin: 0,
           }}>
-            Selected work
+            Structured design.
           </h2>
           <h2 style={{
-            fontFamily: "var(--font-inter), 'Inter', sans-serif",
+            fontFamily: "'Neue Haas Grotesk', sans-serif",
             fontSize: "clamp(36px, 5.5vw, 88px)",
             fontWeight: 200,
-            lineHeight: 1.0,
+            lineHeight: 1.05,
             color: "#02021e",
-            opacity: 0.15,
             margin: 0,
           }}>
-            & projects
+            Driven by intent.
           </h2>
         </div>
 
-        {/* Tagline + smiley — desktop only */}
-        <div className="hidden md:flex" style={{ alignItems: "center", gap: "16px", maxWidth: "380px", marginTop: "8px" }}>
+        {/* Tagline — aligned to bottom of heading */}
+        <div className="hidden md:flex" style={{ flexDirection: "column", alignItems: "center", maxWidth: "420px" }}>
           <p style={{
-            fontFamily: "var(--font-inter), 'Inter', sans-serif",
-            fontSize: "clamp(16px, 1.5vw, 22px)",
-            fontWeight: 300,
-            lineHeight: 1.45,
+            fontFamily: "'Neue Haas Grotesk', sans-serif",
+            fontSize: "clamp(14px, 1.3vw, 20px)",
+            fontWeight: 400,
+            lineHeight: 1.4,
             color: "#02021e",
             margin: 0,
+            textAlign: "center",
+            textTransform: "uppercase",
+            letterSpacing: "0.02em",
           }}>
-            Yep, We&apos;re Designers. But Above All, We&apos;re Thinkers, Explorers, And Storytellers
+            Yep, We&apos;re Designers. But Above All, We&apos;re Thinkers, Explorers, And Storytellers.
           </p>
-          {/* Smiley */}
-          <img src="/images/smiley.svg" alt="" width={56} height={60} style={{ flexShrink: 0 }} />
         </div>
       </div>
 
@@ -765,26 +791,14 @@ export default function Work() {
         ))}
       </div>
 
-      {/* Show All — fat line style */}
+      {/* Show All — fat line + pill button */}
       <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginTop: "clamp(48px, 6vw, 80px)", position: "relative", zIndex: 1 }}>
         {/* Top fat line */}
-        <div style={{ height: "3px", background: "#02021e", borderRadius: "2px" }} />
+        <div style={{ height: "2px", background: "#02021e", borderRadius: "1px" }} />
 
-        <a
-          href="#"
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            padding: "clamp(24px, 3vw, 48px) 0",
-            textDecoration: "none",
-            transition: "opacity 0.25s",
-          }}
-          onMouseEnter={(e) => (e.currentTarget.style.opacity = "0.5")}
-          onMouseLeave={(e) => (e.currentTarget.style.opacity = "1")}
-        >
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "clamp(24px, 3vw, 48px) 0" }}>
           <span style={{
-            fontFamily: "var(--font-inter), 'Inter', sans-serif",
+            fontFamily: "'Neue Haas Grotesk', sans-serif",
             fontSize: "clamp(52px, 9vw, 140px)",
             fontWeight: 200,
             color: "#02021e",
@@ -795,35 +809,40 @@ export default function Work() {
             Show All
           </span>
 
-          {/* Right side — count + arrow */}
-          <div style={{ display: "flex", alignItems: "center", gap: "clamp(12px, 1.5vw, 24px)" }}>
-            {/* Circled count */}
-            <span style={{
+          {/* Pill button */}
+          <a
+            href="#"
+            className="show-work-btn"
+            style={{
               display: "inline-flex",
               alignItems: "center",
-              justifyContent: "center",
-              width: "clamp(40px, 4vw, 64px)",
-              height: "clamp(40px, 4vw, 64px)",
-              borderRadius: "50%",
-              border: "2px solid #02021e",
+              gap: "clamp(8px, 1vw, 14px)",
+              padding: "clamp(14px, 1.5vw, 22px) clamp(24px, 2.5vw, 40px)",
+              background: "#f17752",
+              color: "#fff",
+              borderRadius: "999px",
+              textDecoration: "none",
               fontFamily: "'PP Neue Montreal', sans-serif",
-              fontSize: "clamp(14px, 1.3vw, 20px)",
+              fontSize: "clamp(13px, 1.2vw, 18px)",
               fontWeight: 500,
-              color: "#02021e",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              transition: "background 0.3s, transform 0.3s",
               flexShrink: 0,
-            }}>
-              {projects.length}
-            </span>
-            {/* Arrow */}
-            <svg width="clamp(28,3vw,48)" height="clamp(28,3vw,48)" viewBox="0 0 24 24" fill="none" stroke="#02021e" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" style={{ width: "clamp(28px, 3vw, 48px)", height: "clamp(28px, 3vw, 48px)" }}>
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = "#e0603e"; e.currentTarget.style.transform = "scale(1.05)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = "#f17752"; e.currentTarget.style.transform = "scale(1)"; }}
+          >
+            Show Work
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
               <line x1="5" y1="12" x2="19" y2="12" />
               <polyline points="12 5 19 12 12 19" />
             </svg>
-          </div>
-        </a>
+          </a>
+        </div>
 
         {/* Bottom fat line */}
-        <div style={{ height: "3px", background: "#02021e", borderRadius: "2px" }} />
+        <div style={{ height: "2px", background: "#02021e", borderRadius: "1px" }} />
       </div>
     </section>
   );
