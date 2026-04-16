@@ -213,65 +213,54 @@ export default function Services() {
               </span>
 
 
-              {/* Main content — title left, desc + pills right */}
-              <div style={{
-                position: "relative",
-                zIndex: 2,
-                display: "flex",
-                alignItems: "flex-end",
-                justifyContent: "space-between",
-                gap: "clamp(32px, 4vw, 64px)",
-                flexWrap: "wrap",
-                marginTop: "auto",
-              }}>
-                {/* Left — title */}
-                <div style={{ flex: "0 0 auto" }}>
-                  <h3 style={{
-                    fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-                    fontSize: "clamp(52px, 7vw, 120px)",
-                    fontWeight: 700,
-                    color: s.textColor,
-                    lineHeight: 0.95,
-                    margin: 0,
-                    letterSpacing: "-2px",
-                  }}>
-                    {s.title}
-                  </h3>
-                </div>
+              {/* Top content */}
+              <div style={{ position: "relative", zIndex: 2 }}>
+                <h3 style={{
+                  fontFamily: "'NN Nouvelle Grotesk', sans-serif",
+                  fontSize: "clamp(52px, 7vw, 120px)",
+                  fontWeight: 700,
+                  color: s.textColor,
+                  lineHeight: 0.95,
+                  margin: 0,
+                  letterSpacing: "-2px",
+                }}>
+                  {s.title}
+                </h3>
+              </div>
 
-                {/* Right — desc + pills */}
-                <div style={{ flex: "1 1 300px", maxWidth: "500px" }}>
-                  <p style={{
-                    fontFamily: "'PP Neue Montreal', sans-serif",
-                    fontSize: "clamp(15px, 1.2vw, 18px)",
-                    color: s.descColor,
-                    lineHeight: "1.7",
-                    margin: "0 0 clamp(16px, 2vw, 28px)",
-                    fontWeight: 500,
-                  }}>
-                    {s.desc}
-                  </p>
+              {/* Bottom content — desc + pills */}
+              <div style={{ position: "relative", zIndex: 2, marginTop: "clamp(36px, 5vw, 64px)" }}>
+                <p style={{
+                  fontFamily: "'PP Neue Montreal', sans-serif",
+                  fontSize: "clamp(16px, 1.3vw, 20px)",
+                  color: s.descColor,
+                  lineHeight: "1.7",
+                  margin: "0 0 clamp(20px, 2.5vw, 36px)",
+                  maxWidth: "500px",
+                  fontWeight: 500,
+                }}>
+                  {s.desc}
+                </p>
 
-                  <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                    {s.includes.map((item, j) => (
-                      <span
-                        key={j}
-                        style={{
-                          padding: "10px 22px",
-                          borderRadius: "100px",
-                          border: `1px solid ${s.tagBorder}`,
-                          background: s.tagBg,
-                          fontFamily: "'PP Neue Montreal', sans-serif",
-                          fontSize: "14px",
-                          fontWeight: 500,
-                          color: s.tagText,
-                          whiteSpace: "nowrap",
-                        }}
-                      >
-                        {item}
-                      </span>
-                    ))}
-                  </div>
+                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                  {s.includes.map((item, j) => (
+                    <span
+                      key={j}
+                      style={{
+                        padding: "10px 22px",
+                        borderRadius: "100px",
+                        border: `1px solid ${s.tagBorder}`,
+                        background: s.tagBg,
+                        fontFamily: "'PP Neue Montreal', sans-serif",
+                        fontSize: "14px",
+                        fontWeight: 500,
+                        color: s.tagText,
+                        whiteSpace: "nowrap",
+                      }}
+                    >
+                      {item}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>
