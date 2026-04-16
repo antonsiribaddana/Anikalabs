@@ -82,7 +82,7 @@ export default function Services() {
   }, []);
 
   return (
-    <div ref={sectionRef} style={{ background: "#080818", position: "relative", overflow: "hidden" }}>
+    <div ref={sectionRef} style={{ background: "#080818", position: "relative" }}>
       {/* Decorative background blobs — right corner */}
       <div style={{
         position: "absolute",
