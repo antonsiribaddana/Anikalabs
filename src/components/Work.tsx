@@ -173,12 +173,14 @@ export const projects = [
     tags: ["Branding", "Web Design"],
     color: "#e8ebc4",
     size: "half",
+    image: "/images/sleeq-card.webp",
   },
   {
     title: "BMA Design & Build",
     tags: ["Strategy", "UX/UI Design", "Webflow"],
     color: "#c4cfe8",
     size: "half",
+    image: "/images/bma-card.webp",
   },
 ];
 
