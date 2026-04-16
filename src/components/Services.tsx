@@ -6,6 +6,9 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const OrganicBackground = dynamic(() => import("./OrganicBackground"), { ssr: false });
+const RoundedBlob = dynamic(() => import("./shapes/RoundedBlob"), { ssr: false });
+const ThickRing = dynamic(() => import("./shapes/ThickRing"), { ssr: false });
+const SoftWaveBlock = dynamic(() => import("./shapes/SoftWaveBlock"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -22,6 +25,7 @@ const services = [
     tagBorder: "rgba(0,0,0,0.12)",
     tagBg: "rgba(0,0,0,0.04)",
     tagText: "rgba(0,0,0,0.6)",
+    shapeColor: "#d66544",
   },
   {
     num: "02",
@@ -35,6 +39,7 @@ const services = [
     tagBorder: "rgba(0,0,0,0.12)",
     tagBg: "rgba(0,0,0,0.04)",
     tagText: "rgba(0,0,0,0.6)",
+    shapeColor: "#8e72dc",
   },
   {
     num: "03",
@@ -48,6 +53,7 @@ const services = [
     tagBorder: "rgba(0,0,0,0.12)",
     tagBg: "rgba(0,0,0,0.04)",
     tagText: "rgba(0,0,0,0.6)",
+    shapeColor: "#22b483",
   },
 ];
 
@@ -191,6 +197,24 @@ export default function Services() {
               }}>
                 {s.num}
               </span>
+
+              {/* Abstract shape — right side accent */}
+              <div
+                className="hidden md:block"
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  right: 0,
+                  width: "clamp(320px, 38%, 520px)",
+                  height: "100%",
+                  zIndex: 1,
+                  pointerEvents: "none",
+                }}
+              >
+                {i === 0 && <RoundedBlob color={s.shapeColor} />}
+                {i === 1 && <ThickRing color={s.shapeColor} />}
+                {i === 2 && <SoftWaveBlock color={s.shapeColor} />}
+              </div>
 
               {/* Top content — title */}
               <div style={{ position: "relative", zIndex: 2 }}>
