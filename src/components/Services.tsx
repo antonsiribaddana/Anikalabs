@@ -10,8 +10,8 @@ const services = [
   {
     num: "01",
     title: "Define",
-    desc: "We align on your brand, audience, and goals before a single pixel moves. Strategy first — always.",
-    includes: ["Discovery Workshop", "Visual Moodboard", "Colors & Typography", "Design Direction"],
+    desc: "We get clear on what you're trying to say and who it's for before anything starts. Everything is shaped around your goals so the direction is simple and focused.",
+    includes: ["Brand direction", "Audience focus", "Visual references", "Clear plan"],
     bg: "#f17752",
     textColor: "#1a0e08",
     numColor: "rgba(0,0,0,0.06)",
@@ -25,8 +25,8 @@ const services = [
   {
     num: "02",
     title: "Design",
-    desc: "Interfaces that reflect your brand, speak to your audience, and are a pleasure to interact with.",
-    includes: ["UI Design", "Motion Concepts", "Figma Prototype", "Digital Styleguide"],
+    desc: "We shape everything into something that looks right and makes sense. Every decision is made to keep things clear, consistent, and easy to follow.",
+    includes: ["Page design", "Brand visuals", "Layout and flow", "Prototypes"],
     bg: "#a78bfa",
     textColor: "#0e0a1f",
     numColor: "rgba(0,0,0,0.06)",
@@ -39,9 +39,9 @@ const services = [
   },
   {
     num: "03",
-    title: "Develop",
-    desc: "Clean, fast development with interactions, responsive design, SEO and accessibility from day one.",
-    includes: ["Next.js / Webflow", "Micro-interactions", "Responsive Design", "SEO & Accessibility"],
+    title: "Build",
+    desc: "We bring it to life using the right tools so it works smoothly everywhere. It's set up to be responsive, easy to manage, and ready to grow with you.",
+    includes: ["Websites and pages", "Responsive setup", "Simple interactions", "Easy updates"],
     bg: "#34d399",
     textColor: "#082018",
     numColor: "rgba(0,0,0,0.06)",
@@ -218,15 +218,13 @@ export default function Services() {
                 {s.num}
               </span>
 
-              {/* Top content */}
+              {/* Top content — label */}
               <div style={{ position: "relative", zIndex: 2 }}>
-                {/* Expertise label */}
                 <div style={{
                   display: "inline-block",
                   padding: "8px 18px",
                   background: s.labelBg,
                   borderRadius: "6px",
-                  marginBottom: "clamp(24px, 3vw, 44px)",
                 }}>
                   <span style={{
                     fontFamily: "'PP Neue Montreal', sans-serif",
@@ -238,54 +236,67 @@ export default function Services() {
                     Expertise
                   </span>
                 </div>
-
-                {/* Title */}
-                <h3 style={{
-                  fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-                  fontSize: "clamp(52px, 7vw, 120px)",
-                  fontWeight: 700,
-                  color: s.textColor,
-                  lineHeight: 0.95,
-                  margin: 0,
-                  letterSpacing: "-2px",
-                }}>
-                  {s.title}
-                </h3>
               </div>
 
-              {/* Bottom content — desc + pills */}
-              <div style={{ position: "relative", zIndex: 2, marginTop: "clamp(36px, 5vw, 64px)" }}>
-                <p style={{
-                  fontFamily: "'PP Neue Montreal', sans-serif",
-                  fontSize: "clamp(16px, 1.3vw, 20px)",
-                  color: s.descColor,
-                  lineHeight: "1.7",
-                  margin: "0 0 clamp(20px, 2.5vw, 36px)",
-                  maxWidth: "500px",
-                  fontWeight: 500,
-                }}>
-                  {s.desc}
-                </p>
+              {/* Main content — title left, desc + pills right */}
+              <div style={{
+                position: "relative",
+                zIndex: 2,
+                display: "flex",
+                alignItems: "flex-end",
+                justifyContent: "space-between",
+                gap: "clamp(32px, 4vw, 64px)",
+                flexWrap: "wrap",
+                marginTop: "auto",
+              }}>
+                {/* Left — title */}
+                <div style={{ flex: "0 0 auto" }}>
+                  <h3 style={{
+                    fontFamily: "'NN Nouvelle Grotesk', sans-serif",
+                    fontSize: "clamp(52px, 7vw, 120px)",
+                    fontWeight: 700,
+                    color: s.textColor,
+                    lineHeight: 0.95,
+                    margin: 0,
+                    letterSpacing: "-2px",
+                  }}>
+                    {s.title}
+                  </h3>
+                </div>
 
-                <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-                  {s.includes.map((item, j) => (
-                    <span
-                      key={j}
-                      style={{
-                        padding: "10px 22px",
-                        borderRadius: "100px",
-                        border: `1px solid ${s.tagBorder}`,
-                        background: s.tagBg,
-                        fontFamily: "'PP Neue Montreal', sans-serif",
-                        fontSize: "14px",
-                        fontWeight: 500,
-                        color: s.tagText,
-                        whiteSpace: "nowrap",
-                      }}
-                    >
-                      {item}
-                    </span>
-                  ))}
+                {/* Right — desc + pills */}
+                <div style={{ flex: "1 1 300px", maxWidth: "500px" }}>
+                  <p style={{
+                    fontFamily: "'PP Neue Montreal', sans-serif",
+                    fontSize: "clamp(15px, 1.2vw, 18px)",
+                    color: s.descColor,
+                    lineHeight: "1.7",
+                    margin: "0 0 clamp(16px, 2vw, 28px)",
+                    fontWeight: 500,
+                  }}>
+                    {s.desc}
+                  </p>
+
+                  <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+                    {s.includes.map((item, j) => (
+                      <span
+                        key={j}
+                        style={{
+                          padding: "10px 22px",
+                          borderRadius: "100px",
+                          border: `1px solid ${s.tagBorder}`,
+                          background: s.tagBg,
+                          fontFamily: "'PP Neue Montreal', sans-serif",
+                          fontSize: "14px",
+                          fontWeight: 500,
+                          color: s.tagText,
+                          whiteSpace: "nowrap",
+                        }}
+                      >
+                        {item}
+                      </span>
+                    ))}
+                  </div>
                 </div>
               </div>
             </div>
