@@ -1,8 +1,11 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+const OrganicBackground = dynamic(() => import("./OrganicBackground"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -84,17 +87,33 @@ export default function Services() {
   return (
     <div ref={sectionRef} style={{ background: "#080818" }}>
 
-      {/* Heading */}
+      {/* Heading with organic background */}
       <div style={{
-        padding: "clamp(70px, 8vw, 140px) clamp(20px, 6vw, 112px) clamp(48px, 5vw, 80px)",
-        display: "flex",
-        justifyContent: "space-between",
-        alignItems: "flex-start",
-        gap: "clamp(24px, 4vw, 64px)",
-        flexWrap: "wrap",
         position: "relative",
-        zIndex: 1,
+        overflow: "hidden",
       }}>
+        {/* Organic shader background */}
+        <OrganicBackground />
+
+        {/* Dark gradient overlay for text readability + smooth fade to dark bottom */}
+        <div style={{
+          position: "absolute",
+          inset: 0,
+          background: "linear-gradient(180deg, rgba(8,8,24,0.2) 0%, rgba(8,8,24,0.5) 70%, rgba(8,8,24,1) 100%)",
+          zIndex: 1,
+          pointerEvents: "none",
+        }} />
+
+        <div style={{
+          padding: "clamp(70px, 8vw, 140px) clamp(20px, 6vw, 112px) clamp(48px, 5vw, 80px)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "flex-start",
+          gap: "clamp(24px, 4vw, 64px)",
+          flexWrap: "wrap",
+          position: "relative",
+          zIndex: 2,
+        }}>
         <div style={{ flex: "1 1 500px" }}>
           <h2 style={{
             fontFamily: "'Neue Haas Grotesk', sans-serif",
@@ -120,6 +139,7 @@ export default function Services() {
           }}>
             We turn ideas into structured digital experiences, shaping design, brand, and interaction into something clear, intentional, and easy to understand.
           </p>
+        </div>
         </div>
       </div>
 
