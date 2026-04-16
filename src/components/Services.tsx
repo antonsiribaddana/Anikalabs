@@ -19,8 +19,6 @@ const services = [
     tagBorder: "rgba(0,0,0,0.12)",
     tagBg: "rgba(0,0,0,0.04)",
     tagText: "rgba(0,0,0,0.6)",
-    labelBg: "#fff",
-    labelText: "#1a0e08",
   },
   {
     num: "02",
@@ -34,8 +32,6 @@ const services = [
     tagBorder: "rgba(0,0,0,0.12)",
     tagBg: "rgba(0,0,0,0.04)",
     tagText: "rgba(0,0,0,0.6)",
-    labelBg: "#fff",
-    labelText: "#0e0a1f",
   },
   {
     num: "03",
@@ -49,8 +45,6 @@ const services = [
     tagBorder: "rgba(0,0,0,0.12)",
     tagBg: "rgba(0,0,0,0.04)",
     tagText: "rgba(0,0,0,0.6)",
-    labelBg: "#fff",
-    labelText: "#082018",
   },
 ];
 
@@ -218,25 +212,6 @@ export default function Services() {
                 {s.num}
               </span>
 
-              {/* Top content — label */}
-              <div style={{ position: "relative", zIndex: 2 }}>
-                <div style={{
-                  display: "inline-block",
-                  padding: "8px 18px",
-                  background: s.labelBg,
-                  borderRadius: "6px",
-                }}>
-                  <span style={{
-                    fontFamily: "'PP Neue Montreal', sans-serif",
-                    fontSize: "13px",
-                    fontWeight: 500,
-                    letterSpacing: "0.06em",
-                    color: s.labelText,
-                  }}>
-                    Expertise
-                  </span>
-                </div>
-              </div>
 
               {/* Main content — title left, desc + pills right */}
               <div style={{
