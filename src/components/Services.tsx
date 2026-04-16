@@ -105,7 +105,7 @@ export default function Services() {
         <div style={{
           position: "absolute",
           inset: 0,
-          background: "linear-gradient(180deg, rgba(8,8,24,0.2) 0%, rgba(8,8,24,0.5) 70%, rgba(8,8,24,1) 100%)",
+          background: "linear-gradient(180deg, rgba(8,8,24,0) 0%, rgba(8,8,24,0.15) 50%, rgba(8,8,24,0.85) 95%, rgba(8,8,24,1) 100%)",
           zIndex: 1,
           pointerEvents: "none",
         }} />
