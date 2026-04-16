@@ -155,10 +155,11 @@ export const projects = [
     image: "/images/wander-women.webp",
   },
   {
-    title: "GoSage Lawn Care",
+    title: "Gotta Tennis",
     tags: ["UX/UI Design", "Webflow"],
     color: "#c4e8e0",
     size: "half",
+    image: "/images/gosage-lawn.webp",
   },
   {
     title: "Fresh Code",
