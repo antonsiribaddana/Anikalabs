@@ -104,13 +104,20 @@ function OrganicBlob() {
   );
 }
 
-const projects = [
+export const projects = [
   {
-    title: "For Your Party",
-    tags: ["Branding", "Design"],
-    color: "#c9c4f0",
+    title: "SEC Recruiting Agency",
+    tags: ["Design", "Development", "SEO Services"],
+    color: "#0a1a3a",
     size: "full",
-    image: "/images/laptop-mockup.png",
+    image: "/images/gotta-preview-bg.webp",
+    scrollSlices: [
+      "/images/gotta-slice-1.png",
+      "/images/gotta-slice-2.png",
+      "/images/gotta-slice-3.png",
+      "/images/gotta-slice-4.png",
+      "/images/gotta-slice-5.png",
+    ],
   },
   {
     title: "Young Billionaires",
@@ -129,14 +136,23 @@ const projects = [
   {
     title: "Gotta Tennis",
     tags: ["Strategy", "Web Design", "SEO"],
-    color: "#d4e8c4",
+    color: "#1a2a1a",
     size: "full",
+    image: "/images/tennis-preview-bg.webp",
+    scrollSlices: [
+      "/images/tennis-slice-1.png",
+      "/images/tennis-slice-2.png",
+      "/images/tennis-slice-3.png",
+      "/images/tennis-slice-4.png",
+    ],
+    previewAlign: "right" as const,
   },
   {
-    title: "Wander Women",
-    tags: ["Branding", "Web Site"],
+    title: "Camprodest",
+    tags: ["Design", "Development", "Strategy"],
     color: "#f0d4c4",
     size: "half",
+    image: "/images/wander-women.webp",
   },
   {
     title: "GoSage Lawn Care",
@@ -145,10 +161,11 @@ const projects = [
     size: "half",
   },
   {
-    title: "Camprodest",
-    tags: ["Web Design", "Strategy", "UX/UI Design"],
-    color: "#ddc4f0",
+    title: "Fresh Code",
+    tags: ["UI Design", "UX Design", "Development"],
+    color: "#1a1a2e",
     size: "full",
+    image: "/images/camprodest-bg.webp",
   },
   {
     title: "Sleeq",
@@ -175,11 +192,14 @@ function CardBackground({ baseColor }: { baseColor: string }) {
 
     let raf = 0;
     let t = 0;
+    let visible = false;
 
     const resize = () => {
       const dpr = window.devicePixelRatio || 1;
-      canvas.width = canvas.offsetWidth * dpr;
-      canvas.height = canvas.offsetHeight * dpr;
+      const w = Math.max(1, canvas.offsetWidth);
+      const h = Math.max(1, canvas.offsetHeight);
+      canvas.width = w * dpr;
+      canvas.height = h * dpr;
     };
     resize();
     const ro = new ResizeObserver(resize);
@@ -216,11 +236,26 @@ function CardBackground({ baseColor }: { baseColor: string }) {
       t += 0.02;
       raf = requestAnimationFrame(draw);
     };
-    draw();
+
+    // IntersectionObserver gates animation — only run when visible
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (e.isIntersecting && !visible) {
+          visible = true;
+          cancelAnimationFrame(raf);
+          raf = requestAnimationFrame(draw);
+        } else if (!e.isIntersecting && visible) {
+          visible = false;
+          cancelAnimationFrame(raf);
+        }
+      }
+    }, { threshold: 0.01 });
+    io.observe(canvas);
 
     return () => {
       cancelAnimationFrame(raf);
       ro.disconnect();
+      io.disconnect();
     };
   }, []);
 
@@ -240,7 +275,206 @@ function CardBackground({ baseColor }: { baseColor: string }) {
   );
 }
 
-function WorkCard({ project }: { project: typeof projects[number] }) {
+function ScrollingPreview({ slices: _slices, size = "default", align = "center", stitchedSrc, stops: customStops }: { slices: string[]; size?: "default" | "large"; align?: "center" | "right"; stitchedSrc?: string; stops?: number[] }) {
+  const stitched = stitchedSrc || "/images/gotta-stitched.webp";
+  const trackRef = useRef<HTMLDivElement>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const tlRef = useRef<gsap.core.Timeline | null>(null);
+  const resumeTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => {
+    const track = trackRef.current;
+    const container = containerRef.current;
+    if (!track || !container) return;
+
+    const HOLD_DUR = 2.0;
+    const PX_PER_SEC = 30;
+
+    const STOPS = customStops || [
+      0.0000, 0.2997, 0.4540, 0.6102, 0.7850, 0.8747,
+    ];
+
+    /* ── Build the auto-scroll timeline ── */
+    const buildTimeline = (startY: number) => {
+      const h = track.scrollHeight;
+      if (h <= 0) return null;
+      const singleH = h / 2;
+
+      // Figure out which stop we're closest to (or past)
+      const currentFrac = Math.abs(startY) / singleH;
+      let startIdx = 0;
+      for (let i = STOPS.length - 1; i >= 0; i--) {
+        if (currentFrac >= STOPS[i] - 0.01) { startIdx = i; break; }
+      }
+
+      gsap.set(track, { y: startY, force3D: true });
+      const tl = gsap.timeline({ repeat: -1 });
+
+      // Start from current position — drift to next stop first
+      for (let loop = 0; loop < 2; loop++) { // 2 full cycles to fill repeat buffer
+        for (let i = 0; i < STOPS.length; i++) {
+          const idx = (startIdx + i) % STOPS.length;
+          const slideTop = -singleH * STOPS[idx];
+          const slideBottom = idx < STOPS.length - 1
+            ? -singleH * STOPS[idx + 1]
+            : -singleH;
+
+          // On the very first segment, skip to current Y
+          if (loop === 0 && i === 0) {
+            const distPx = Math.abs(slideBottom - startY);
+            const driftDur = distPx / PX_PER_SEC;
+            if (driftDur > 0.1) {
+              tl.to(track, { y: slideBottom, duration: driftDur, ease: "none" });
+            }
+            if (idx === STOPS.length - 1) tl.set(track, { y: 0 });
+            continue;
+          }
+
+          tl.to(track, { y: slideTop, duration: HOLD_DUR });
+          const distPx = Math.abs(slideBottom - slideTop);
+          const driftDur = distPx / PX_PER_SEC;
+          tl.to(track, { y: slideBottom, duration: driftDur, ease: "none" });
+          if (idx === STOPS.length - 1) tl.set(track, { y: 0 });
+        }
+        startIdx = 0; // second loop always starts from 0
+      }
+
+      return tl;
+    };
+
+    const startAutoScroll = (fromY?: number) => {
+      if (tlRef.current) { tlRef.current.kill(); tlRef.current = null; }
+      const h = track.scrollHeight;
+      const singleH = h / 2;
+      const y = fromY !== undefined ? fromY : 0;
+      // Clamp to single image range
+      const clampedY = singleH > 0 ? Math.max(-singleH, Math.min(0, y)) : 0;
+      tlRef.current = buildTimeline(clampedY);
+    };
+
+    /* ── Drag support ── */
+    let isDragging = false;
+    let dragStartY = 0;
+    let trackStartY = 0;
+
+    const getTrackY = () => {
+      const transform = track.style.transform;
+      const match = transform.match(/matrix.*,\s*([-\d.]+)\)/);
+      if (match) return parseFloat(match[1]);
+      // Fallback: gsap.getProperty
+      return Number(gsap.getProperty(track, "y")) || 0;
+    };
+
+    const onPointerDown = (e: PointerEvent) => {
+      isDragging = true;
+      dragStartY = e.clientY;
+      trackStartY = getTrackY();
+
+      // Pause auto-scroll
+      if (tlRef.current) tlRef.current.pause();
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+
+      container.setPointerCapture(e.pointerId);
+      container.style.cursor = "grabbing";
+    };
+
+    const onPointerMove = (e: PointerEvent) => {
+      if (!isDragging) return;
+      const delta = e.clientY - dragStartY;
+      const h = track.scrollHeight;
+      const singleH = h / 2;
+      let newY = trackStartY + delta;
+      // Clamp to full single image height (user can scroll through everything)
+      newY = Math.max(-singleH, Math.min(0, newY));
+      gsap.set(track, { y: newY, force3D: true });
+    };
+
+    const onPointerUp = (e: PointerEvent) => {
+      if (!isDragging) return;
+      isDragging = false;
+      container.releasePointerCapture(e.pointerId);
+      container.style.cursor = "grab";
+
+      // Resume auto-scroll from current position after 3 seconds
+      const currentY = getTrackY();
+      resumeTimerRef.current = setTimeout(() => {
+        startAutoScroll(currentY);
+      }, 3000);
+    };
+
+    container.addEventListener("pointerdown", onPointerDown);
+    container.addEventListener("pointermove", onPointerMove);
+    container.addEventListener("pointerup", onPointerUp);
+    container.addEventListener("pointercancel", onPointerUp);
+
+    /* ── Wait for images then start ── */
+    const imgs = Array.from(track.querySelectorAll("img"));
+    let remaining = imgs.length;
+    const init = () => startAutoScroll(0);
+    if (remaining === 0) init();
+    else {
+      imgs.forEach((img) => {
+        if (img.complete && img.naturalHeight > 0) {
+          if (--remaining === 0) init();
+        } else {
+          const done = () => { if (--remaining === 0) init(); };
+          img.addEventListener("load", done, { once: true });
+          img.addEventListener("error", done, { once: true });
+        }
+      });
+    }
+
+    return () => {
+      if (tlRef.current) tlRef.current.kill();
+      if (resumeTimerRef.current) clearTimeout(resumeTimerRef.current);
+      container.removeEventListener("pointerdown", onPointerDown);
+      container.removeEventListener("pointermove", onPointerMove);
+      container.removeEventListener("pointerup", onPointerUp);
+      container.removeEventListener("pointercancel", onPointerUp);
+      gsap.killTweensOf(track);
+    };
+  }, []);
+
+  const widthClamp = "min(66%, 920px)";
+
+  return (
+    <div
+      ref={containerRef}
+      style={{
+        position: "absolute",
+        top: "48%",
+        ...(align === "right"
+          ? { right: "clamp(20px, 3vw, 48px)", transform: "translateY(-50%)" }
+          : { left: "50%", transform: "translate(-50%, -50%)" }),
+        width: widthClamp,
+        aspectRatio: "16/9.5",
+        borderRadius: "12px",
+        overflow: "hidden",
+        boxShadow: "0 30px 80px rgba(0,0,0,0.55)",
+        zIndex: 2,
+        cursor: "grab",
+        touchAction: "none",
+      }}
+    >
+      <div
+        ref={trackRef}
+        style={{
+          position: "absolute",
+          top: 0,
+          left: 0,
+          width: "100%",
+          willChange: "transform",
+          backfaceVisibility: "hidden",
+        }}
+      >
+        <img src={stitched} alt="" draggable={false} style={{ display: "block", width: "100%", height: "auto", userSelect: "none", pointerEvents: "none" }} />
+        <img src={stitched} alt="" draggable={false} aria-hidden="true" style={{ display: "block", width: "100%", height: "auto", userSelect: "none", pointerEvents: "none" }} />
+      </div>
+    </div>
+  );
+}
+
+export function WorkCard({ project, disableAnimatedBg = false, previewSize = "default", previewAlign = "center" }: { project: typeof projects[number]; disableAnimatedBg?: boolean; previewSize?: "default" | "large"; previewAlign?: "center" | "right" }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
@@ -253,6 +487,25 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
 
     const SIZE = 64;
 
+    const tick = () => {
+      posRef.current.cx += (posRef.current.tx - posRef.current.cx) * 0.12;
+      posRef.current.cy += (posRef.current.ty - posRef.current.cy) * 0.12;
+      circle.style.transform = `translate(${posRef.current.cx - SIZE / 2}px, ${posRef.current.cy - SIZE / 2}px) scale(${circle.style.opacity === "0" ? 0.6 : 1})`;
+      // Keep ticking a few frames after leave so easing completes, then stop.
+      const dx = posRef.current.tx - posRef.current.cx;
+      const dy = posRef.current.ty - posRef.current.cy;
+      const settled = Math.abs(dx) < 0.1 && Math.abs(dy) < 0.1;
+      if (posRef.current.visible || !settled) {
+        rafRef.current = requestAnimationFrame(tick);
+      } else {
+        rafRef.current = 0;
+      }
+    };
+
+    const ensureTicking = () => {
+      if (!rafRef.current) rafRef.current = requestAnimationFrame(tick);
+    };
+
     const onEnter = (e: MouseEvent) => {
       const rect = card.getBoundingClientRect();
       posRef.current.tx = e.clientX - rect.left;
@@ -262,43 +515,39 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
       posRef.current.visible = true;
       gsap.killTweensOf(circle);
       gsap.to(circle, { opacity: 1, scale: 1, duration: 0.3, ease: "power2.out" });
+      ensureTicking();
     };
 
     const onLeave = () => {
       posRef.current.visible = false;
       gsap.to(circle, { opacity: 0, scale: 0.6, duration: 0.4, ease: "power2.in" });
+      // let tick settle naturally; it will stop itself
     };
 
     const onMove = (e: MouseEvent) => {
       const rect = card.getBoundingClientRect();
       posRef.current.tx = e.clientX - rect.left;
       posRef.current.ty = e.clientY - rect.top;
-    };
-
-    const tick = () => {
-      posRef.current.cx += (posRef.current.tx - posRef.current.cx) * 0.12;
-      posRef.current.cy += (posRef.current.ty - posRef.current.cy) * 0.12;
-      circle.style.transform = `translate(${posRef.current.cx - SIZE / 2}px, ${posRef.current.cy - SIZE / 2}px) scale(${circle.style.opacity === "0" ? 0.6 : 1})`;
-      rafRef.current = requestAnimationFrame(tick);
+      ensureTicking();
     };
 
     card.addEventListener("mouseenter", onEnter);
     card.addEventListener("mouseleave", onLeave);
     card.addEventListener("mousemove", onMove);
-    rafRef.current = requestAnimationFrame(tick);
+    // Don't start rAF here — only when the user actually hovers the card.
 
     return () => {
       card.removeEventListener("mouseenter", onEnter);
       card.removeEventListener("mouseleave", onLeave);
       card.removeEventListener("mousemove", onMove);
-      cancelAnimationFrame(rafRef.current);
+      if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
   }, []);
 
   return (
     <div
       ref={cardRef}
-      className="work-card"
+      className={`work-card${project.size === "full" ? " work-card-full" : ""}`}
       style={{
         flex: 1,
         position: "relative",
@@ -312,8 +561,8 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
         padding: "clamp(20px, 2.5vw, 32px) clamp(20px, 2.5vw, 36px)",
       }}
     >
-      {/* Animated background */}
-      <CardBackground baseColor="#0a1a3a" />
+      {/* Animated background — skip when card has its own image */}
+      {!disableAnimatedBg && !project.image && <CardBackground baseColor="#0a1a3a" />}
 
       {/* Magnetic circle cursor */}
       <div
@@ -364,62 +613,64 @@ function WorkCard({ project }: { project: typeof projects[number] }) {
         />
       )}
 
-      {/* Pill group: project name + tags */}
+      {/* Scrolling preview window */}
+      {project.scrollSlices && <ScrollingPreview slices={project.scrollSlices} size={previewSize} align={(project as any).previewAlign || previewAlign} stitchedSrc={project.title === "Gotta Tennis" ? "/images/tennis-stitched.webp" : "/images/gotta-stitched.webp"} stops={project.title === "Gotta Tennis" ? [0.0000, 0.3302, 0.5337, 0.7529] : undefined} />}
+
+      {/* Project name (left) + tags (right) */}
       <div
         style={{
           position: "absolute",
-          ...(project.size === "full"
-            ? { top: "clamp(16px, 1.8vw, 24px)", left: "clamp(16px, 1.8vw, 24px)" }
-            : { bottom: "clamp(16px, 1.8vw, 24px)", left: "clamp(16px, 1.8vw, 24px)" }),
+          bottom: "clamp(16px, 1.8vw, 28px)",
+          left: "clamp(16px, 1.8vw, 28px)",
+          right: "clamp(16px, 1.8vw, 28px)",
           display: "flex",
-          gap: "6px",
+          flexDirection: "column",
+          gap: "8px",
           zIndex: 3,
           pointerEvents: "none",
         }}
       >
+        {/* Name — bigger */}
         <span
           style={{
             display: "inline-flex",
             alignItems: "center",
-            gap: "6px",
-            padding: "6px 12px",
-            borderRadius: "6px",
-            background: "rgba(0,0,0,0.55)",
-            backdropFilter: "blur(6px)",
+            gap: "8px",
             fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "11px",
+            fontSize: "clamp(16px, 1.4vw, 22px)",
             fontWeight: 600,
             color: "#fffbf2",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            border: "1px solid rgba(255,255,255,0.1)",
+            letterSpacing: "0.02em",
           }}
         >
-          <span style={{ width: "6px", height: "6px", borderRadius: "50%", background: "#f17752" }} />
           {project.title}
         </span>
-        {project.tags.map((tag) => (
-          <span
-            key={tag}
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              padding: "6px 12px",
-              borderRadius: "6px",
-              background: "rgba(255,255,255,0.06)",
-              backdropFilter: "blur(6px)",
-              fontFamily: "'PP Neue Montreal', sans-serif",
-              fontSize: "11px",
-              fontWeight: 500,
-              color: "rgba(255,255,255,0.85)",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              border: "1px solid rgba(255,255,255,0.15)",
-            }}
-          >
-            {tag}
-          </span>
-        ))}
+
+        {/* Tags — under the title */}
+        <div style={{ display: "flex", gap: "6px" }}>
+          {project.tags.map((tag) => (
+            <span
+              key={tag}
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                padding: "6px 12px",
+                borderRadius: "6px",
+                background: "rgba(255,255,255,0.06)",
+                backdropFilter: "blur(6px)",
+                fontFamily: "'PP Neue Montreal', sans-serif",
+                fontSize: "11px",
+                fontWeight: 500,
+                color: "rgba(255,255,255,0.85)",
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                border: "1px solid rgba(255,255,255,0.15)",
+              }}
+            >
+              {tag}
+            </span>
+          ))}
+        </div>
       </div>
 
     </div>

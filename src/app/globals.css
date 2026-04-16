@@ -1,5 +1,6 @@
 @import "tailwindcss";
 
+
 :root {
   --background: #02021e;
   --foreground: #ffffff;
@@ -85,6 +86,13 @@ body {
   transform: translateY(0) !important;
 }
 
+/* Work section — taller full-width cards on smaller desktops so preview doesn't overlap text */
+@media (max-width: 1280px) {
+  .work-card-full {
+    aspect-ratio: 16/8.5 !important;
+  }
+}
+
 /* Work section — stack half-width cards on mobile */
 @media (max-width: 768px) {
   .work-row {
@@ -92,6 +100,9 @@ body {
   }
   .work-card {
     aspect-ratio: 3/2 !important;
+  }
+  .work-card-full {
+    aspect-ratio: 16/9 !important;
   }
 }
 

@@ -87,15 +87,27 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Image
-            src="/images/logo.svg"
-            alt="Anika Labs"
-            width={200}
-            height={60}
-            className="w-auto transition-all duration-500"
-            style={{ height: scrolled ? "44px" : "clamp(40px, 5vw, 60px)" }}
-            priority
-          />
+          <a
+            href="/"
+            aria-label="Anika Labs — Home"
+            onClick={(e) => {
+              if (window.location.pathname === "/" || window.location.pathname === "") {
+                e.preventDefault();
+                window.scrollTo({ top: 0, behavior: "smooth" });
+              }
+            }}
+            style={{ display: "inline-flex", alignItems: "center" }}
+          >
+            <Image
+              src="/images/logo.svg"
+              alt="Anika Labs"
+              width={200}
+              height={60}
+              className="w-auto transition-all duration-500"
+              style={{ height: scrolled ? "44px" : "clamp(40px, 5vw, 60px)" }}
+              priority
+            />
+          </a>
 
           {/* Nav links — desktop, grouped with + prefix */}
           <div className="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">

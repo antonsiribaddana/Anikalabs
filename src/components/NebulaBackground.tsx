@@ -84,6 +84,8 @@ export default function NebulaBackground() {
 
     const renderer = new THREE.WebGLRenderer({ antialias: false, alpha: true });
     const rect = el.getBoundingClientRect();
+    // Skip init if element has zero size (avoids flicker from 0x0 canvas)
+    if (rect.width < 1 || rect.height < 1) return;
     renderer.setSize(rect.width, rect.height);
     renderer.setPixelRatio(pixelScale);
     renderer.domElement.style.cssText = "position:absolute;inset:0;width:100%;height:100%;display:block;pointer-events:none;";
@@ -127,15 +129,27 @@ export default function NebulaBackground() {
     }
     raf = requestAnimationFrame(tick);
 
+    let resizeRaf = 0;
+    let lastW = rect.width;
+    let lastH = rect.height;
     function onResize() {
-      const r = el!.getBoundingClientRect();
-      renderer.setSize(r.width, r.height);
-      uniforms.iResolution.value.set(r.width * pixelScale, r.height * pixelScale, 1.0);
+      if (resizeRaf) return;
+      resizeRaf = requestAnimationFrame(() => {
+        resizeRaf = 0;
+        const r = el!.getBoundingClientRect();
+        if (r.width < 1 || r.height < 1) return;
+        if (Math.abs(r.width - lastW) < 1 && Math.abs(r.height - lastH) < 1) return;
+        lastW = r.width;
+        lastH = r.height;
+        renderer.setSize(r.width, r.height);
+        uniforms.iResolution.value.set(r.width * pixelScale, r.height * pixelScale, 1.0);
+      });
     }
     window.addEventListener("resize", onResize);
 
     return () => {
       cancelAnimationFrame(raf);
+      if (resizeRaf) cancelAnimationFrame(resizeRaf);
       window.removeEventListener("resize", onResize);
       renderer.dispose();
       mat.dispose();
