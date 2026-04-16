@@ -617,7 +617,19 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
       {/* Scrolling preview window */}
       {project.scrollSlices && <ScrollingPreview slices={project.scrollSlices} size={previewSize} align={(project as any).previewAlign || previewAlign} stitchedSrc={project.title === "Gotta Tennis" ? "/images/tennis-stitched.webp" : "/images/gotta-stitched.webp"} stops={project.title === "Gotta Tennis" ? [0.0000, 0.3302, 0.5337, 0.7529] : undefined} />}
 
-      {/* Project name (left) + tags (right) */}
+      {/* Bottom gradient overlay */}
+      <div style={{
+        position: "absolute",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: "40%",
+        background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, transparent 100%)",
+        zIndex: 2,
+        pointerEvents: "none",
+      }} />
+
+      {/* Project name + tags */}
       <div
         style={{
           position: "absolute",
