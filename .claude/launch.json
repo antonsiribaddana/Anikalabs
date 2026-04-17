@@ -3,8 +3,8 @@
   "configurations": [
     {
       "name": "anika-labs",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["serve", "out", "-l", "3000"],
       "port": 3000,
       "autoPort": true
     }

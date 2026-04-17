@@ -6,6 +6,8 @@ import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const OrganicBackground = dynamic(() => import("./OrganicBackground"), { ssr: false });
+const WebsiteGraphic = dynamic(() => import("./graphics/WebsiteGraphic"), { ssr: false });
+const WebsiteBoxPattern = dynamic(() => import("./graphics/WebsiteBoxPattern"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -197,7 +199,45 @@ export default function Services() {
                 justifyContent: "space-between",
               }}
             >
-{/* Top content — title */}
+              {/* Websites card — laptop mockup inside its own box */}
+              {i === 0 && (
+                <div
+                  className="hidden md:block"
+                  style={{
+                    position: "absolute",
+                    top: "clamp(28px, 3vw, 44px)",
+                    right: "clamp(28px, 3vw, 44px)",
+                    bottom: "clamp(28px, 3vw, 44px)",
+                    width: "clamp(520px, 54%, 840px)",
+                    background: "#e85d2f",
+                    borderRadius: "clamp(14px, 1.6vw, 22px)",
+                    overflow: "hidden",
+                    zIndex: 1,
+                    pointerEvents: "none",
+                  }}
+                >
+                  {/* Ribbon layer — behind laptop */}
+                  <WebsiteBoxPattern />
+
+                  <img
+                    src="/images/websites-laptop.png"
+                    alt=""
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "50%",
+                      transform: "translate(-52%, -38%)",
+                      width: "165%",
+                      height: "auto",
+                      maxWidth: "none",
+                      display: "block",
+                      zIndex: 2,
+                    }}
+                  />
+                </div>
+              )}
+
+              {/* Top content — title */}
               <div style={{ position: "relative", zIndex: 2 }}>
                 <h3 style={{
                   fontFamily: "'Neue Haas Grotesk', sans-serif",
