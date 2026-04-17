@@ -142,7 +142,7 @@ export default function Navbar() {
           {/* CTA — desktop */}
           <a
             ref={btnRef}
-            href="#contact"
+            href="/lets-begin"
             className="hidden lg:inline-flex items-center justify-center text-white font-medium rounded-full transition-all duration-500 relative overflow-hidden"
             style={{
               background: "#f17752",
@@ -175,7 +175,7 @@ export default function Navbar() {
                 flexShrink: 0,
                 opacity: 0.9,
               }} />
-              Book a Call
+              Let&apos;s begin
             </span>
           </a>
 
@@ -218,7 +218,7 @@ export default function Navbar() {
           </a>
         ))}
         <a
-          href="#contact"
+          href="/lets-begin"
           onClick={() => setMenuOpen(false)}
           className="inline-flex items-center justify-center text-white font-medium rounded-full mt-4"
           style={{

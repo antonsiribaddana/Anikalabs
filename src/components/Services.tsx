@@ -57,9 +57,9 @@ const services = [
   },
   {
     num: "04",
-    title: "Build",
-    desc: "We bring everything to life using the right tools for your project, building fast, scalable websites and ecommerce experiences.",
-    includes: ["Custom development and CMS", "Shopify and ecommerce", "Integrations and functionality", "Easy editing and handover"],
+    title: "Build & Growth",
+    desc: "We build and optimize websites to perform in the real world, from search visibility to conversion and long term scalability.",
+    includes: ["Custom development and CMS", "Shopify and ecommerce", "SEO and AI search readiness", "Integrations and performance"],
     bg: "#1a1a2e",
     bgDark: "#0d0d1f",
     textColor: "#ffffff",
