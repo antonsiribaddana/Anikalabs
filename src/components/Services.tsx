@@ -10,6 +10,7 @@ const WebsiteGraphic = dynamic(() => import("./graphics/WebsiteGraphic"), { ssr:
 const WebsiteBoxPattern = dynamic(() => import("./graphics/WebsiteBoxPattern"), { ssr: false });
 const BrandBoxPattern = dynamic(() => import("./graphics/BrandBoxPattern"), { ssr: false });
 const BuildCLI = dynamic(() => import("./graphics/BuildCLI"), { ssr: false });
+const SystemsFlow = dynamic(() => import("./graphics/SystemsFlow"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -201,6 +202,27 @@ export default function Services() {
                 justifyContent: "space-between",
               }}
             >
+              {/* Systems card — live flow diagram */}
+              {i === 2 && (
+                <div
+                  className="hidden md:block"
+                  style={{
+                    position: "absolute",
+                    top: "clamp(28px, 3vw, 44px)",
+                    right: "clamp(28px, 3vw, 44px)",
+                    bottom: "clamp(28px, 3vw, 44px)",
+                    width: "clamp(520px, 54%, 840px)",
+                    background: "linear-gradient(135deg, #1a8c68 0%, #0f6b4f 100%)",
+                    borderRadius: "clamp(14px, 1.6vw, 22px)",
+                    overflow: "hidden",
+                    zIndex: 1,
+                    pointerEvents: "none",
+                  }}
+                >
+                  <SystemsFlow />
+                </div>
+              )}
+
               {/* Build & Growth card — live CLI panel */}
               {i === 3 && (
                 <div
