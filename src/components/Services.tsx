@@ -8,6 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 const OrganicBackground = dynamic(() => import("./OrganicBackground"), { ssr: false });
 const WebsiteGraphic = dynamic(() => import("./graphics/WebsiteGraphic"), { ssr: false });
 const WebsiteBoxPattern = dynamic(() => import("./graphics/WebsiteBoxPattern"), { ssr: false });
+const BrandBoxPattern = dynamic(() => import("./graphics/BrandBoxPattern"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -30,7 +31,7 @@ const services = [
   {
     num: "02",
     title: "Brand",
-    desc: "We create visual identities that are clear, consistent, and built to be recognized instantly.",
+    desc: "We create visual identities that are clear, consistent, and built to be recognized instantly across digital and physical touchpoints.",
     includes: ["Brand direction and positioning", "Visual identity systems", "Typography and color", "Core brand assets"],
     bg: "#5d4bf0",
     bgDark: "#3f2fc7",
@@ -60,8 +61,8 @@ const services = [
   {
     num: "04",
     title: "Build & Growth",
-    desc: "We build and optimize websites to perform in the real world, from search visibility to conversion and long term scalability.",
-    includes: ["Custom development and CMS", "Shopify and ecommerce", "SEO and AI search readiness", "Integrations and performance"],
+    desc: "We build and optimize digital products to perform in the real world, from websites to full scale web applications.",
+    includes: ["Custom development and CMS", "Shopify and ecommerce", "Web applications and platforms", "SEO and AI search readiness"],
     bg: "#1a1a2e",
     bgDark: "#0d0d1f",
     textColor: "#ffffff",
@@ -199,6 +200,44 @@ export default function Services() {
                 justifyContent: "space-between",
               }}
             >
+              {/* Brand card — showcase image inside its own box with ripple shader bg */}
+              {i === 1 && (
+                <div
+                  className="hidden md:block"
+                  style={{
+                    position: "absolute",
+                    top: "clamp(28px, 3vw, 44px)",
+                    right: "clamp(28px, 3vw, 44px)",
+                    bottom: "clamp(28px, 3vw, 44px)",
+                    width: "clamp(520px, 54%, 840px)",
+                    background: "#5d4bf0",
+                    borderRadius: "clamp(14px, 1.6vw, 22px)",
+                    overflow: "hidden",
+                    zIndex: 1,
+                    pointerEvents: "none",
+                  }}
+                >
+                  <BrandBoxPattern />
+
+                  <img
+                    src="/images/brand-showcase.png"
+                    alt=""
+                    style={{
+                      position: "absolute",
+                      left: "50%",
+                      top: "50%",
+                      transform: "translate(-50%, -50%)",
+                      width: "88%",
+                      height: "auto",
+                      maxHeight: "90%",
+                      objectFit: "contain",
+                      display: "block",
+                      zIndex: 2,
+                    }}
+                  />
+                </div>
+              )}
+
               {/* Websites card — laptop mockup inside its own box */}
               {i === 0 && (
                 <div
