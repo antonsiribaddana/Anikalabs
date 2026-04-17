@@ -9,6 +9,7 @@ const OrganicBackground = dynamic(() => import("./OrganicBackground"), { ssr: fa
 const WebsiteGraphic = dynamic(() => import("./graphics/WebsiteGraphic"), { ssr: false });
 const WebsiteBoxPattern = dynamic(() => import("./graphics/WebsiteBoxPattern"), { ssr: false });
 const BrandBoxPattern = dynamic(() => import("./graphics/BrandBoxPattern"), { ssr: false });
+const BuildCLI = dynamic(() => import("./graphics/BuildCLI"), { ssr: false });
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -200,6 +201,27 @@ export default function Services() {
                 justifyContent: "space-between",
               }}
             >
+              {/* Build & Growth card — live CLI panel */}
+              {i === 3 && (
+                <div
+                  className="hidden md:block"
+                  style={{
+                    position: "absolute",
+                    top: "clamp(28px, 3vw, 44px)",
+                    right: "clamp(28px, 3vw, 44px)",
+                    bottom: "clamp(28px, 3vw, 44px)",
+                    width: "clamp(520px, 54%, 840px)",
+                    background: "linear-gradient(135deg, #22223a 0%, #14142a 100%)",
+                    borderRadius: "clamp(14px, 1.6vw, 22px)",
+                    overflow: "hidden",
+                    zIndex: 1,
+                    pointerEvents: "none",
+                  }}
+                >
+                  <BuildCLI />
+                </div>
+              )}
+
               {/* Brand card — showcase image inside its own box with ripple shader bg */}
               {i === 1 && (
                 <div
