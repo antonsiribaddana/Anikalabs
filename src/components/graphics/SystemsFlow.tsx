@@ -278,6 +278,55 @@ export default function SystemsFlow() {
         });
       });
 
+      // 2b) Tag border shimmer — fires in system order, one at a time, then loops
+      const tagShimmerEls = Array.from(
+        svg.querySelectorAll<SVGRectElement>("[data-tag-shimmer]")
+      );
+      const shimmerOrder = ["audience", "messaging", "structure", "pages", "actions", "outcomes"];
+      const orderedShimmers = shimmerOrder
+        .map((id) => tagShimmerEls.find((el) => el.getAttribute("data-tag-shimmer-id") === id))
+        .filter((el): el is SVGRectElement => !!el);
+
+      orderedShimmers.forEach((rect) => {
+        const len = rect.getTotalLength();
+        const lit = Math.max(40, len * 0.22);
+        rect.style.strokeDasharray = `${lit} ${len}`;
+        rect.style.strokeDashoffset = `${lit}`;
+        rect.style.opacity = "0";
+      });
+
+      const runTagShimmer = (idx: number) => {
+        const rect = orderedShimmers[idx];
+        if (!rect) return;
+        const len = rect.getTotalLength();
+        const lit = Math.max(40, len * 0.22);
+        const state = { v: lit };
+        gsap.set(rect, { opacity: 0 });
+        gsap.to(rect, { opacity: 0.95, duration: 0.18, ease: "power2.out" });
+        gsap.to(state, {
+          v: -(len + lit),
+          duration: 1.4,
+          ease: "power2.inOut",
+          onUpdate: () => {
+            rect.style.strokeDashoffset = `${state.v}`;
+          },
+          onComplete: () => {
+            gsap.to(rect, {
+              opacity: 0,
+              duration: 0.25,
+              ease: "power2.in",
+              onComplete: () => {
+                const next = (idx + 1) % orderedShimmers.length;
+                gsap.delayedCall(0.25, () => runTagShimmer(next));
+              },
+            });
+          },
+        });
+      };
+
+      // Kick off after all tags have finished revealing (last tag at 0.9 + 5*0.28 = 2.3s)
+      gsap.delayedCall(2.6, () => runTagShimmer(0));
+
       // 3) Shimmer pulses on ambient routes
       const fireShimmer = () => {
         if (shimmerMeta.length === 0) return;
@@ -429,6 +478,22 @@ export default function SystemsFlow() {
                 stroke={n.hue}
                 strokeOpacity={0.7}
                 strokeWidth={1}
+              />
+              {/* Shimmer — traces the border when this tag is "active" */}
+              <rect
+                data-tag-shimmer
+                data-tag-shimmer-id={n.id}
+                x={x + 0.5}
+                y={y + 0.5}
+                width={TAG_W - 1}
+                height={TAG_H - 1}
+                rx={rx}
+                fill="none"
+                stroke={n.glow}
+                strokeWidth={1.6}
+                strokeLinecap="round"
+                opacity={0}
+                style={{ filter: "blur(0.4px)" }}
               />
               {/* Label */}
               <text
