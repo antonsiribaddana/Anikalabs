@@ -21,6 +21,21 @@ type Result = {
 
 const results: Result[] = [
   {
+    ticker: "Product-to-Delivery System",
+    client: "TeeBrix",
+    headline: "Selling t-shirts was never the issue, it was everything required to actually run the business behind it",
+    paragraphs: [
+      "Behind the product, design, printing, store, and fulfillment were treated as separate parts. That created friction at every stage of the business.",
+      "We connected the entire flow into one system, from product setup and printing to order handling, packaging, and delivery, so nothing breaks between steps.",
+      "Now the business runs as a continuous operation, not a series of manual tasks.",
+    ],
+    cardBg: "#ffffff",
+    panelBg: "#d0d0d0",
+    accent: "#e64a4a",
+    initial: "T",
+    image: "/teebrix-mockup.png",
+  },
+  {
     ticker: "Portfolio Narrative System",
     client: "NIC Directs",
     headline: "The work was already at an Emmy-winning level, but the digital presence wasn't reflecting it with the same clarity",
@@ -42,7 +57,7 @@ const results: Result[] = [
     headline: "The goal was a simple website, but simplicity alone wasn't solving positioning or attracting the right clients",
     paragraphs: [
       "The initial goal was a clean, simple website. But simplicity alone wasn't solving positioning or how the business attracts the right clients.",
-      "We shifted the focus from pages to structure — aligning messaging, flow, and positioning into one system that supports how the business operates.",
+      "We shifted the focus from pages to structure, aligning messaging, flow, and positioning into one system that supports how the business operates.",
       "The result is a presence that works, not just one that looks good.",
     ],
     cardBg: "#ffffff",
@@ -58,7 +73,7 @@ const results: Result[] = [
     headline: "The challenge wasn't a lack of services, it was how everything was presented and connected for the user",
     paragraphs: [
       "Pools, decks, and outdoor living were presented as separate offerings with no clear path for the user. People had to piece things together themselves.",
-      "We restructured how everything connects — from brand to pages to service flow — so the full offering is understood as one system instead of isolated parts.",
+      "We restructured how everything connects, from brand to pages to service flow, so the full offering is understood as one system instead of isolated parts.",
       "This made it easier for the right clients to understand the value and move toward a decision.",
     ],
     cardBg: "#ffffff",
@@ -77,25 +92,73 @@ const results: Result[] = [
       "Users don't just visit. They understand and act.",
     ],
     cardBg: "#ffffff",
-    panelBg: "#fff4ec",
+    panelBg: "#5a5a5e",
     accent: "#e27d3a",
     initial: "C",
-  },
-  {
-    ticker: "Product-to-Delivery System",
-    client: "TeeBrix",
-    headline: "Selling t-shirts was never the issue, it was everything required to actually run the business behind it",
-    paragraphs: [
-      "Behind the product, design, printing, store, and fulfillment were treated as separate parts. That created friction at every stage of the business.",
-      "We connected the entire flow into one system, from product setup and printing to order handling, packaging, and delivery, so nothing breaks between steps.",
-      "Now the business runs as a continuous operation, not a series of manual tasks.",
-    ],
-    cardBg: "#ffffff",
-    panelBg: "#fff0f0",
-    accent: "#e64a4a",
-    initial: "T",
+    image: "/camprodest-mockup.png",
   },
 ];
+
+function ArrowButton({ direction, onClick }: { direction: "prev" | "next"; onClick: () => void }) {
+  const [hover, setHover] = useState(false);
+  return (
+    <button
+      onClick={onClick}
+      onMouseEnter={() => setHover(true)}
+      onMouseLeave={() => setHover(false)}
+      aria-label={direction === "prev" ? "Previous result" : "Next result"}
+      style={{
+        position: "relative",
+        width: "44px",
+        height: "44px",
+        borderRadius: "50%",
+        border: "none",
+        background: "transparent",
+        cursor: "pointer",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        padding: 0,
+      }}
+    >
+      {/* Static thin ring */}
+      <span
+        style={{
+          position: "absolute",
+          inset: 0,
+          borderRadius: "50%",
+          border: "1px solid rgba(10,10,10,0.18)",
+          transition: "opacity 0.3s ease",
+          opacity: hover ? 0.3 : 1,
+        }}
+      />
+      {/* Shimmer orange ring */}
+      <span
+        style={{
+          position: "absolute",
+          inset: "-1px",
+          borderRadius: "50%",
+          padding: "1.5px",
+          background: "conic-gradient(from 0deg, transparent 0deg, #f17752 80deg, transparent 160deg)",
+          WebkitMask: "linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0)",
+          WebkitMaskComposite: "xor",
+          maskComposite: "exclude",
+          opacity: hover ? 1 : 0,
+          animation: hover ? "arrowSpin 1.2s linear infinite" : "none",
+          transition: "opacity 0.3s ease",
+          pointerEvents: "none",
+        }}
+      />
+      <svg width="14" height="14" viewBox="0 0 18 18" fill="none" style={{ color: hover ? "#f17752" : "#0a0a0a", position: "relative", zIndex: 1, transition: "color 0.25s ease" }}>
+        {direction === "prev" ? (
+          <path d="M11 4L6 9L11 14" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+        ) : (
+          <path d="M7 4L12 9L7 14" stroke="currentColor" strokeWidth="1.25" strokeLinecap="round" strokeLinejoin="round"/>
+        )}
+      </svg>
+    </button>
+  );
+}
 
 export default function Results() {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -263,6 +326,7 @@ export default function Results() {
         overflow: "hidden",
       }}
     >
+      <style>{`@keyframes arrowSpin { to { transform: rotate(360deg); } }`}</style>
       {/* ─── Heading ─── */}
       <div
         ref={headingRef}
@@ -272,49 +336,36 @@ export default function Results() {
           position: "relative",
           zIndex: 1,
           display: "flex",
-          justifyContent: "space-between",
+          flexDirection: "column",
           alignItems: "center",
+          textAlign: "center",
         }}
       >
-        <div>
-          <h2 style={{
-            fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-            fontSize: "clamp(36px, 5.5vw, 88px)",
-            fontWeight: 500,
-            lineHeight: 1.05,
-            color: "#02021e",
-            margin: 0,
-          }}>
-            Where Ideas Become.
-          </h2>
-          <h2 style={{
-            fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-            fontSize: "clamp(36px, 5.5vw, 88px)",
-            fontWeight: 500,
-            lineHeight: 1.05,
-            color: "#02021e",
-            margin: 0,
-          }}>
-            Systems That Work.
-          </h2>
-        </div>
+        <h2 style={{
+          fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+          fontSize: "clamp(42px, 6vw, 88px)",
+          fontWeight: 500,
+          lineHeight: 1.02,
+          letterSpacing: "-1.5px",
+          color: "#111",
+          margin: 0,
+          whiteSpace: "nowrap",
+        }}>
+          We Build Systems That Work.
+        </h2>
 
-        {/* Tagline — aligned to bottom of heading */}
-        <div className="hidden md:flex" style={{ flexDirection: "column", alignItems: "center", maxWidth: "420px" }}>
-          <p style={{
-            fontFamily: "'Neue Haas Grotesk', sans-serif",
-            fontSize: "clamp(14px, 1.3vw, 20px)",
-            fontWeight: 400,
-            lineHeight: 1.4,
-            color: "#02021e",
-            margin: 0,
-            textAlign: "center",
-            textTransform: "uppercase",
-            letterSpacing: "0.02em",
-          }}>
-            Every Project Starts With The Same Question — What Isn&apos;t Working As A System?
-          </p>
-        </div>
+        <p style={{
+          fontFamily: "'PP Neue Montreal', sans-serif",
+          fontSize: "clamp(15px, 1.4vw, 18px)",
+          fontWeight: 400,
+          lineHeight: 1.7,
+          color: "#888",
+          margin: "clamp(20px, 2.5vw, 32px) 0 0",
+          textAlign: "center",
+          maxWidth: "640px",
+        }}>
+          Every project starts by finding what is not working and fixing it at the root.
+        </p>
       </div>
 
       {/* ─── Slider ─── */}
@@ -385,15 +436,15 @@ export default function Results() {
                         display: "flex",
                         alignItems: "center",
                         gap: "12px",
-                        marginBottom: "clamp(24px, 2.5vw, 40px)",
+                        marginBottom: "clamp(14px, 1.4vw, 20px)",
                       }}
                     >
                       <span
                         style={{
                           fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                          fontSize: "12px",
+                          fontSize: "clamp(13px, 1vw, 15px)",
                           fontWeight: 500,
-                          color: isDark ? "rgba(255,255,255,0.85)" : "rgba(26,26,26,0.75)",
+                          color: "#f17752",
                           letterSpacing: "0.14em",
                           textTransform: "uppercase",
                         }}
@@ -407,8 +458,8 @@ export default function Results() {
                       style={{
                         fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
                         fontWeight: 500,
-                        fontSize: "clamp(22px, 2.3vw, 36px)",
-                        lineHeight: 1.14,
+                        fontSize: "clamp(26px, 2.8vw, 42px)",
+                        lineHeight: 1.12,
                         letterSpacing: "-0.01em",
                         color: textMain,
                         margin: 0,
@@ -432,8 +483,8 @@ export default function Results() {
                           key={j}
                           style={{
                             fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                            fontSize: "clamp(14px, 1.2vw, 16px)",
-                            lineHeight: 1.55,
+                            fontSize: "clamp(15px, 1.4vw, 18px)",
+                            lineHeight: 1.6,
                             color: j === r.paragraphs.length - 1 ? textMain : textMuted,
                             margin: 0,
                             fontWeight: j === r.paragraphs.length - 1 ? 500 : 400,
@@ -444,47 +495,6 @@ export default function Results() {
                       ))}
                     </div>
 
-                    {/* Client chip */}
-                    <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-                      <div
-                        style={{
-                          width: 40,
-                          height: 40,
-                          borderRadius: "50%",
-                          background: r.accent,
-                          color: "#fff",
-                          display: "grid",
-                          placeItems: "center",
-                          fontFamily: "'PP Neue Montreal', sans-serif",
-                          fontWeight: 600,
-                          fontSize: "15px",
-                          flexShrink: 0,
-                        }}
-                      >
-                        {r.initial}
-                      </div>
-                      <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.2, minWidth: 0 }}>
-                        <span
-                          style={{
-                            fontFamily: "'PP Neue Montreal', sans-serif",
-                            fontSize: "14px",
-                            fontWeight: 600,
-                            color: textMain,
-                          }}
-                        >
-                          {r.client}
-                        </span>
-                        <span
-                          style={{
-                            fontFamily: "'PP Neue Montreal', sans-serif",
-                            fontSize: "12px",
-                            color: textFaint,
-                          }}
-                        >
-                          Rebuilt as a system
-                        </span>
-                      </div>
-                    </div>
                   </div>
 
                   {/* RIGHT — visual panel */}
@@ -636,25 +646,6 @@ export default function Results() {
         padding: "clamp(24px, 3vw, 40px) clamp(20px, 5vw, 80px) 0",
         gap: "clamp(16px, 2vw, 32px)",
       }}>
-        {/* Counter */}
-        <div style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "14px",
-          fontWeight: 500,
-          color: "rgba(10,10,10,0.35)",
-          minWidth: "60px",
-          display: "flex",
-          alignItems: "center",
-          gap: "4px",
-          overflow: "hidden",
-        }}>
-          <span ref={counterRef} style={{ display: "inline-block", willChange: "transform, opacity", color: "#0a0a0a" }}>
-            {String(current + 1).padStart(2, "0")}
-          </span>
-          <span>/</span>
-          <span>{String(total).padStart(2, "0")}</span>
-        </div>
-
         {/* Progress */}
         <div style={{
           flex: 1,
@@ -675,51 +666,9 @@ export default function Results() {
         </div>
 
         {/* Arrows */}
-        <div style={{ display: "flex", gap: "10px" }}>
-          <button
-            onClick={() => { prev(); resetAutoplay(); }}
-            aria-label="Previous result"
-            style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              border: "1.5px solid rgba(10,10,10,0.1)",
-              background: "#fff",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "all 0.25s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#0a0a0a"; e.currentTarget.style.borderColor = "#0a0a0a"; (e.currentTarget.querySelector("svg") as SVGElement).style.color = "#fff"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "rgba(10,10,10,0.1)"; (e.currentTarget.querySelector("svg") as SVGElement).style.color = "#0a0a0a"; }}
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ color: "#0a0a0a", transition: "color 0.25s" }}>
-              <path d="M11 4L6 9L11 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
-          <button
-            onClick={() => { next(); resetAutoplay(); }}
-            aria-label="Next result"
-            style={{
-              width: "48px",
-              height: "48px",
-              borderRadius: "50%",
-              border: "1.5px solid rgba(10,10,10,0.1)",
-              background: "#fff",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              transition: "all 0.25s",
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = "#0a0a0a"; e.currentTarget.style.borderColor = "#0a0a0a"; (e.currentTarget.querySelector("svg") as SVGElement).style.color = "#fff"; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = "#fff"; e.currentTarget.style.borderColor = "rgba(10,10,10,0.1)"; (e.currentTarget.querySelector("svg") as SVGElement).style.color = "#0a0a0a"; }}
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" style={{ color: "#0a0a0a", transition: "color 0.25s" }}>
-              <path d="M7 4L12 9L7 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-            </svg>
-          </button>
+        <div style={{ display: "flex", gap: "8px" }}>
+          <ArrowButton direction="prev" onClick={() => { prev(); resetAutoplay(); }} />
+          <ArrowButton direction="next" onClick={() => { next(); resetAutoplay(); }} />
         </div>
       </div>
 
