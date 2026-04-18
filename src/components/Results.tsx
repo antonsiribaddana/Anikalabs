@@ -15,78 +15,85 @@ type Result = {
   panelBg: string;
   accent: string;
   initial: string;
+  image?: string;
+  imagePosition?: string;
 };
 
 const results: Result[] = [
   {
+    ticker: "Portfolio Narrative System",
+    client: "NIC Directs",
+    headline: "The work was already at an Emmy-winning level, but the digital presence wasn't reflecting it with the same clarity",
+    paragraphs: [
+      "The work was already at an Emmy-winning level, but the digital presence didn't reflect it.",
+      "We removed unnecessary layers and rebuilt the structure so the work is presented with clarity and intent, without distraction.",
+      "Now the site supports the work instead of competing with it.",
+    ],
+    cardBg: "#ffffff",
+    panelBg: "#111111",
+    accent: "#f2b14a",
+    initial: "N",
+    image: "/nicdirects-monitor-4x3.png",
+    imagePosition: "center center",
+  },
+  {
+    ticker: "Client Positioning System",
+    client: "Newflow Partners",
+    headline: "The goal was a simple website, but simplicity alone wasn't solving positioning or attracting the right clients",
+    paragraphs: [
+      "The initial goal was a clean, simple website. But simplicity alone wasn't solving positioning or how the business attracts the right clients.",
+      "We shifted the focus from pages to structure — aligning messaging, flow, and positioning into one system that supports how the business operates.",
+      "The result is a presence that works, not just one that looks good.",
+    ],
+    cardBg: "#ffffff",
+    panelBg: "#1a6b45",
+    accent: "#2f8f5d",
+    initial: "N",
+    image: "/newflow-mockup.png",
+    imagePosition: "center center",
+  },
+  {
     ticker: "Client Acquisition System",
     client: "ModernXPools",
-    headline: "From separate services to one unified system",
+    headline: "The challenge wasn't a lack of services, it was how everything was presented and connected for the user",
     paragraphs: [
       "Pools, decks, and outdoor living were presented as separate offerings with no clear path for the user. People had to piece things together themselves.",
       "We restructured how everything connects — from brand to pages to service flow — so the full offering is understood as one system instead of isolated parts.",
       "This made it easier for the right clients to understand the value and move toward a decision.",
     ],
-    cardBg: "#f4ede1",
-    panelBg: "#e9f0ff",
+    cardBg: "#ffffff",
+    panelBg: "#4a4a4a",
     accent: "#3b6bd6",
     initial: "M",
+    image: "/modernxpools-mockup.png",
   },
   {
     ticker: "Creator Onboarding System",
     client: "Camprodest",
-    headline: "From platform idea to clear user flow",
+    headline: "The platform had potential, but users struggled to understand it and take action without hesitation",
     paragraphs: [
       "The platform had potential, but users were hesitating. The value wasn't immediately clear, and the path to action felt uncertain.",
       "We simplified the structure and clarified how the platform communicates. Every step now leads somewhere intentional, reducing friction across the experience.",
       "Users don't just visit. They understand and act.",
     ],
-    cardBg: "#efe8dd",
-    panelBg: "#fff1e2",
+    cardBg: "#ffffff",
+    panelBg: "#fff4ec",
     accent: "#e27d3a",
     initial: "C",
   },
   {
     ticker: "Product-to-Delivery System",
     client: "TeeBrix",
-    headline: "From selling t-shirts to running a system",
+    headline: "Selling t-shirts was never the issue, it was everything required to actually run the business behind it",
     paragraphs: [
-      "Design, printing, store, and fulfillment were treated as separate parts. That created friction at every stage of the business.",
-      "We built a complete system that covers everything — design, printing, store setup, order processing, packaging, and delivery logistics — so nothing sits disconnected.",
-      "Now the business runs as one continuous flow instead of a series of manual steps.",
+      "Behind the product, design, printing, store, and fulfillment were treated as separate parts. That created friction at every stage of the business.",
+      "We connected the entire flow into one system, from product setup and printing to order handling, packaging, and delivery, so nothing breaks between steps.",
+      "Now the business runs as a continuous operation, not a series of manual tasks.",
     ],
-    cardBg: "#f4ede1",
-    panelBg: "#ffe6e6",
+    cardBg: "#ffffff",
+    panelBg: "#fff0f0",
     accent: "#e64a4a",
     initial: "T",
-  },
-  {
-    ticker: "Client Positioning System",
-    client: "Newflow Partners",
-    headline: "From a simple site to a structured presence",
-    paragraphs: [
-      "The initial goal was a clean, simple website. But simplicity alone wasn't solving positioning or how the business attracts the right clients.",
-      "We shifted the focus from pages to structure — aligning messaging, flow, and positioning into one system that supports how the business operates.",
-      "The result is a presence that works, not just one that looks good.",
-    ],
-    cardBg: "#efe8dd",
-    panelBg: "#eaf4ee",
-    accent: "#2f8f5d",
-    initial: "N",
-  },
-  {
-    ticker: "Portfolio Narrative System",
-    client: "NIC Directs",
-    headline: "From portfolio to controlled narrative",
-    paragraphs: [
-      "The work was already at an Emmy-winning level, but the digital presence didn't reflect it.",
-      "We removed unnecessary layers and rebuilt the structure so the work is presented with clarity and intent, without distraction.",
-      "Now the site supports the work instead of competing with it.",
-    ],
-    cardBg: "#1f1f1f",
-    panelBg: "#181818",
-    accent: "#f2b14a",
-    initial: "N",
   },
 ];
 
@@ -125,8 +132,8 @@ export default function Results() {
         rotateY: offset * -4,
         z: offset === 0 ? 0 : -100,
         filter: offset === 0 ? "blur(0px)" : "blur(2px)",
-        duration: 0.8,
-        ease: "power3.inOut",
+        duration: 1.2,
+        ease: "power2.inOut",
         onComplete: i === nextIndex ? () => { isAnimatingRef.current = false; } : undefined,
       });
     });
@@ -135,8 +142,8 @@ export default function Results() {
     if (progressFillRef.current) {
       gsap.to(progressFillRef.current, {
         width: `${((nextIndex + 1) / total) * 100}%`,
-        duration: 0.8,
-        ease: "power3.inOut",
+        duration: 1.2,
+        ease: "power2.inOut",
       });
     }
 
@@ -165,16 +172,7 @@ export default function Results() {
   const next = useCallback(() => goTo(current + 1), [current, goTo]);
   const prev = useCallback(() => goTo(current - 1), [current, goTo]);
 
-  /* ─── Autoplay ─── */
-  useEffect(() => {
-    autoplayRef.current = setInterval(next, 5000);
-    return () => { if (autoplayRef.current) clearInterval(autoplayRef.current); };
-  }, [next]);
-
-  const resetAutoplay = useCallback(() => {
-    if (autoplayRef.current) clearInterval(autoplayRef.current);
-    autoplayRef.current = setInterval(next, 5000);
-  }, [next]);
+  const resetAutoplay = useCallback(() => {}, []);
 
   /* ─── Initial card positions ─── */
   useEffect(() => {
@@ -377,6 +375,7 @@ export default function Results() {
                     style={{
                       display: "flex",
                       flexDirection: "column",
+                      justifyContent: "center",
                       minWidth: 0,
                     }}
                   >
@@ -389,16 +388,6 @@ export default function Results() {
                         marginBottom: "clamp(24px, 2.5vw, 40px)",
                       }}
                     >
-                      <span
-                        style={{
-                          width: 7,
-                          height: 7,
-                          borderRadius: "50%",
-                          background: r.accent,
-                          boxShadow: `0 0 0 3px ${r.accent}26`,
-                          flexShrink: 0,
-                        }}
-                      />
                       <span
                         style={{
                           fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
@@ -435,8 +424,7 @@ export default function Results() {
                         display: "flex",
                         flexDirection: "column",
                         gap: "clamp(10px, 0.9vw, 16px)",
-                        marginBottom: "auto",
-                        paddingBottom: "clamp(24px, 2.5vw, 40px)",
+                        marginBottom: "clamp(24px, 2.5vw, 40px)",
                       }}
                     >
                       {r.paragraphs.map((p, j) => (
@@ -444,7 +432,7 @@ export default function Results() {
                           key={j}
                           style={{
                             fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                            fontSize: "clamp(13px, 1vw, 16px)",
+                            fontSize: "clamp(14px, 1.2vw, 16px)",
                             lineHeight: 1.55,
                             color: j === r.paragraphs.length - 1 ? textMain : textMuted,
                             margin: 0,
@@ -506,51 +494,68 @@ export default function Results() {
                       borderRadius: "clamp(16px, 1.4vw, 22px)",
                       background: r.panelBg,
                       overflow: "hidden",
+                      alignSelf: "center",
+                      width: "100%",
+                      aspectRatio: "4 / 3",
                     }}
                   >
-                    {/* Concentric rings system visualization */}
-                    <svg
-                      viewBox="0 0 600 600"
-                      preserveAspectRatio="xMidYMid slice"
-                      style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
-                    >
-                      {[0, 1, 2, 3, 4, 5].map((rr) => (
-                        <circle
-                          key={rr}
-                          cx="300"
-                          cy="300"
-                          r={60 + rr * 55}
-                          fill="none"
-                          stroke={isDark ? "rgba(255,255,255,0.08)" : `${r.accent}22`}
-                          strokeWidth={1}
-                        />
-                      ))}
-                      {/* Satellite edges + nodes */}
-                      {[
-                        { cx: 470, cy: 210 },
-                        { cx: 160, cy: 250 },
-                        { cx: 430, cy: 430 },
-                        { cx: 200, cy: 450 },
-                      ].map((n, k) => (
-                        <g key={k}>
-                          <line
-                            x1="300"
-                            y1="300"
-                            x2={n.cx}
-                            y2={n.cy}
-                            stroke={isDark ? "rgba(255,255,255,0.18)" : `${r.accent}55`}
+                    {/* Panel visual */}
+                    {r.image ? (
+                      <img
+                        src={r.image}
+                        alt={`${r.client} website mockup`}
+                        style={{
+                          position: "absolute",
+                          inset: 0,
+                          width: "100%",
+                          height: "100%",
+                          objectFit: "cover",
+                          objectPosition: "center center",
+                        }}
+                      />
+                    ) : (
+                      /* All other cards — concentric rings SVG */
+                      <svg
+                        viewBox="0 0 600 600"
+                        preserveAspectRatio="xMidYMid slice"
+                        style={{ position: "absolute", inset: 0, width: "100%", height: "100%" }}
+                      >
+                        {[0, 1, 2, 3, 4, 5].map((rr) => (
+                          <circle
+                            key={rr}
+                            cx="300"
+                            cy="300"
+                            r={60 + rr * 55}
+                            fill="none"
+                            stroke={isDark ? "rgba(255,255,255,0.08)" : `${r.accent}22`}
                             strokeWidth={1}
                           />
-                          <circle cx={n.cx} cy={n.cy} r={7} fill={r.accent} opacity={0.9} />
-                        </g>
-                      ))}
-                      {/* Central accent node */}
-                      <circle cx="300" cy="300" r="18" fill={r.accent} opacity="0.95" />
-                      <circle cx="300" cy="300" r="6" fill="#fff" opacity="0.95" />
-                    </svg>
+                        ))}
+                        {[
+                          { cx: 470, cy: 210 },
+                          { cx: 160, cy: 250 },
+                          { cx: 430, cy: 430 },
+                          { cx: 200, cy: 450 },
+                        ].map((n, k) => (
+                          <g key={k}>
+                            <line
+                              x1="300"
+                              y1="300"
+                              x2={n.cx}
+                              y2={n.cy}
+                              stroke={isDark ? "rgba(255,255,255,0.18)" : `${r.accent}55`}
+                              strokeWidth={1}
+                            />
+                            <circle cx={n.cx} cy={n.cy} r={7} fill={r.accent} opacity={0.9} />
+                          </g>
+                        ))}
+                        <circle cx="300" cy="300" r="18" fill={r.accent} opacity="0.95" />
+                        <circle cx="300" cy="300" r="6" fill="#fff" opacity="0.95" />
+                      </svg>
+                    )}
 
                     {/* Label chip top-left */}
-                    <div
+                    {!r.image && <div
                       style={{
                         position: "absolute",
                         top: "clamp(16px, 1.6vw, 24px)",
@@ -573,10 +578,10 @@ export default function Results() {
                     >
                       <span style={{ width: 6, height: 6, borderRadius: "50%", background: r.accent }} />
                       System
-                    </div>
+                    </div>}
 
                     {/* Bottom strip: case label + read case */}
-                    <div
+                    {!r.image && <div
                       style={{
                         position: "absolute",
                         bottom: "clamp(16px, 1.6vw, 24px)",
@@ -614,7 +619,7 @@ export default function Results() {
                       >
                         Read case →
                       </span>
-                    </div>
+                    </div>}
                   </div>
                 </div>
               </div>
