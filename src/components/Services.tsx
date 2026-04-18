@@ -142,9 +142,9 @@ export default function Services() {
         }}>
         <div style={{ flex: "1 1 500px" }}>
           <h2 style={{
-            fontFamily: "'Neue Haas Grotesk', sans-serif",
+            fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
             fontSize: "clamp(42px, 6vw, 96px)",
-            fontWeight: 200,
+            fontWeight: 500,
             color: "#fff",
             lineHeight: 1.05,
             letterSpacing: "-1px",
@@ -323,9 +323,9 @@ export default function Services() {
               {/* Top content — title */}
               <div style={{ position: "relative", zIndex: 2 }}>
                 <h3 style={{
-                  fontFamily: "'Neue Haas Grotesk', sans-serif",
+                  fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
                   fontSize: "clamp(44px, 5vw, 84px)",
-                  fontWeight: 200,
+                  fontWeight: 500,
                   color: s.textColor,
                   lineHeight: 0.95,
                   margin: 0,

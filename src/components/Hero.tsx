@@ -37,7 +37,7 @@ export default function Hero() {
           {/* Headline — true vertical center */}
           <h1
             className="text-white leading-[1.02] tracking-[-2px]"
-            style={{ fontSize: "clamp(36px, 6.5vw, 100px)", fontFamily: "'Neue Haas Grotesk', sans-serif", fontWeight: 200 }}
+            style={{ fontSize: "clamp(36px, 6.5vw, 100px)", fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif", fontWeight: 500 }}
           >
             We Build Digital
             <br />

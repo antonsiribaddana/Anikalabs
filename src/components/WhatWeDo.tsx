@@ -166,8 +166,8 @@ export default function WhatWeDo() {
                 className="text-white"
                 style={{
                   fontSize: "clamp(40px, 5vw, 80px)",
-                  fontFamily: "'Neue Haas Grotesk', sans-serif",
-                  fontWeight: 200,
+                  fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+                  fontWeight: 500,
                   letterSpacing: "0px",
                   lineHeight: 1.05,
                   marginBottom: "28px",

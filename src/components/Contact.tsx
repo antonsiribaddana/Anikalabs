@@ -17,9 +17,9 @@ export default function Contact() {
 
         {/* Heading */}
         <h2 style={{
-          fontFamily: "'Neue Haas Grotesk', sans-serif",
+          fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
           fontSize: "clamp(42px, 6vw, 88px)",
-          fontWeight: 200,
+          fontWeight: 500,
           color: "#111",
           lineHeight: 1.02,
           letterSpacing: "-1.5px",
@@ -44,9 +44,9 @@ export default function Contact() {
         {submitted ? (
           <div style={{ padding: "48px 0" }}>
             <p style={{
-              fontFamily: "'Neue Haas Grotesk', sans-serif",
+              fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
               fontSize: "clamp(28px, 4vw, 48px)",
-              fontWeight: 200,
+              fontWeight: 500,
               color: "#111",
               lineHeight: 1.1,
               marginBottom: "16px",

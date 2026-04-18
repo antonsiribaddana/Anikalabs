@@ -741,9 +741,9 @@ export default function Work() {
       <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginBottom: "clamp(36px, 5vw, 72px)", position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div>
           <h2 style={{
-            fontFamily: "'Neue Haas Grotesk', sans-serif",
+            fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
             fontSize: "clamp(36px, 5.5vw, 88px)",
-            fontWeight: 200,
+            fontWeight: 500,
             lineHeight: 1.05,
             color: "#02021e",
             margin: 0,
@@ -751,9 +751,9 @@ export default function Work() {
             Structured design.
           </h2>
           <h2 style={{
-            fontFamily: "'Neue Haas Grotesk', sans-serif",
+            fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
             fontSize: "clamp(36px, 5.5vw, 88px)",
-            fontWeight: 200,
+            fontWeight: 500,
             lineHeight: 1.05,
             color: "#02021e",
             margin: 0,
@@ -799,9 +799,9 @@ export default function Work() {
         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "clamp(24px, 3vw, 48px) 0" }}>
           <span style={{ position: "relative", display: "inline-block" }}>
             <span style={{
-              fontFamily: "'Neue Haas Grotesk', sans-serif",
+              fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
               fontSize: "clamp(52px, 9vw, 140px)",
-              fontWeight: 200,
+              fontWeight: 500,
               color: "#02021e",
               lineHeight: 1,
               letterSpacing: "-3px",
