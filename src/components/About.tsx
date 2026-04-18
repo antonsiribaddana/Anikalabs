@@ -1,10 +1,13 @@
 "use client";
 
 import { useRef, useEffect } from "react";
+import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
+
+const NebulaBackground = dynamic(() => import("./NebulaBackground"), { ssr: false });
 
 /* ─── Animated grain/mesh canvas background ─── */
 function MeshBackground() {
@@ -236,35 +239,7 @@ export default function About() {
         justifyContent: "center",
       }}
     >
-      {/* Animated mesh background */}
-      <MeshBackground />
-
-      {/* Film grain */}
-      <GrainOverlay />
-
-      {/* Radial glow accents */}
-      <div style={{
-        position: "absolute",
-        top: "-20%",
-        left: "-10%",
-        width: "60%",
-        height: "60%",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(241,119,82,0.06) 0%, transparent 70%)",
-        pointerEvents: "none",
-        zIndex: 1,
-      }} />
-      <div style={{
-        position: "absolute",
-        bottom: "-15%",
-        right: "-10%",
-        width: "50%",
-        height: "50%",
-        borderRadius: "50%",
-        background: "radial-gradient(circle, rgba(167,139,250,0.04) 0%, transparent 70%)",
-        pointerEvents: "none",
-        zIndex: 1,
-      }} />
+      <NebulaBackground />
 
       {/* Content */}
       <div style={{
@@ -272,93 +247,51 @@ export default function About() {
         zIndex: 2,
         padding: "clamp(80px, 12vw, 180px) clamp(20px, 5vw, 80px)",
       }}>
-        {/* Top labels */}
-        <div style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: "clamp(48px, 6vw, 80px)",
-        }}>
-          <span style={{
-            fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "12px",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.25)",
-            fontWeight: 500,
-          }}>
-            Sri Lanka
-          </span>
-          <span style={{
-            fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "12px",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.25)",
-            fontWeight: 500,
-          }}>
-            [ Creative Design Studio ]
-          </span>
-          <span style={{
-            fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "12px",
-            letterSpacing: "0.12em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.25)",
-            fontWeight: 500,
-          }}>
-            International
-          </span>
-        </div>
-
         {/* Giant headline */}
         <div
           ref={headingRef}
           style={{
             perspective: "800px",
-            marginBottom: "clamp(48px, 6vw, 80px)",
+            marginBottom: "clamp(20px, 2.5vw, 32px)",
           }}
         >
           <div className="about-line" style={{ overflow: "hidden" }}>
             <h2 style={{
-              fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-              fontSize: "clamp(32px, 6vw, 100px)",
-              fontWeight: 700,
-              lineHeight: 1.0,
-              color: "#f17752",
+              fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+              fontSize: "clamp(42px, 6vw, 88px)",
+              fontWeight: 500,
+              lineHeight: 1.02,
+              color: "#fff",
               margin: 0,
-              letterSpacing: "-2px",
-              textTransform: "uppercase",
+              letterSpacing: "-1.5px",
             }}>
-              We craft digital
+              The noise fades.
             </h2>
           </div>
           <div className="about-line" style={{ overflow: "hidden" }}>
             <h2 style={{
-              fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-              fontSize: "clamp(32px, 6vw, 100px)",
-              fontWeight: 700,
-              lineHeight: 1.0,
-              color: "#f17752",
+              fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+              fontSize: "clamp(42px, 6vw, 88px)",
+              fontWeight: 500,
+              lineHeight: 1.02,
+              color: "#fff",
               margin: 0,
-              letterSpacing: "-2px",
-              textTransform: "uppercase",
+              letterSpacing: "-1.5px",
             }}>
-              experiences that
+              The direction is clear.
             </h2>
           </div>
           <div className="about-line" style={{ overflow: "hidden" }}>
             <h2 style={{
-              fontFamily: "'NN Nouvelle Grotesk', sans-serif",
-              fontSize: "clamp(32px, 6vw, 100px)",
-              fontWeight: 700,
-              lineHeight: 1.0,
-              color: "#f17752",
+              fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+              fontSize: "clamp(42px, 6vw, 88px)",
+              fontWeight: 500,
+              lineHeight: 1.02,
+              color: "#fff",
               margin: 0,
-              letterSpacing: "-2px",
-              textTransform: "uppercase",
+              letterSpacing: "-1.5px",
             }}>
-              captivate &amp; convert
+              The next move is yours.
             </h2>
           </div>
         </div>
@@ -370,47 +303,36 @@ export default function About() {
             fontSize: "clamp(17px, 1.5vw, 22px)",
             lineHeight: 1.7,
             color: "rgba(255,255,255,0.45)",
-            margin: "0 0 24px",
-            fontWeight: 400,
-          }}>
-            We&apos;re a creative studio obsessed with building brands and digital products that
-            actually perform. Every pixel, every interaction, every line of code exists to serve
-            one purpose — making people stop scrolling and start paying attention.
-          </p>
-          <p style={{
-            fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "clamp(17px, 1.5vw, 22px)",
-            lineHeight: 1.7,
-            color: "rgba(255,255,255,0.45)",
             margin: 0,
             fontWeight: 400,
           }}>
-            From brand identity to full-stack development, we partner with ambitious founders
-            and forward-thinking teams who refuse to blend in.
+            Whatever stage you&apos;re at, we&apos;ll help you connect the pieces and move forward with clarity.
           </p>
-        </div>
 
-        {/* Bottom brand signature */}
-        <div style={{
-          marginTop: "clamp(64px, 8vw, 120px)",
-          display: "flex",
-          alignItems: "center",
-          gap: "16px",
-        }}>
-          <div style={{
-            width: "40px",
-            height: "1px",
-            background: "rgba(255,255,255,0.15)",
-          }} />
-          <span style={{
-            fontFamily: "'PP Neue Montreal', sans-serif",
-            fontSize: "14px",
-            color: "rgba(255,255,255,0.25)",
-            fontWeight: 500,
-            letterSpacing: "0.06em",
-          }}>
-            Anika Labs — Design &amp; Development Studio
-          </span>
+          <a
+            href="/lets-begin"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "10px",
+              marginTop: "clamp(32px, 4vw, 48px)",
+              background: "#f17752",
+              color: "#fff",
+              textDecoration: "none",
+              border: "none",
+              borderRadius: "100px",
+              padding: "16px 32px",
+              fontFamily: "'PP Neue Montreal', sans-serif",
+              fontSize: "16px",
+              fontWeight: 600,
+              letterSpacing: "-0.01em",
+              transition: "opacity 0.2s ease, transform 0.2s ease",
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.opacity = "0.9"; e.currentTarget.style.transform = "translateY(-1px)"; }}
+            onMouseLeave={(e) => { e.currentTarget.style.opacity = "1"; e.currentTarget.style.transform = "translateY(0)"; }}
+          >
+            Let&apos;s begin <span style={{ fontSize: "18px" }}>→</span>
+          </a>
         </div>
       </div>
     </section>

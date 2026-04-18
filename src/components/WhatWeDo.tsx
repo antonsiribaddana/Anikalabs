@@ -139,13 +139,13 @@ export default function WhatWeDo() {
   return (
     <div
       ref={sectionRef}
-      style={{ background: "#fffbf2", paddingTop: "0" }}
+      style={{ background: "#0a0a0a", paddingTop: "0" }}
     >
       <div
         ref={innerRef}
         data-wwd-section
         className="relative overflow-hidden"
-        style={{ background: "#02021e" }}
+        style={{ background: "#0a0a0a" }}
       >
         {/* Nebula shader background */}
         <NebulaBackground />
@@ -163,27 +163,28 @@ export default function WhatWeDo() {
             <div className="flex flex-col w-full" style={{ paddingTop: "20px" }}>
               <h2
                 ref={headingRef}
-                className="text-white"
                 style={{
-                  fontSize: "clamp(40px, 5vw, 80px)",
+                  fontSize: "clamp(42px, 6vw, 88px)",
                   fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
                   fontWeight: 500,
-                  letterSpacing: "0px",
-                  lineHeight: 1.05,
+                  letterSpacing: "-1.5px",
+                  lineHeight: 1.02,
                   marginBottom: "28px",
                   opacity: 0,
+                  color: "#fff",
                 }}
               >
                 Built with structure.<br />Refined through brand.
               </h2>
               <p
                 ref={paraRef}
-                className="text-white/75 leading-[1.6]"
+                className="leading-[1.7]"
                 style={{
-                  fontSize: "clamp(16px, 1.6vw, 22px)",
+                  fontSize: "clamp(15px, 1.4vw, 18px)",
                   fontFamily: "'PP Neue Montreal', sans-serif",
                   opacity: 0,
                   maxWidth: "700px",
+                  color: "rgba(255,255,255,0.55)",
                 }}
               >
                 We shape your ideas into something clear and intentional. Not just good looking, but something people understand, connect with, and remember. Built to guide, convert, and perform. Not something people scroll past.

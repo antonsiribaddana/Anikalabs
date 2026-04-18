@@ -17,7 +17,7 @@ export default function Footer() {
         padding: "clamp(12px, 1.5vw, 20px)",
       }}>
         <div style={{
-          background: "#f17752",
+          background: "#0d0425",
           borderRadius: "clamp(16px, 2vw, 24px)",
           padding: "clamp(48px, 6vw, 96px) clamp(36px, 5vw, 80px)",
           position: "relative",
