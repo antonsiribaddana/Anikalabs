@@ -197,11 +197,11 @@ export default function About() {
               textDecoration: "none",
               border: "none",
               borderRadius: "100px",
-              padding: "16px 32px",
+              padding: "18px 36px",
               fontFamily: "'PP Neue Montreal', sans-serif",
-              fontSize: "16px",
-              fontWeight: 600,
-              letterSpacing: "-0.01em",
+              fontSize: "18px",
+              fontWeight: 500,
+              letterSpacing: "0.4px",
               transition: "opacity 0.2s ease, transform 0.2s ease",
             }}
             onMouseEnter={(e) => {
@@ -213,7 +213,18 @@ export default function About() {
               e.currentTarget.style.transform = "translateY(0)";
             }}
           >
-            Let&apos;s begin <span style={{ fontSize: "18px" }}>→</span>
+            <span
+              style={{
+                width: "7px",
+                height: "7px",
+                borderRadius: "50%",
+                background: "#fff",
+                display: "inline-block",
+                flexShrink: 0,
+                opacity: 0.9,
+              }}
+            />
+            Let&apos;s begin
           </a>
         </div>
       </div>

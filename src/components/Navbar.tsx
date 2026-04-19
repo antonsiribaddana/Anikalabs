@@ -115,7 +115,7 @@ export default function Navbar() {
               { label: "About", href: "#about-us" },
               { label: "Services", href: "#services" },
               { label: "Work", href: "#work" },
-              { label: "Contact", href: "#contact-us" },
+              { label: "Contact", href: "/contact-us" },
             ].map((item) => (
               <a
                 key={item.label}
@@ -202,10 +202,15 @@ export default function Navbar() {
           pointerEvents: menuOpen ? "auto" : "none",
         }}
       >
-        {["Services", "Projects", "About Us", "Contact Us"].map((item) => (
+        {[
+          { label: "Services", href: "#services" },
+          { label: "Projects", href: "#projects" },
+          { label: "About Us", href: "#about-us" },
+          { label: "Contact Us", href: "/contact-us" },
+        ].map((item) => (
           <a
-            key={item}
-            href={`#${item.toLowerCase().replace(" ", "-")}`}
+            key={item.label}
+            href={item.href}
             onClick={() => setMenuOpen(false)}
             className="text-white font-medium hover:opacity-60 transition-opacity duration-200"
             style={{
@@ -214,7 +219,7 @@ export default function Navbar() {
               fontFamily: "'PP Neue Montreal', sans-serif",
             }}
           >
-            {item}
+            {item.label}
           </a>
         ))}
         <a
