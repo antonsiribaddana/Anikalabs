@@ -44,8 +44,15 @@ export default function Hero() {
 
         {/* Purple glow — top right */}
         <div
-          className="pointer-events-none absolute -right-[200px] -top-[200px] w-[900px] h-[900px] rounded-full opacity-50"
-          style={{ background: "radial-gradient(circle, rgba(90,40,200,0.6) 0%, transparent 60%)" }}
+          className="pointer-events-none absolute rounded-full"
+          style={{
+            right: "-200px",
+            top: "-200px",
+            width: "900px",
+            height: "900px",
+            opacity: 0.5,
+            background: "radial-gradient(circle, rgba(90,40,200,0.6) 0%, transparent 60%)",
+          }}
         />
 
         {/* Navbar is fixed — rendered in layout */}

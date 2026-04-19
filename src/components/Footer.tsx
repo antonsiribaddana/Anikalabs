@@ -146,6 +146,14 @@ export default function Footer() {
           <FooterCol
             label="Company"
             items={["About", "Services", "Work", "Resources", "Contact"]}
+            urls={{
+              About: "/about",
+              Services: "/services",
+              Work: "/work",
+              Resources: "/resources",
+              Contact: "/contact-us",
+            }}
+            internalRoutes
           />
           {/* Offices */}
           <div>
@@ -180,6 +188,9 @@ export default function Footer() {
             label="Follow"
             items={["Dribbble", "Behance", "LinkedIn", "Facebook"]}
             external
+            urls={{
+              Behance: "https://www.behance.net/AnikaLabs",
+            }}
           />
         </div>
 
@@ -242,24 +253,45 @@ export default function Footer() {
 }
 
 /* ─── Column helper ─── */
-function FooterCol({ label, items, external = false }: { label: string; items: string[]; external?: boolean }) {
+function FooterCol({
+  label,
+  items,
+  external = false,
+  urls = {},
+  internalRoutes = false,
+}: {
+  label: string;
+  items: string[];
+  external?: boolean;
+  urls?: Record<string, string>;
+  internalRoutes?: boolean;
+}) {
   return (
     <div>
       <p style={colLabelStyle}>{label}</p>
       <nav style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-        {items.map((item) => (
-          <a
-            key={item}
-            href={external ? "#" : `#${item.toLowerCase().replace(/\s+/g, "-")}`}
-            target={external ? "_blank" : undefined}
-            rel={external ? "noopener noreferrer" : undefined}
-            style={colLinkStyle}
-            onMouseEnter={(e) => (e.currentTarget.style.color = "#f17752")}
-            onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
-          >
-            {item}
-          </a>
-        ))}
+        {items.map((item) => {
+          const mapped = urls[item];
+          const href = mapped
+            ? mapped
+            : external
+            ? "#"
+            : `#${item.toLowerCase().replace(/\s+/g, "-")}`;
+          const isExternal = !internalRoutes && (external || (!!mapped && /^https?:/.test(mapped)));
+          return (
+            <a
+              key={item}
+              href={href}
+              target={isExternal ? "_blank" : undefined}
+              rel={isExternal ? "noopener noreferrer" : undefined}
+              style={colLinkStyle}
+              onMouseEnter={(e) => (e.currentTarget.style.color = "#f17752")}
+              onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.55)")}
+            >
+              {item}
+            </a>
+          );
+        })}
       </nav>
     </div>
   );
