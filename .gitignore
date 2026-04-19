@@ -39,3 +39,7 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# heavy media sources (kept locally, not in repo)
+public/about-bg-source.mov
+public/segments/

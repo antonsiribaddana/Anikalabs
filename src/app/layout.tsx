@@ -41,8 +41,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${manrope.variable} ${splineSansMono.variable} ${GeistSans.variable} ${inter.variable} ${ibmPlexMono.variable} h-full antialiased`}>
-      <body className="min-h-full bg-[#02021e] text-white">
+    <html lang="en" className={`${manrope.variable} ${splineSansMono.variable} ${GeistSans.variable} ${inter.variable} ${ibmPlexMono.variable} antialiased`}>
+      <body className="bg-[#02021e] text-white">
         <SmoothScroll />
         <Navbar />
         {children}
