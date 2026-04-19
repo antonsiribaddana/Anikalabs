@@ -145,43 +145,6 @@ function ServicesHero() {
         }}
       />
 
-      {/* Meta row */}
-      <div
-        data-transition-reveal
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "14px",
-          marginBottom: "clamp(28px, 3vw, 48px)",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "14px" }}>
-          <span
-            style={{
-              display: "inline-block",
-              width: "8px",
-              height: "8px",
-              borderRadius: "50%",
-              background: "#f17752",
-              boxShadow: "0 0 16px rgba(241,119,82,0.7)",
-            }}
-          />
-          <span
-            style={{
-              fontFamily: "'PP Neue Montreal', sans-serif",
-              fontSize: "13px",
-              letterSpacing: "0.14em",
-              textTransform: "uppercase",
-              color: "rgba(255,255,255,0.75)",
-            }}
-          >
-            Services — 0{services.length} Disciplines
-          </span>
-        </div>
-      </div>
 
       <div ref={headingRef} data-transition-reveal style={{ position: "relative", zIndex: 1 }}>
         <div style={{ overflow: "hidden" }}>
@@ -350,7 +313,7 @@ function ServicesBlocks() {
             borderRadius: "clamp(20px, 2.5vw, 28px)",
             overflow: "hidden",
             background: `linear-gradient(135deg, ${s.bg} 0%, ${s.bgDark} 100%)`,
-            minHeight: "clamp(460px, 58vh, 620px)",
+            minHeight: "clamp(460px, 48vh, 600px)",
             padding: "clamp(44px, 5vw, 80px) clamp(36px, 5vw, 80px)",
             display: "flex",
             flexDirection: "column",

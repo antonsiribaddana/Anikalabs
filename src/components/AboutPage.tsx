@@ -153,41 +153,6 @@ function AboutHero() {
         }}
       />
 
-      {/* Eyebrow */}
-      <div
-        data-transition-reveal
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: "14px",
-          marginBottom: "clamp(28px, 3vw, 48px)",
-          position: "relative",
-          zIndex: 1,
-        }}
-      >
-        <span
-          style={{
-            display: "inline-block",
-            width: "8px",
-            height: "8px",
-            borderRadius: "50%",
-            background: "#f17752",
-            boxShadow: "0 0 16px rgba(241,119,82,0.7)",
-          }}
-        />
-        <span
-          style={{
-            fontFamily: FONT,
-            fontSize: "13px",
-            letterSpacing: "0.14em",
-            textTransform: "uppercase",
-            color: "rgba(255,255,255,0.75)",
-          }}
-        >
-          About — Anika Labs
-        </span>
-      </div>
-
       {/* Title */}
       <div ref={headingRef} data-transition-reveal style={{ position: "relative", zIndex: 1 }}>
         <div style={{ overflow: "hidden" }}>

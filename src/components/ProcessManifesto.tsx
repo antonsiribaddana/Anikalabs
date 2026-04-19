@@ -66,7 +66,7 @@ export default function ProcessManifesto() {
       style={{
         position: "relative",
         width: "100%",
-        height: "100vh",
+        height: "min(100vh, 900px)",
         overflow: "hidden",
         // Base gradient — problem state (bone → deeper coral toward bottom)
         background:

@@ -17,7 +17,7 @@ export default function Hero() {
     <section className="relative w-full bg-[#02021e] overflow-hidden">
 
       {/* ── Hero Top: Navbar + Headline + Description ── */}
-      <div className="relative" style={{ minHeight: "100svh" }}>
+      <div className="relative" style={{ minHeight: "100svh", maxHeight: "1000px" }}>
 
         {/* Background video */}
         {showVideo ? (
@@ -52,7 +52,7 @@ export default function Hero() {
         <div className="h-[116px]" />
 
         {/* ── Hero Content ── */}
-        <div className="relative z-10 flex items-center" style={{ minHeight: "calc(100vh - 140px)", padding: "0 clamp(20px, 6vw, 112px)" }}>
+        <div className="relative z-10 flex items-center" style={{ minHeight: "calc(min(100vh, 1000px) - 140px)", padding: "0 clamp(20px, 6vw, 112px)" }}>
           {/* Headline — true vertical center */}
           <h1
             className="text-white leading-[1.02] tracking-[-2px]"

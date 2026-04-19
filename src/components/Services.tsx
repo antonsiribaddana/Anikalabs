@@ -194,7 +194,7 @@ export default function Services() {
             <div
               style={{
                 background: `linear-gradient(135deg, ${s.bg} 0%, ${s.bgDark} 100%)`,
-                minHeight: "clamp(420px, 50vh, 580px)",
+                minHeight: "clamp(420px, 42vh, 560px)",
                 padding: "clamp(44px, 5vw, 80px) clamp(36px, 5vw, 80px)",
                 position: "relative",
                 display: "flex",
