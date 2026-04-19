@@ -192,24 +192,42 @@ export default function SystemsFlow() {
     const shimmerEls = Array.from(svg.querySelectorAll<SVGPathElement>("[data-shimmer]"));
     const tagEls = Array.from(svg.querySelectorAll<SVGGElement>("[data-tag]"));
 
+    // Bail early if the SVG isn't being rendered (e.g. hidden on mobile via
+    // `hidden md:block`) — getTotalLength() throws on non-rendered elements.
+    const svgRect = svg.getBoundingClientRect();
+    if (svgRect.width === 0 || svgRect.height === 0) return;
+
+    const safeLen = (p: SVGPathElement): number | null => {
+      try {
+        return p.getTotalLength();
+      } catch {
+        return null;
+      }
+    };
+
     primaryEls.forEach((p) => {
-      const len = p.getTotalLength();
+      const len = safeLen(p);
+      if (len == null) return;
       p.style.strokeDasharray = `${len}`;
       p.style.strokeDashoffset = `${len}`;
     });
     ambientEls.forEach((p) => {
-      const len = p.getTotalLength();
+      const len = safeLen(p);
+      if (len == null) return;
       p.style.strokeDasharray = `${len}`;
       p.style.strokeDashoffset = `${len}`;
     });
-    const shimmerMeta = shimmerEls.map((p) => {
-      const len = p.getTotalLength();
-      const lit = 80;
-      p.style.strokeDasharray = `${lit} ${len}`;
-      p.style.strokeDashoffset = `${lit + len}`;
-      p.style.opacity = "0";
-      return { el: p, len, lit };
-    });
+    const shimmerMeta = shimmerEls
+      .map((p) => {
+        const len = safeLen(p);
+        if (len == null) return null;
+        const lit = 80;
+        p.style.strokeDasharray = `${lit} ${len}`;
+        p.style.strokeDashoffset = `${lit + len}`;
+        p.style.opacity = "0";
+        return { el: p, len, lit };
+      })
+      .filter((m): m is { el: SVGPathElement; len: number; lit: number } => m !== null);
 
     gsap.set(tagEls, { opacity: 0, scale: 0.9, transformOrigin: "50% 50%" });
 
@@ -288,7 +306,13 @@ export default function SystemsFlow() {
         .filter((el): el is SVGRectElement => !!el);
 
       orderedShimmers.forEach((rect) => {
-        const len = rect.getTotalLength();
+        if (!rect.isConnected) return;
+        let len: number;
+        try {
+          len = rect.getTotalLength();
+        } catch {
+          return;
+        }
         const lit = Math.max(40, len * 0.22);
         rect.style.strokeDasharray = `${lit} ${len}`;
         rect.style.strokeDashoffset = `${lit}`;
@@ -298,7 +322,22 @@ export default function SystemsFlow() {
       const runTagShimmer = (idx: number) => {
         const rect = orderedShimmers[idx];
         if (!rect) return;
-        const len = rect.getTotalLength();
+        // Guard: element may have been unmounted between scheduled calls, or
+        // the card may be hidden (display:none via Tailwind responsive class),
+        // in which case getTotalLength() throws InvalidStateError.
+        if (!rect.isConnected || !(rect as SVGGraphicsElement).getBBox) return;
+        try {
+          const bbox = rect.getBoundingClientRect();
+          if (bbox.width === 0 && bbox.height === 0) return;
+        } catch {
+          return;
+        }
+        let len: number;
+        try {
+          len = rect.getTotalLength();
+        } catch {
+          return;
+        }
         const lit = Math.max(40, len * 0.22);
         const state = { v: lit };
         gsap.set(rect, { opacity: 0 });

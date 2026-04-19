@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import Image from "next/image";
 import gsap from "gsap";
+import { TransitionLink } from "@/components/PageTransitionProvider";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -10,11 +11,19 @@ export default function Navbar() {
   const lastScrollY = useRef(0);
   const btnRef = useRef<HTMLAnchorElement>(null);
   const blobRef = useRef<HTMLSpanElement>(null);
+  const linkColor = "rgba(255,255,255,0.55)";
+  const linkColorHover = "rgba(255,255,255,0.95)";
+  const hamburgerColor = "#fff";
+  const pillBg = scrolled ? "rgba(10,10,30,0.7)" : "transparent";
+  const pillBorder = scrolled
+    ? "1px solid rgba(255,255,255,0.12)"
+    : "1px solid transparent";
 
   useEffect(() => {
     const btn = btnRef.current;
     const blob = blobRef.current;
     if (!btn || !blob) return;
+    if (window.matchMedia("(hover: none), (pointer: coarse), (prefers-reduced-motion: reduce)").matches) return;
 
     const onMove = (e: MouseEvent) => {
       const rect = btn.getBoundingClientRect();
@@ -39,14 +48,7 @@ export default function Navbar() {
   useEffect(() => {
     const onScroll = () => {
       const current = window.scrollY;
-      const atTop = current < 80;
-
-      if (atTop) {
-        setScrolled(false);
-      } else {
-        setScrolled(true);
-      }
-
+      setScrolled(current >= 80);
       lastScrollY.current = current;
     };
 
@@ -79,23 +81,17 @@ export default function Navbar() {
             margin: scrolled ? "16px auto 0" : "0",
             padding: scrolled ? "12px 24px" : "28px clamp(20px, 6vw, 112px)",
             borderRadius: scrolled ? "999px" : "0px",
-            background: scrolled ? "rgba(10,10,30,0.55)" : "transparent",
+            background: pillBg,
             backdropFilter: scrolled ? "blur(20px)" : "none",
             WebkitBackdropFilter: scrolled ? "blur(20px)" : "none",
-            border: scrolled ? "1px solid rgba(255,255,255,0.12)" : "1px solid transparent",
+            border: pillBorder,
             boxShadow: scrolled ? "0 8px 32px rgba(0,0,0,0.3)" : "none",
           }}
         >
           {/* Logo */}
-          <a
+          <TransitionLink
             href="/"
             aria-label="Anika Labs — Home"
-            onClick={(e) => {
-              if (window.location.pathname === "/" || window.location.pathname === "") {
-                e.preventDefault();
-                window.scrollTo({ top: 0, behavior: "smooth" });
-              }
-            }}
             style={{ display: "inline-flex", alignItems: "center" }}
           >
             <Image
@@ -104,20 +100,22 @@ export default function Navbar() {
               width={200}
               height={60}
               className="w-auto transition-all duration-500"
-              style={{ height: scrolled ? "44px" : "clamp(40px, 5vw, 60px)" }}
+              style={{
+                height: scrolled ? "44px" : "clamp(40px, 5vw, 60px)",
+              }}
               priority
             />
-          </a>
+          </TransitionLink>
 
           {/* Nav links — desktop, grouped with + prefix */}
           <div className="hidden lg:flex items-center gap-12 absolute left-1/2 -translate-x-1/2">
             {[
-              { label: "About", href: "#about-us" },
-              { label: "Services", href: "#services" },
-              { label: "Work", href: "#work" },
+              { label: "About", href: "/about" },
+              { label: "Services", href: "/services" },
+              { label: "Work", href: "/work" },
               { label: "Contact", href: "/contact-us" },
             ].map((item) => (
-              <a
+              <TransitionLink
                 key={item.label}
                 href={item.href}
                 className="group flex items-center gap-[6px] hover:opacity-100 transition-opacity duration-200"
@@ -126,21 +124,23 @@ export default function Navbar() {
                   letterSpacing: "0.12em",
                   fontFamily: "'PP Neue Montreal', sans-serif",
                   fontWeight: 500,
-                  color: "rgba(255,255,255,0.5)",
+                  color: linkColor,
                   textTransform: "uppercase",
                   opacity: 1,
+                  textDecoration: "none",
+                  transition: "color 0.25s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.9)")}
-                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.5)")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = linkColorHover)}
+                onMouseLeave={(e) => (e.currentTarget.style.color = linkColor)}
               >
                 <span style={{ color: "#f17752", fontSize: "16px", lineHeight: 1, marginTop: "-1px" }}>+</span>
                 {item.label}
-              </a>
+              </TransitionLink>
             ))}
           </div>
 
           {/* CTA — desktop */}
-          <a
+          <TransitionLink
             ref={btnRef}
             href="/lets-begin"
             className="hidden lg:inline-flex items-center justify-center text-white font-medium rounded-full transition-all duration-500 relative overflow-hidden"
@@ -150,6 +150,7 @@ export default function Navbar() {
               padding: scrolled ? "10px 24px" : "16px 36px",
               letterSpacing: "0.4px",
               fontFamily: "'PP Neue Montreal', sans-serif",
+              textDecoration: "none",
             }}
           >
             <span
@@ -177,7 +178,7 @@ export default function Navbar() {
               }} />
               Let&apos;s begin
             </span>
-          </a>
+          </TransitionLink>
 
           {/* Hamburger — mobile */}
           <button
@@ -185,9 +186,9 @@ export default function Navbar() {
             onClick={() => setMenuOpen(!menuOpen)}
             aria-label="Toggle menu"
           >
-            <span className="block w-6 h-[2px] bg-white transition-all duration-300" style={{ transform: menuOpen ? "translateY(4px) rotate(45deg)" : "none" }} />
-            <span className="block w-6 h-[2px] bg-white transition-all duration-300" style={{ opacity: menuOpen ? 0 : 1 }} />
-            <span className="block w-6 h-[2px] bg-white transition-all duration-300" style={{ transform: menuOpen ? "translateY(-4px) rotate(-45deg)" : "none" }} />
+            <span className="block w-6 h-[2px] transition-all duration-300" style={{ background: hamburgerColor, transform: menuOpen ? "translateY(4px) rotate(45deg)" : "none" }} />
+            <span className="block w-6 h-[2px] transition-all duration-300" style={{ background: hamburgerColor, opacity: menuOpen ? 0 : 1 }} />
+            <span className="block w-6 h-[2px] transition-all duration-300" style={{ background: hamburgerColor, transform: menuOpen ? "translateY(-4px) rotate(-45deg)" : "none" }} />
           </button>
         </nav>
       </div>
@@ -203,12 +204,12 @@ export default function Navbar() {
         }}
       >
         {[
-          { label: "Services", href: "#services" },
-          { label: "Projects", href: "#projects" },
-          { label: "About Us", href: "#about-us" },
+          { label: "Services", href: "/services" },
+          { label: "Work", href: "/work" },
+          { label: "About", href: "/about" },
           { label: "Contact Us", href: "/contact-us" },
         ].map((item) => (
-          <a
+          <TransitionLink
             key={item.label}
             href={item.href}
             onClick={() => setMenuOpen(false)}
@@ -217,12 +218,13 @@ export default function Navbar() {
               fontSize: "28px",
               letterSpacing: "0.4px",
               fontFamily: "'PP Neue Montreal', sans-serif",
+              textDecoration: "none",
             }}
           >
             {item.label}
-          </a>
+          </TransitionLink>
         ))}
-        <a
+        <TransitionLink
           href="/lets-begin"
           onClick={() => setMenuOpen(false)}
           className="inline-flex items-center justify-center text-white font-medium rounded-full mt-4"
@@ -231,10 +233,11 @@ export default function Navbar() {
             fontSize: "20px",
             padding: "16px 40px",
             fontFamily: "'PP Neue Montreal', sans-serif",
+            textDecoration: "none",
           }}
         >
           Book a Call
-        </a>
+        </TransitionLink>
       </div>
     </>
   );

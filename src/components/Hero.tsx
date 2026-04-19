@@ -1,8 +1,18 @@
 "use client";
 
-import Image from "next/image";
+import { useEffect, useState } from "react";
 
 export default function Hero() {
+  const [showVideo, setShowVideo] = useState(false);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const ok =
+      window.matchMedia("(min-width: 768px)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    setShowVideo(ok);
+  }, []);
+
   return (
     <section className="relative w-full bg-[#02021e] overflow-hidden">
 
@@ -10,15 +20,24 @@ export default function Hero() {
       <div className="relative" style={{ minHeight: "100svh" }}>
 
         {/* Background video */}
-        <video
-          autoPlay
-          muted
-          loop
-          playsInline
-          className="absolute inset-0 w-full h-full object-cover scale-x-[-1]"
-        >
-          <source src="/images/hero-bg.mp4" type="video/mp4" />
-        </video>
+        {showVideo ? (
+          <video
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            poster="/images/hero-bg.png"
+            className="absolute inset-0 h-full w-full object-cover scale-x-[-1]"
+          >
+            <source src="/images/hero-bg.mp4" type="video/mp4" />
+          </video>
+        ) : (
+          <div
+            className="absolute inset-0 bg-cover bg-center"
+            style={{ backgroundImage: "url('/images/hero-bg.png')", transform: "scaleX(-1)" }}
+          />
+        )}
 
         {/* Dark overlay on video */}
         <div className="absolute inset-0 bg-[#02021e]/60" />

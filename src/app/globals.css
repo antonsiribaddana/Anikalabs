@@ -9,6 +9,10 @@
 body {
   background: var(--background);
   color: var(--foreground);
+  /* Prevent stray horizontal scrollbars from off-screen transforms (page
+     transition tiles, marquees) without clipping the html element — html
+     overflow: clip breaks position:fixed containing block and kills perf. */
+  overflow-x: hidden;
 }
 
 @font-face {

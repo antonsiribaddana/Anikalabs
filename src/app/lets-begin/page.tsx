@@ -1,4 +1,5 @@
 import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Let's Begin — Anika Labs",
@@ -7,8 +8,9 @@ export const metadata = {
 
 export default function LetsBegin() {
   return (
-    <main style={{ background: "#fff", minHeight: "100vh" }}>
+    <main style={{ background: "#02021e", minHeight: "100vh" }}>
       <Contact />
+      <Footer />
     </main>
   );
 }

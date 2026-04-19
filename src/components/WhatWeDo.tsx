@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import dynamic from "next/dynamic";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,19 +9,31 @@ gsap.registerPlugin(ScrollTrigger);
 const NebulaBackground = dynamic(() => import("./NebulaBackground"), { ssr: false });
 const FractalSingularity = dynamic(() => import("./FractalSingularity"), { ssr: false });
 
-const BLIND_COUNT = 20;
-
 export default function WhatWeDo() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const innerRef = useRef<HTMLDivElement>(null);
   const headingRef = useRef<HTMLHeadingElement>(null);
   const paraRef = useRef<HTMLParagraphElement>(null);
   const cardsRef = useRef<HTMLDivElement>(null);
-  const blindsRef = useRef<HTMLDivElement>(null);
   const tracerRef = useRef<HTMLDivElement>(null);
+  // Initialize false on both SSR and client so the first render matches; flip
+  // to true after mount if the viewport/preferences allow. Prevents hydration
+  // mismatch on the conditionally-rendered NebulaBackground / FractalSingularity.
+  const [shouldEnhance, setShouldEnhance] = useState(false);
+
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(min-width: 1024px) and (prefers-reduced-motion: no-preference)").matches
+    ) {
+      setShouldEnhance(true);
+    }
+  }, []);
 
   // Grid line tracer — dot travels along separator lines
   useEffect(() => {
+    if (!shouldEnhance) return;
+
     const tracer = tracerRef.current as HTMLElement | null;
     const cards = cardsRef.current;
     if (!tracer || !cards) return;
@@ -56,12 +68,14 @@ export default function WhatWeDo() {
       if (tl) tl.kill();
       window.removeEventListener("resize", build);
     };
-  }, []);
+  }, [shouldEnhance]);
 
 
   // CSS div blind strip entry animation — disabled
 
   useEffect(() => {
+    if (!shouldEnhance) return;
+
     const section = sectionRef.current;
     const heading = headingRef.current;
     const para = paraRef.current;
@@ -134,7 +148,7 @@ export default function WhatWeDo() {
     });
 
     return () => ctx.revert();
-  }, []);
+  }, [shouldEnhance]);
 
   return (
     <div
@@ -148,10 +162,10 @@ export default function WhatWeDo() {
         style={{ background: "#0a0a0a" }}
       >
         {/* Nebula shader background */}
-        <NebulaBackground />
+        {shouldEnhance && <NebulaBackground />}
 
         {/* Fractal singularity — right side */}
-        <FractalSingularity />
+        {shouldEnhance && <FractalSingularity />}
 
 
         {/* Content */}

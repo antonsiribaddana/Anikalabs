@@ -1,7 +1,18 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import gsap from "gsap";
+
+type Project = {
+  title: string;
+  tags: string[];
+  color: string;
+  size: "full" | "half";
+  image?: string;
+  scrollSlices?: string[];
+  previewAlign?: "center" | "right";
+  leftGraphic?: string;
+};
 
 function OrganicBlob() {
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -16,8 +27,9 @@ function OrganicBlob() {
     let t = 0;
 
     const resize = () => {
-      canvas.width = canvas.offsetWidth * window.devicePixelRatio;
-      canvas.height = canvas.offsetHeight * window.devicePixelRatio;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
+      canvas.width = canvas.offsetWidth * dpr;
+      canvas.height = canvas.offsetHeight * dpr;
     };
     resize();
     window.addEventListener("resize", resize);
@@ -104,7 +116,7 @@ function OrganicBlob() {
   );
 }
 
-export const projects = [
+export const projects: Project[] = [
   {
     title: "SEC Recruiting Agency",
     tags: ["Design", "Development", "SEO Services"],
@@ -199,7 +211,7 @@ function CardBackground({ baseColor }: { baseColor: string }) {
     let visible = false;
 
     const resize = () => {
-      const dpr = window.devicePixelRatio || 1;
+      const dpr = Math.min(window.devicePixelRatio || 1, 1.5);
       const w = Math.max(1, canvas.offsetWidth);
       const h = Math.max(1, canvas.offsetHeight);
       canvas.width = w * dpr;
@@ -279,7 +291,7 @@ function CardBackground({ baseColor }: { baseColor: string }) {
   );
 }
 
-function ScrollingPreview({ slices: _slices, size = "default", align = "center", stitchedSrc, stops: customStops }: { slices: string[]; size?: "default" | "large"; align?: "center" | "right"; stitchedSrc?: string; stops?: number[] }) {
+function ScrollingPreview({ align = "center", stitchedSrc, stops: customStops }: { slices: string[]; align?: "center" | "right"; stitchedSrc?: string; stops?: number[] }) {
   const stitched = stitchedSrc || "/images/gotta-stitched.webp";
   const trackRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
@@ -437,7 +449,7 @@ function ScrollingPreview({ slices: _slices, size = "default", align = "center",
       container.removeEventListener("pointercancel", onPointerUp);
       gsap.killTweensOf(track);
     };
-  }, []);
+  }, [customStops]);
 
   const widthClamp = "min(66%, 920px)";
 
@@ -478,13 +490,29 @@ function ScrollingPreview({ slices: _slices, size = "default", align = "center",
   );
 }
 
-export function WorkCard({ project, disableAnimatedBg = false, previewSize = "default", previewAlign = "center" }: { project: typeof projects[number]; disableAnimatedBg?: boolean; previewSize?: "default" | "large"; previewAlign?: "center" | "right" }) {
+export function WorkCard({ project, disableAnimatedBg = false, previewAlign = "center" }: { project: Project; disableAnimatedBg?: boolean; previewAlign?: "center" | "right" }) {
   const cardRef = useRef<HTMLDivElement>(null);
   const circleRef = useRef<HTMLDivElement>(null);
   const rafRef = useRef<number>(0);
   const posRef = useRef({ cx: 0, cy: 0, tx: 0, ty: 0, visible: false });
+  // Start both false on SSR+client, flip after mount — prevents hydration
+  // mismatch on conditional children (cursor circle, ScrollingPreview).
+  const [enableHoverFx, setEnableHoverFx] = useState(false);
+  const [showInteractivePreview, setShowInteractivePreview] = useState(false);
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (!reduced && window.matchMedia("(hover: hover) and (pointer: fine)").matches) {
+      setEnableHoverFx(true);
+    }
+    if (!reduced && window.matchMedia("(min-width: 768px)").matches) {
+      setShowInteractivePreview(true);
+    }
+  }, []);
 
   useEffect(() => {
+    if (!enableHoverFx) return;
+
     const card = cardRef.current;
     const circle = circleRef.current;
     if (!card || !circle) return;
@@ -546,7 +574,7 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
       card.removeEventListener("mousemove", onMove);
       if (rafRef.current) cancelAnimationFrame(rafRef.current);
     };
-  }, []);
+  }, [enableHoverFx]);
 
   return (
     <div
@@ -556,7 +584,7 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
         flex: 1,
         position: "relative",
         overflow: "hidden",
-        cursor: "none",
+        cursor: enableHoverFx ? "none" : "default",
         borderRadius: "12px",
         background: project.color,
         aspectRatio: project.size === "full" ? "16/7" : "4/3",
@@ -569,36 +597,38 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
       {!disableAnimatedBg && !project.image && <CardBackground baseColor="#0a1a3a" />}
 
       {/* Magnetic circle cursor */}
-      <div
-        ref={circleRef}
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "64px",
-          height: "64px",
-          borderRadius: "50%",
-          background: "rgba(2,2,30,0.9)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          pointerEvents: "none",
-          opacity: 0,
-          zIndex: 10,
-          willChange: "transform",
-        }}
-      >
-        <span style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "11px",
-          fontWeight: 500,
-          color: "#fff",
-          letterSpacing: "0.06em",
-          userSelect: "none",
-        }}>
-          View
-        </span>
-      </div>
+      {enableHoverFx && (
+        <div
+          ref={circleRef}
+          style={{
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "64px",
+            height: "64px",
+            borderRadius: "50%",
+            background: "rgba(2,2,30,0.9)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            pointerEvents: "none",
+            opacity: 0,
+            zIndex: 10,
+            willChange: "transform",
+          }}
+        >
+          <span style={{
+            fontFamily: "'PP Neue Montreal', sans-serif",
+            fontSize: "11px",
+            fontWeight: 500,
+            color: "#fff",
+            letterSpacing: "0.06em",
+            userSelect: "none",
+          }}>
+            View
+          </span>
+        </div>
+      )}
 
       {/* Project image */}
       {project.image && (
@@ -618,9 +648,9 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
       )}
 
       {/* Left-side graphic (e.g. Gotta Tennis characters) */}
-      {(project as any).leftGraphic && (
+      {project.leftGraphic && (
         <img
-          src={(project as any).leftGraphic}
+          src={project.leftGraphic}
           alt=""
           style={{
             position: "absolute",
@@ -643,7 +673,7 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
       )}
 
       {/* Scrolling preview window */}
-      {project.scrollSlices && <ScrollingPreview slices={project.scrollSlices} size={previewSize} align={(project as any).previewAlign || previewAlign} stitchedSrc={project.title === "PopUp Sports" ? "/images/tennis-stitched.webp" : "/images/gotta-stitched.webp"} stops={project.title === "PopUp Sports" ? [0.0000, 0.3302, 0.5337, 0.7529] : undefined} />}
+      {project.scrollSlices && showInteractivePreview && <ScrollingPreview slices={project.scrollSlices} align={project.previewAlign || previewAlign} stitchedSrc={project.title === "PopUp Sports" ? "/images/tennis-stitched.webp" : "/images/gotta-stitched.webp"} stops={project.title === "PopUp Sports" ? [0.0000, 0.3302, 0.5337, 0.7529] : undefined} />}
 
       {/* Bottom gradient overlay */}
       <div style={{
@@ -719,6 +749,19 @@ export function WorkCard({ project, disableAnimatedBg = false, previewSize = "de
 }
 
 export default function Work() {
+  // Initialize false on both SSR and client so first render matches; flip on
+  // after mount. Prevents hydration mismatch on the conditional <OrganicBlob />.
+  const [showOrganicBlob, setShowOrganicBlob] = useState(false);
+  useEffect(() => {
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(min-width: 1024px)").matches &&
+      !window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setShowOrganicBlob(true);
+    }
+  }, []);
+
   const rows: typeof projects[number][][] = [];
   let i = 0;
   while (i < projects.length) {
@@ -735,7 +778,7 @@ export default function Work() {
     <section style={{ background: "#fffbf2", padding: "clamp(60px, 8vw, 120px) 0 clamp(80px, 10vw, 160px)", position: "relative", overflow: "hidden" }}>
 
       {/* Organic blob — top right */}
-      <OrganicBlob />
+      {showOrganicBlob && <OrganicBlob />}
 
       {/* Heading + tagline */}
       <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginBottom: "clamp(36px, 5vw, 72px)", position: "relative", zIndex: 1, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
@@ -796,7 +839,7 @@ export default function Work() {
         {/* Top fat line */}
         <div style={{ height: "2px", background: "#02021e", borderRadius: "1px" }} />
 
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", padding: "clamp(24px, 3vw, 48px) 0" }}>
+        <div className="flex flex-col items-start gap-6 md:flex-row md:items-center md:justify-between" style={{ padding: "clamp(24px, 3vw, 48px) 0" }}>
           <span style={{ position: "relative", display: "inline-block" }}>
             <span style={{
               fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",

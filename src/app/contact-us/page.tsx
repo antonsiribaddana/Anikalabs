@@ -1,4 +1,5 @@
 import ContactUs from "@/components/ContactUs";
+import Footer from "@/components/Footer";
 
 export const metadata = {
   title: "Contact Us — Anika Labs",
@@ -7,8 +8,9 @@ export const metadata = {
 
 export default function ContactUsPage() {
   return (
-    <main style={{ background: "#fff", minHeight: "100vh" }}>
+    <main style={{ background: "#02021e", minHeight: "100vh" }}>
       <ContactUs />
+      <Footer />
     </main>
   );
 }

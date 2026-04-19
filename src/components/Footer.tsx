@@ -59,11 +59,38 @@ export default function Footer() {
   }, []);
 
   return (
-    <footer style={{ background: "#040012" }}>
+    <footer style={{
+      background: "linear-gradient(180deg, #06031a 0%, #080425 20%, #0d0638 42%, #160b52 62%, #1f1070 78%, #2e1a96 90%, #3d22b8 100%)",
+      position: "relative",
+      overflow: "hidden",
+    }}>
+      {/* Glow — bottom center, rising purple bloom */}
+      <div aria-hidden style={{
+        position: "absolute", bottom: "-200px", left: "50%", transform: "translateX(-50%)",
+        width: "1200px", height: "700px", borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(120,60,255,0.32) 0%, rgba(80,30,200,0.18) 40%, transparent 70%)",
+        pointerEvents: "none",
+      }} />
+      {/* Glow — bottom left accent */}
+      <div aria-hidden style={{
+        position: "absolute", bottom: "-100px", left: "-150px",
+        width: "600px", height: "600px", borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(241,119,82,0.12) 0%, transparent 65%)",
+        pointerEvents: "none",
+      }} />
+      {/* Glow — bottom right accent */}
+      <div aria-hidden style={{
+        position: "absolute", bottom: "-100px", right: "-150px",
+        width: "600px", height: "600px", borderRadius: "50%",
+        background: "radial-gradient(circle, rgba(100,50,255,0.18) 0%, transparent 65%)",
+        pointerEvents: "none",
+      }} />
       {/* ── Dark footer body ── */}
       <div
         style={{
-          padding: "clamp(32px, 3.5vw, 56px) clamp(20px, 5vw, 80px) clamp(28px, 3vw, 44px)",
+          position: "relative",
+          zIndex: 1,
+          padding: "clamp(32px, 3.5vw, 56px) clamp(20px, 6vw, 112px) clamp(28px, 3vw, 44px)",
           color: "#fff",
         }}
       >
@@ -73,7 +100,7 @@ export default function Footer() {
             position: "relative",
             width: "100%",
             height: "1px",
-            background: "rgba(255,255,255,0.05)",
+            background: "rgba(255,255,255,0.06)",
             margin: "0 0 clamp(40px, 5vw, 72px)",
             overflow: "hidden",
           }}

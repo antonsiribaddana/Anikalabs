@@ -14,11 +14,11 @@ export default function Home() {
       <Hero />
       <HorizontalCards />
       <WhatWeDo />
-      <Work />
-      <Services />
+      <section id="work"><Work /></section>
+      <section id="services"><Services /></section>
       <ProcessManifesto />
       <Results />
-      <About />
+      <section id="about-us"><About /></section>
       <Footer />
     </main>
   );

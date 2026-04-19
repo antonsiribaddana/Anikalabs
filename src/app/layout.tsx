@@ -4,6 +4,7 @@ import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
+import PageTransitionProvider from "@/components/PageTransitionProvider";
 
 const manrope = Manrope({
   variable: "--font-manrope",
@@ -44,8 +45,10 @@ export default function RootLayout({
     <html lang="en" className={`${manrope.variable} ${splineSansMono.variable} ${GeistSans.variable} ${inter.variable} ${ibmPlexMono.variable} antialiased`}>
       <body className="bg-[#02021e] text-white">
         <SmoothScroll />
-        <Navbar />
-        {children}
+        <PageTransitionProvider>
+          <Navbar />
+          {children}
+        </PageTransitionProvider>
       </body>
     </html>
   );

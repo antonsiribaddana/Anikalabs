@@ -1,16 +1,6 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
-
-gsap.registerPlugin(ScrollTrigger);
-
-const Plus = ({ size = 14 }: { size?: number }) => (
-  <svg width={size} height={size} viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M7 1V13M1 7H13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
-  </svg>
-);
+import { useState } from "react";
 
 const PROJECT_TYPES = [
   "Full System Build",
@@ -19,6 +9,7 @@ const PROJECT_TYPES = [
   "E-commerce System",
   "Web Application",
   "Automation & AI",
+  "Design & Creative",
   "Ongoing Growth",
   "Not sure yet",
 ];
@@ -28,715 +19,645 @@ const BUDGETS = [
   "$5,000–$10,000",
   "$10,000–$20,000",
   "Above $20,000",
+  "Not sure yet",
 ];
 
-const TIMELINES = [
-  "ASAP",
-  "1–2 months",
-  "3–6 months",
-  "Flexible",
-];
-
-const FAQS = [
-  {
-    q: "How soon will I hear back?",
-    a: "Within one business day. We review every inquiry personally and reply with honest next steps — even if we're not the right fit.",
-  },
-  {
-    q: "What does a typical engagement look like?",
-    a: "Most projects run 4–10 weeks. We scope tightly around outcomes, not deliverables, and ship in weekly increments so you see progress constantly.",
-  },
-  {
-    q: "Do you work with startups?",
-    a: "Yes — early-stage teams are where we do some of our best work. We tailor scope and pricing to the stage you're at.",
-  },
-  {
-    q: "Can you partner long-term?",
-    a: "Absolutely. Our Creative Partnership™ model is designed for ongoing collaboration — one monthly rate, one team, everything you need to keep moving.",
-  },
-  {
-    q: "Where is Anika Labs based?",
-    a: "Headquartered in Colombo, Sri Lanka. We work remotely with clients across Europe, North America and Asia.",
-  },
-  {
-    q: "What do you need from me to get started?",
-    a: "A rough sense of what you're trying to build or change, who it's for, and any constraints (deadlines, existing systems). We take it from there.",
-  },
-];
+const TIMELINES = ["ASAP", "1–3 months", "Flexible"];
 
 export default function ContactUs() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const [projectType, setProjectType] = useState("");
+  const [projectTypes, setProjectTypes] = useState<string[]>([]);
   const [budget, setBudget] = useState("");
   const [timeline, setTimeline] = useState("");
   const [submitted, setSubmitted] = useState(false);
-  const [openFaq, setOpenFaq] = useState<number | null>(null);
+
+  // Field values + touched state for silent inline validation
+  const [name, setName] = useState("");
+  const [nameTouched, setNameTouched] = useState(false);
+  const [email, setEmail] = useState("");
+  const [emailTouched, setEmailTouched] = useState(false);
+  const [company, setCompany] = useState("");
+  const [phone, setPhone] = useState("");
+  const [message, setMessage] = useState("");
+
+  const emailValid = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    setNameTouched(true);
+    setEmailTouched(true);
+    if (!name.trim() || !emailValid) return;
     setSubmitted(true);
   };
 
   return (
     <section
-      id="contact-us"
-      ref={sectionRef}
       style={{
         position: "relative",
-        background: "linear-gradient(180deg, #0C042A 0%, #110837 30%, #1a1040 55%, #f5f1ea 100%)",
+        background:
+          "linear-gradient(180deg, #02021e 0%, #0a0532 20%, #140a4a 40%, #1f1066 58%, #2d167f 72%, #3a1d95 85%, #4423a8 100%)",
         color: "#fff",
         minHeight: "100vh",
-        overflow: "hidden",
+        overflowX: "clip",
       }}
     >
-      {/* Large low-contrast background word */}
-      <div
-        aria-hidden
-        style={{
-          position: "absolute",
-          top: "clamp(60px, 8vw, 120px)",
-          left: 0,
-          right: 0,
-          display: "flex",
-          justifyContent: "center",
-          pointerEvents: "none",
-          zIndex: 0,
-          overflow: "hidden",
-        }}
-      >
-        <span
-          style={{
-            fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-            fontSize: "clamp(120px, 20vw, 280px)",
-            fontWeight: 500,
-            letterSpacing: "-0.04em",
-            color: "transparent",
-            WebkitTextStroke: "1px rgba(255,255,255,0.06)",
-            whiteSpace: "nowrap",
-            userSelect: "none",
-            lineHeight: 1,
-          }}
-        >
-          CONTACT
-        </span>
-      </div>
+      {/* Ambient — top right */}
+      <div aria-hidden style={{ position:"absolute", top:"-200px", right:"-200px", width:"900px", height:"900px", borderRadius:"50%", background:"radial-gradient(circle, rgba(90,40,200,0.3) 0%, transparent 65%)", pointerEvents:"none", zIndex:0 }} />
+      {/* Ambient — bottom left */}
+      <div aria-hidden style={{ position:"absolute", bottom:"-400px", left:"-400px", width:"1000px", height:"1000px", borderRadius:"50%", background:"radial-gradient(circle, rgba(241,119,82,0.14) 0%, transparent 60%)", pointerEvents:"none", zIndex:0 }} />
+      {/* Ambient — bottom right */}
+      <div aria-hidden style={{ position:"absolute", bottom:"-250px", right:"-150px", width:"800px", height:"800px", borderRadius:"50%", background:"radial-gradient(circle, rgba(140,80,255,0.22) 0%, transparent 65%)", pointerEvents:"none", zIndex:0 }} />
 
-      {/* Content */}
       <div
         style={{
           position: "relative",
-          zIndex: 2,
+          width: "100%",
           padding: "clamp(140px, 14vw, 200px) clamp(20px, 6vw, 112px) clamp(80px, 10vw, 140px)",
-          maxWidth: "1320px",
-          margin: "0 auto",
+          zIndex: 1,
         }}
       >
-
-        {/* ── INTRO ── */}
         <div
           style={{
             display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-            gap: "clamp(40px, 6vw, 80px)",
+            gridTemplateColumns: "minmax(0, 1fr) minmax(0, 1.1fr)",
+            gap: "clamp(48px, 6vw, 96px)",
             alignItems: "start",
-            marginBottom: "clamp(80px, 10vw, 140px)",
-            paddingBottom: "clamp(80px, 10vw, 140px)",
-            borderBottom: "1px solid rgba(255,255,255,0.08)",
+            position: "relative",
           }}
+          className="contact-grid"
         >
-          {/* Left label */}
-          <div style={{ paddingTop: "8px" }}>
-            <p
-              style={{
-                fontFamily: "'PP Neue Montreal', sans-serif",
-                fontSize: "13px",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.4)",
-                margin: 0,
-              }}
-            >
-              Get in touch
-            </p>
-          </div>
 
-          {/* Right — main intro text */}
-          <div>
-            <p
-              style={{
-                fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                fontSize: "clamp(22px, 2.4vw, 36px)",
-                fontWeight: 400,
-                lineHeight: 1.5,
-                letterSpacing: "-0.4px",
-                color: "rgba(255,255,255,0.88)",
-                margin: "0 0 clamp(24px, 3vw, 36px)",
-                maxWidth: "680px",
-              }}
-            >
-              Have a project in mind? We&apos;d love to hear more. Tell us what you&apos;re building and we&apos;ll help you structure it properly from the start.
-            </p>
-            <p
-              style={{
-                fontFamily: "'PP Neue Montreal', sans-serif",
-                fontSize: "14px",
-                letterSpacing: "0.06em",
-                color: "rgba(255,255,255,0.35)",
-                margin: 0,
-                textTransform: "uppercase",
-              }}
-            >
-              hello@anikalabs.com
-            </p>
-          </div>
-        </div>
+          {/* ── LEFT: sticky ── */}
+          <aside
+            style={{
+              position: "sticky",
+              top: "clamp(100px, 12vw, 140px)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "clamp(28px, 3.5vw, 40px)",
+            }}
+            className="contact-sidebar"
+          >
+            <h1 data-transition-reveal style={{
+              fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+              fontSize: "clamp(44px, 5.5vw, 88px)",
+              fontWeight: 500,
+              lineHeight: 1,
+              letterSpacing: "-2px",
+              color: "#fff",
+              margin: 0,
+            }}>
+              Share Your<br />Idea With Us
+            </h1>
 
-        {/* ── FORM ── */}
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "1fr 2fr",
-            gap: "clamp(40px, 6vw, 80px)",
-            alignItems: "start",
-          }}
-        >
-          {/* Left — form label */}
-          <div style={{ paddingTop: "8px" }}>
-            <p
-              style={{
-                fontFamily: "'PP Neue Montreal', sans-serif",
-                fontSize: "13px",
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.4)",
-                margin: "0 0 20px",
-              }}
-            >
-              Project brief
+            <p style={{
+              fontFamily: "'PP Neue Montreal', sans-serif",
+              fontSize: "clamp(16px, 1.2vw, 18px)",
+              lineHeight: 1.65,
+              color: "rgba(255,255,255,0.55)",
+              margin: 0,
+              maxWidth: "520px",
+            }}>
+              Have a project in mind? Tell us what you&apos;re building. We&apos;ll
+              help shape it into something clear, structured, and ready to perform.
             </p>
-            <p
-              style={{
-                fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                fontSize: "clamp(18px, 1.8vw, 24px)",
-                fontWeight: 400,
-                lineHeight: 1.45,
-                letterSpacing: "-0.3px",
+
+            {/* Availability — separated by hairline, deemphasised */}
+            <div style={{
+              paddingTop: "clamp(20px, 2.4vw, 28px)",
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+              display: "flex",
+              flexDirection: "column",
+              gap: "14px",
+            }}>
+              <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+                <span style={{
+                  width: "6px", height: "6px", borderRadius: "50%",
+                  background: "#6bff9e",
+                  display: "inline-block", flexShrink: 0,
+                }} />
+                <span style={{
+                  fontFamily: "'PP Neue Montreal', sans-serif",
+                  fontSize: "12px",
+                  letterSpacing: "0.14em",
+                  textTransform: "uppercase",
+                  color: "rgba(255,255,255,0.45)",
+                }}>
+                  2 spots available
+                </span>
+              </div>
+
+              <p style={{
+                fontFamily: "'PP Neue Montreal', sans-serif",
+                fontSize: "clamp(14px, 1.1vw, 16px)",
+                lineHeight: 1.6,
                 color: "rgba(255,255,255,0.5)",
                 margin: 0,
-                maxWidth: "260px",
-              }}
-            >
-              Fill in what you know — we&apos;ll figure out the rest together.
-            </p>
-          </div>
-
-          {/* Right — form */}
-          {submitted ? (
-            <SuccessCard />
-          ) : (
-            <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "clamp(32px, 3.5vw, 48px)" }}>
-              <Row>
-                <Field label="Name" name="name" required placeholder="Jane Doe" />
-                <Field label="Company" name="company" placeholder="Optional" />
-              </Row>
-
-              <Field label="Email" name="email" type="email" required placeholder="jane@company.com" />
-
-              <Select
-                label="Project type"
-                options={PROJECT_TYPES}
-                value={projectType}
-                onChange={setProjectType}
-                placeholder="Select one…"
-                required
-              />
-
-              <Row>
-                <ChipGroup label="Budget" options={BUDGETS} value={budget} onChange={setBudget} />
-                <ChipGroup label="Timeline" options={TIMELINES} value={timeline} onChange={setTimeline} />
-              </Row>
-
-              <TextArea label="About the project" name="message" required placeholder="What are you trying to build, fix, or figure out?" />
-
-              <label
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "12px",
-                  color: "rgba(255,255,255,0.4)",
-                  fontFamily: "'PP Neue Montreal', sans-serif",
-                  fontSize: "13px",
-                  cursor: "pointer",
-                }}
-              >
-                <input type="checkbox" required style={{ accentColor: "#f17752", width: "15px", height: "15px" }} />
-                I agree to Anika Labs&apos; privacy policy.
-              </label>
-
-              <div>
-                <button
-                  type="submit"
-                  style={{
-                    background: "#f17752",
-                    color: "#fff",
-                    border: "none",
-                    borderRadius: "100px",
-                    padding: "18px 40px",
-                    fontFamily: "'PP Neue Montreal', sans-serif",
-                    fontSize: "17px",
-                    fontWeight: 500,
-                    letterSpacing: "0.2px",
-                    cursor: "pointer",
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "10px",
-                    transition: "opacity 0.2s ease, transform 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => {
-                    e.currentTarget.style.opacity = "0.88";
-                    e.currentTarget.style.transform = "translateY(-1px)";
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.opacity = "1";
-                    e.currentTarget.style.transform = "translateY(0)";
-                  }}
-                >
-                  <span
-                    style={{
-                      width: "7px",
-                      height: "7px",
-                      borderRadius: "50%",
-                      background: "#fff",
-                      opacity: 0.9,
-                      display: "inline-block",
-                      flexShrink: 0,
-                    }}
-                  />
-                  Start the project
-                </button>
-              </div>
-            </form>
-          )}
-        </div>
-
-        {/* ── FAQ ── */}
-        <div style={{ marginTop: "clamp(120px, 14vw, 180px)" }}>
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr 2fr",
-              gap: "clamp(40px, 6vw, 80px)",
-              alignItems: "start",
-              marginBottom: "clamp(40px, 5vw, 64px)",
-            }}
-          >
-            <div style={{ paddingTop: "8px" }}>
-              <p
-                style={{
-                  fontFamily: "'PP Neue Montreal', sans-serif",
-                  fontSize: "13px",
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "rgba(10,10,30,0.4)",
-                  margin: 0,
-                }}
-              >
-                FAQ
+                maxWidth: "480px",
+              }}>
+                We take on a limited number of projects each quarter to stay focused and deliver with care.
+                Every inquiry is reviewed personally.
               </p>
             </div>
-            <h2
-              style={{
-                fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                fontSize: "clamp(32px, 4vw, 56px)",
-                fontWeight: 500,
-                lineHeight: 1.05,
-                letterSpacing: "-1.2px",
-                color: "#0a0a1e",
-                margin: 0,
-              }}
-            >
-              Questions we hear a lot.
-            </h2>
-          </div>
 
-          <div style={{ borderTop: "1px solid rgba(10,10,30,0.1)" }}>
-            {FAQS.map((item, i) => {
-              const open = openFaq === i;
-              return (
-                <div key={i} style={{ borderBottom: "1px solid rgba(10,10,30,0.1)" }}>
-                  <button
-                    onClick={() => setOpenFaq(open ? null : i)}
-                    style={{
-                      all: "unset",
-                      cursor: "pointer",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "space-between",
-                      gap: "24px",
-                      padding: "clamp(22px, 2.4vw, 30px) 0",
-                      width: "100%",
-                      fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-                      fontSize: "clamp(17px, 1.6vw, 22px)",
-                      fontWeight: 500,
-                      color: "#0a0a1e",
-                      letterSpacing: "-0.4px",
-                    }}
-                  >
-                    <span>{item.q}</span>
-                    <span
-                      style={{
-                        color: "#f17752",
-                        transform: open ? "rotate(45deg)" : "rotate(0deg)",
-                        transition: "transform 0.3s ease",
-                        display: "inline-flex",
-                        flexShrink: 0,
-                      }}
-                    >
-                      <Plus size={18} />
-                    </span>
-                  </button>
+            {/* Direct email */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "6px" }}>
+              <span style={{
+                fontFamily: "'PP Neue Montreal', sans-serif",
+                fontSize: "11px",
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                color: "rgba(255,255,255,0.28)",
+              }}>
+                Prefer email?
+              </span>
+              <a
+                href="mailto:hello@anikalabs.com"
+                style={{
+                  fontFamily: "'PP Neue Montreal', sans-serif",
+                  fontSize: "17px",
+                  fontWeight: 500,
+                  color: "rgba(255,255,255,0.8)",
+                  textDecoration: "none",
+                  borderBottom: "1px solid rgba(255,255,255,0.15)",
+                  paddingBottom: "3px",
+                  alignSelf: "flex-start",
+                  transition: "color 0.2s ease, border-color 0.2s ease",
+                }}
+                onMouseEnter={(e) => {
+                  e.currentTarget.style.color = "#f17752";
+                  e.currentTarget.style.borderBottomColor = "#f17752";
+                }}
+                onMouseLeave={(e) => {
+                  e.currentTarget.style.color = "rgba(255,255,255,0.8)";
+                  e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.15)";
+                }}
+              >
+                hello@anikalabs.com
+              </a>
+            </div>
+          </aside>
+
+          {/* ── RIGHT: scrolling form ── */}
+          <div style={{ paddingTop: "4px" }} className="contact-form-col">
+            {submitted ? (
+              <SuccessCard />
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                noValidate
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "clamp(52px, 6vw, 72px)",
+                }}
+              >
+                {/* What are you looking for — multi select */}
+                <div>
+                  <SectionLabel>What are you looking for?</SectionLabel>
+                  <MultiOptionGroup
+                    options={PROJECT_TYPES}
+                    value={projectTypes}
+                    onChange={setProjectTypes}
+                    cols={3}
+                  />
+                </div>
+
+                {/* Budget */}
+                <div>
+                  <SectionLabel>Estimated budget</SectionLabel>
+                  <OptionGroup
+                    options={BUDGETS}
+                    value={budget}
+                    onChange={setBudget}
+                    cols={3}
+                  />
+                </div>
+
+                {/* Timeline */}
+                <div>
+                  <SectionLabel>Timeline</SectionLabel>
+                  <OptionGroup
+                    options={TIMELINES}
+                    value={timeline}
+                    onChange={setTimeline}
+                    cols={3}
+                  />
+                </div>
+
+                {/* Contact fields */}
+                <div>
+                  <SectionLabel>How can we contact you?</SectionLabel>
                   <div
                     style={{
                       display: "grid",
-                      gridTemplateRows: open ? "1fr" : "0fr",
-                      transition: "grid-template-rows 0.4s ease",
+                      gridTemplateColumns: "repeat(2, minmax(0, 1fr))",
+                      gap: "0 24px",
+                      marginTop: "24px",
                     }}
+                    className="contact-fields"
                   >
-                    <div style={{ overflow: "hidden" }}>
-                      <p
-                        style={{
-                          fontFamily: "'PP Neue Montreal', sans-serif",
-                          fontSize: "clamp(15px, 1.2vw, 17px)",
-                          lineHeight: 1.7,
-                          color: "rgba(10,10,30,0.6)",
-                          margin: "0 0 clamp(22px, 2.4vw, 30px)",
-                          maxWidth: "680px",
-                        }}
-                      >
-                        {item.a}
-                      </p>
-                    </div>
+                    <FieldInput
+                      placeholder="Your name"
+                      value={name}
+                      onChange={(v) => { setName(v); }}
+                      onBlur={() => setNameTouched(true)}
+                      error={nameTouched && !name.trim() ? "Let us know your name" : ""}
+                    />
+                    <FieldInput
+                      placeholder="Company"
+                      value={company}
+                      onChange={setCompany}
+                    />
+                    <FieldInput
+                      placeholder="Email address"
+                      type="email"
+                      value={email}
+                      onChange={(v) => { setEmail(v); }}
+                      onBlur={() => setEmailTouched(true)}
+                      error={emailTouched && email && !emailValid ? "Check the email format" : ""}
+                    />
+                    <FieldInput
+                      placeholder="Phone"
+                      value={phone}
+                      onChange={setPhone}
+                    />
                   </div>
                 </div>
-              );
-            })}
+
+                {/* Message */}
+                <div>
+                  <SectionLabel>Tell us more about the project</SectionLabel>
+                  <textarea
+                    rows={5}
+                    placeholder="What are you trying to build, fix, or figure out?"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    style={{
+                      width: "100%",
+                      marginTop: "24px",
+                      background: "transparent",
+                      border: "none",
+                      borderBottom: "1px solid rgba(255,255,255,0.12)",
+                      color: "#fff",
+                      fontFamily: "'PP Neue Montreal', sans-serif",
+                      fontSize: "15px",
+                      padding: "14px 0",
+                      outline: "none",
+                      resize: "none",
+                      lineHeight: 1.7,
+                      transition: "border-color 0.2s ease",
+                    }}
+                    onFocus={(e) => {
+                      e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.35)";
+                    }}
+                    onBlur={(e) => {
+                      e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.12)";
+                    }}
+                  />
+                </div>
+
+                {/* Submit */}
+                <div>
+                  <button
+                    type="submit"
+                    style={{
+                      background: "#f17752",
+                      color: "#fff",
+                      border: "none",
+                      borderRadius: "100px",
+                      padding: "17px 40px",
+                      fontFamily: "'PP Neue Montreal', sans-serif",
+                      fontSize: "16px",
+                      fontWeight: 500,
+                      letterSpacing: "0.2px",
+                      cursor: "pointer",
+                      transition: "opacity 0.2s ease, transform 0.2s ease",
+                    }}
+                    onMouseEnter={(e) => {
+                      e.currentTarget.style.opacity = "0.88";
+                      e.currentTarget.style.transform = "translateY(-1px)";
+                    }}
+                    onMouseLeave={(e) => {
+                      e.currentTarget.style.opacity = "1";
+                      e.currentTarget.style.transform = "translateY(0)";
+                    }}
+                  >
+                    Start the project
+                  </button>
+                </div>
+              </form>
+            )}
           </div>
         </div>
-
       </div>
+
+      <style>{`
+        .contact-form-col {
+          border-left: 1px solid rgba(255,255,255,0.07);
+          padding-left: clamp(32px, 4vw, 64px);
+        }
+        @media (max-width: 900px) {
+          .contact-grid { grid-template-columns: 1fr !important; gap: 64px !important; }
+          .contact-form-col { border-left: none !important; padding-left: 0 !important; }
+          .contact-sidebar { position: relative !important; top: auto !important; }
+          .contact-fields { grid-template-columns: 1fr !important; }
+          .option-group { grid-template-columns: repeat(2, minmax(0,1fr)) !important; }
+        }
+        ::placeholder { color: rgba(255,255,255,0.28); }
+
+        /* Ticker border animation on hover */
+        .ticker-btn {
+          --p: 0%;
+          background-image: none;
+        }
+        .ticker-btn::before {
+          content: '';
+          position: absolute;
+          inset: 0;
+          border-radius: 8px;
+          padding: 1px;
+          background: conic-gradient(
+            from 0deg,
+            rgba(241,119,82,0.9) var(--p),
+            rgba(255,255,255,0.08) var(--p)
+          );
+          -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+          -webkit-mask-composite: xor;
+          mask-composite: exclude;
+          pointer-events: none;
+          opacity: 0;
+          transition: opacity 0.15s ease;
+        }
+        .ticker-btn:hover::before {
+          opacity: 1;
+          animation: borderTick 0.6s linear forwards;
+        }
+        .ticker-active::before {
+          opacity: 1 !important;
+          animation: none !important;
+          background: conic-gradient(
+            from 0deg,
+            rgba(241,119,82,0.7) 100%,
+            rgba(241,119,82,0.7) 100%
+          ) !important;
+        }
+        @keyframes borderTick {
+          from { --p: 0%; }
+          to   { --p: 100%; }
+        }
+        @property --p {
+          syntax: '<percentage>';
+          inherits: false;
+          initial-value: 0%;
+        }
+      `}</style>
     </section>
   );
 }
 
-/* ─── Form primitives ─── */
+/* ─── Section label ─── */
 
-function Row({ children }: { children: React.ReactNode }) {
+function SectionLabel({ children }: { children: React.ReactNode }) {
+  return (
+    <h3 style={{
+      fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+      fontSize: "clamp(22px, 1.8vw, 28px)",
+      fontWeight: 500,
+      color: "#fff",
+      letterSpacing: "-0.3px",
+      margin: 0,
+      lineHeight: 1.2,
+    }}>
+      {children}
+    </h3>
+  );
+}
+
+/* ─── Option buttons (single-select) with ticker hover ─── */
+
+function OptionGroup({
+  options,
+  value,
+  onChange,
+  cols = 3,
+}: {
+  options: string[];
+  value: string;
+  onChange: (v: string) => void;
+  cols?: number;
+}) {
   return (
     <div
       style={{
         display: "grid",
-        gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-        gap: "clamp(24px, 3vw, 40px)",
+        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+        gap: "8px",
+        marginTop: "18px",
       }}
+      className="option-group"
     >
-      {children}
+      {options.map((opt) => {
+        const active = value === opt;
+        return (
+          <button
+            key={opt}
+            type="button"
+            aria-pressed={active}
+            onClick={() => onChange(active ? "" : opt)}
+            className={`ticker-btn${active ? " ticker-active" : ""}`}
+            style={{
+              padding: "13px 16px",
+              borderRadius: "8px",
+              border: active
+                ? "1px solid rgba(241,119,82,0.55)"
+                : "1px solid rgba(255,255,255,0.08)",
+              background: active
+                ? "rgba(241,119,82,0.1)"
+                : "rgba(255,255,255,0.02)",
+              color: active ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.48)",
+              fontFamily: "'PP Neue Montreal', sans-serif",
+              fontSize: "15px",
+              fontWeight: active ? 500 : 400,
+              cursor: "pointer",
+              transition: "color 0.15s ease, background 0.15s ease",
+              textAlign: "center",
+              lineHeight: 1.3,
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            {opt}
+          </button>
+        );
+      })}
     </div>
   );
 }
 
-function Field({
-  label, name, type = "text", placeholder, required,
+/* ─── Multi-select option group (project type) with ticker hover ─── */
+
+function MultiOptionGroup({
+  options,
+  value,
+  onChange,
+  cols = 3,
 }: {
-  label: string; name: string; type?: string; placeholder?: string; required?: boolean;
+  options: string[];
+  value: string[];
+  onChange: (v: string[]) => void;
+  cols?: number;
 }) {
+  const toggle = (opt: string) => {
+    onChange(value.includes(opt) ? value.filter((v) => v !== opt) : [...value, opt]);
+  };
+
   return (
-    <label style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-      <span
-        style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "11px",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.4)",
-        }}
-      >
-        {label}{required && <span style={{ color: "#f17752", marginLeft: "3px" }}>*</span>}
-      </span>
-      <input
-        type={type}
-        name={name}
-        placeholder={placeholder}
-        required={required}
-        style={{
-          background: "transparent",
-          border: "none",
-          borderBottom: "1px solid rgba(255,255,255,0.15)",
-          color: "#fff",
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "18px",
-          padding: "14px 0",
-          outline: "none",
-          transition: "border-color 0.2s ease",
-          width: "100%",
-        }}
-        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#f17752")}
-        onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.15)")}
-      />
-    </label>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: `repeat(${cols}, minmax(0, 1fr))`,
+        gap: "8px",
+        marginTop: "18px",
+      }}
+      className="option-group"
+    >
+      {options.map((opt) => {
+        const active = value.includes(opt);
+        return (
+          <button
+            key={opt}
+            type="button"
+            aria-pressed={active}
+            onClick={() => toggle(opt)}
+            className={`ticker-btn${active ? " ticker-active" : ""}`}
+            style={{
+              padding: "13px 16px",
+              borderRadius: "8px",
+              border: active
+                ? "1px solid rgba(241,119,82,0.55)"
+                : "1px solid rgba(255,255,255,0.08)",
+              background: active
+                ? "rgba(241,119,82,0.1)"
+                : "rgba(255,255,255,0.02)",
+              color: active ? "rgba(255,255,255,0.92)" : "rgba(255,255,255,0.48)",
+              fontFamily: "'PP Neue Montreal', sans-serif",
+              fontSize: "15px",
+              fontWeight: active ? 500 : 400,
+              cursor: "pointer",
+              transition: "color 0.15s ease, background 0.15s ease",
+              textAlign: "center",
+              lineHeight: 1.3,
+              position: "relative",
+              overflow: "hidden",
+            }}
+          >
+            {opt}
+          </button>
+        );
+      })}
+    </div>
   );
 }
 
-function Select({
-  label, options, value, onChange, placeholder = "Select one…", required,
+/* ─── Underline text input with silent inline error ─── */
+
+function FieldInput({
+  placeholder,
+  type = "text",
+  value,
+  onChange,
+  onBlur,
+  error,
 }: {
-  label: string; options: string[]; value: string; onChange: (v: string) => void; placeholder?: string; required?: boolean;
+  placeholder?: string;
+  type?: string;
+  value: string;
+  onChange: (v: string) => void;
+  onBlur?: () => void;
+  error?: string;
 }) {
-  const [open, setOpen] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    if (!open) return;
-    const onDocClick = (e: MouseEvent) => { if (!ref.current?.contains(e.target as Node)) setOpen(false); };
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
-    document.addEventListener("mousedown", onDocClick);
-    document.addEventListener("keydown", onKey);
-    return () => {
-      document.removeEventListener("mousedown", onDocClick);
-      document.removeEventListener("keydown", onKey);
-    };
-  }, [open]);
-
   return (
-    <div ref={ref} style={{ display: "flex", flexDirection: "column", gap: "12px", position: "relative" }}>
-      <span
+    <div style={{ display: "flex", flexDirection: "column", marginBottom: "28px" }}>
+      <input
+        type={type}
+        placeholder={placeholder}
+        value={value}
+        onChange={(e) => onChange(e.target.value)}
+        onBlur={onBlur}
         style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "11px",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.4)",
-        }}
-      >
-        {label}{required && <span style={{ color: "#f17752", marginLeft: "3px" }}>*</span>}
-      </span>
-      <button
-        type="button"
-        onClick={() => setOpen((o) => !o)}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          gap: "12px",
           background: "transparent",
           border: "none",
-          borderBottom: open ? "1px solid #f17752" : "1px solid rgba(255,255,255,0.15)",
-          color: value ? "#fff" : "rgba(255,255,255,0.35)",
+          borderBottom: `1px solid ${error ? "rgba(241,119,82,0.5)" : "rgba(255,255,255,0.12)"}`,
+          color: "#fff",
           fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "18px",
-          padding: "14px 0",
+          fontSize: "15px",
+          padding: "12px 0",
           outline: "none",
-          cursor: "pointer",
-          textAlign: "left",
+          width: "100%",
           transition: "border-color 0.2s ease",
         }}
-      >
-        <span>{value || placeholder}</span>
-        <span
-          style={{
-            display: "inline-flex",
-            color: "rgba(255,255,255,0.4)",
-            transform: open ? "rotate(180deg)" : "rotate(0deg)",
-            transition: "transform 0.25s ease",
-          }}
-        >
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-            <path d="M3 5L7 9L11 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round" />
-          </svg>
+        onFocus={(e) => {
+          e.currentTarget.style.borderBottomColor = error
+            ? "rgba(241,119,82,0.6)"
+            : "rgba(255,255,255,0.35)";
+        }}
+        onBlurCapture={(e) => {
+          e.currentTarget.style.borderBottomColor = error
+            ? "rgba(241,119,82,0.5)"
+            : "rgba(255,255,255,0.12)";
+        }}
+      />
+      {error && (
+        <span style={{
+          fontFamily: "'PP Neue Montreal', sans-serif",
+          fontSize: "12px",
+          color: "rgba(241,119,82,0.7)",
+          marginTop: "6px",
+          letterSpacing: "0.01em",
+        }}>
+          {error}
         </span>
-      </button>
-      {open && (
-        <div
-          style={{
-            position: "absolute",
-            top: "calc(100% + 8px)",
-            left: 0,
-            right: 0,
-            zIndex: 20,
-            background: "rgba(14,6,38,0.97)",
-            backdropFilter: "blur(16px)",
-            border: "1px solid rgba(255,255,255,0.1)",
-            borderRadius: "14px",
-            padding: "6px",
-            boxShadow: "0 32px 64px rgba(0,0,0,0.5)",
-            maxHeight: "300px",
-            overflowY: "auto",
-          }}
-        >
-          {options.map((opt) => {
-            const active = opt === value;
-            return (
-              <button
-                key={opt}
-                type="button"
-                onClick={() => { onChange(opt); setOpen(false); }}
-                style={{
-                  display: "block",
-                  width: "100%",
-                  textAlign: "left",
-                  padding: "13px 16px",
-                  borderRadius: "10px",
-                  border: "none",
-                  background: active ? "rgba(241,119,82,0.15)" : "transparent",
-                  color: active ? "#f17752" : "rgba(255,255,255,0.85)",
-                  fontFamily: "'PP Neue Montreal', sans-serif",
-                  fontSize: "15px",
-                  fontWeight: 500,
-                  cursor: "pointer",
-                  transition: "background 0.15s ease",
-                }}
-                onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = "rgba(255,255,255,0.05)"; }}
-                onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = "transparent"; }}
-              >
-                {opt}
-              </button>
-            );
-          })}
-        </div>
       )}
     </div>
   );
 }
 
-function TextArea({
-  label, name, placeholder, required,
-}: {
-  label: string; name: string; placeholder?: string; required?: boolean;
-}) {
-  return (
-    <label style={{ display: "flex", flexDirection: "column", gap: "12px" }}>
-      <span
-        style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "11px",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.4)",
-        }}
-      >
-        {label}{required && <span style={{ color: "#f17752", marginLeft: "3px" }}>*</span>}
-      </span>
-      <textarea
-        name={name}
-        placeholder={placeholder}
-        required={required}
-        rows={6}
-        style={{
-          background: "transparent",
-          border: "none",
-          borderBottom: "1px solid rgba(255,255,255,0.15)",
-          color: "#fff",
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "18px",
-          padding: "14px 0",
-          outline: "none",
-          resize: "none",
-          transition: "border-color 0.2s ease",
-          lineHeight: 1.6,
-        }}
-        onFocus={(e) => (e.currentTarget.style.borderBottomColor = "#f17752")}
-        onBlur={(e) => (e.currentTarget.style.borderBottomColor = "rgba(255,255,255,0.15)")}
-      />
-    </label>
-  );
-}
-
-function ChipGroup({
-  label, options, value, onChange,
-}: {
-  label: string; options: string[]; value: string; onChange: (v: string) => void;
-}) {
-  return (
-    <div style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
-      <span
-        style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "11px",
-          letterSpacing: "0.1em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.4)",
-        }}
-      >
-        {label}
-      </span>
-      <div style={{ display: "flex", flexWrap: "wrap", gap: "8px" }}>
-        {options.map((opt) => {
-          const active = value === opt;
-          return (
-            <button
-              key={opt}
-              type="button"
-              onClick={() => onChange(active ? "" : opt)}
-              style={{
-                padding: "9px 18px",
-                borderRadius: "100px",
-                border: active ? "1px solid #f17752" : "1px solid rgba(255,255,255,0.15)",
-                background: active ? "#f17752" : "transparent",
-                color: active ? "#fff" : "rgba(255,255,255,0.65)",
-                fontFamily: "'PP Neue Montreal', sans-serif",
-                fontSize: "13px",
-                fontWeight: 500,
-                cursor: "pointer",
-                transition: "all 0.15s ease",
-              }}
-            >
-              {opt}
-            </button>
-          );
-        })}
-      </div>
-    </div>
-  );
-}
+/* ─── Success state ─── */
 
 function SuccessCard() {
   return (
-    <div style={{ padding: "clamp(40px, 5vw, 64px) 0" }}>
-      <p
-        style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "12px",
-          letterSpacing: "0.12em",
-          textTransform: "uppercase",
-          color: "rgba(255,255,255,0.4)",
-          margin: "0 0 20px",
-        }}
-      >
+    <div style={{ paddingTop: "clamp(24px, 3vw, 40px)" }}>
+      <p style={{
+        fontFamily: "'PP Neue Montreal', sans-serif",
+        fontSize: "12px",
+        letterSpacing: "0.14em",
+        textTransform: "uppercase",
+        color: "rgba(255,255,255,0.35)",
+        margin: "0 0 24px",
+      }}>
         Received
       </p>
-      <h3
-        style={{
-          fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-          fontSize: "clamp(32px, 4vw, 52px)",
-          fontWeight: 500,
-          lineHeight: 1.05,
-          letterSpacing: "-1.2px",
-          color: "#fff",
-          margin: "0 0 20px",
-        }}
-      >
+      <h3 style={{
+        fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
+        fontSize: "clamp(32px, 4vw, 52px)",
+        fontWeight: 500,
+        lineHeight: 1.05,
+        letterSpacing: "-1.2px",
+        color: "#fff",
+        margin: "0 0 20px",
+      }}>
         Your brief landed safely.
       </h3>
-      <p
-        style={{
-          fontFamily: "'PP Neue Montreal', sans-serif",
-          fontSize: "17px",
-          lineHeight: 1.7,
-          color: "rgba(255,255,255,0.55)",
-          margin: 0,
-          maxWidth: "480px",
-        }}
-      >
-        We&apos;ll read it properly and reply within one business day — usually sooner. If it&apos;s urgent, reach us at hello@anikalabs.com directly.
+      <p style={{
+        fontFamily: "'PP Neue Montreal', sans-serif",
+        fontSize: "17px",
+        lineHeight: 1.7,
+        color: "rgba(255,255,255,0.55)",
+        margin: 0,
+        maxWidth: "480px",
+      }}>
+        We&apos;ll read it properly and reply within one business day — usually
+        sooner. If it&apos;s urgent, reach us at hello@anikalabs.com directly.
       </p>
     </div>
   );
