@@ -483,8 +483,14 @@ function ScrollingPreview({ align = "center", stitchedSrc, stops: customStops }:
           backfaceVisibility: "hidden",
         }}
       >
-        <img src={stitched} alt="" draggable={false} style={{ display: "block", width: "100%", height: "auto", userSelect: "none", pointerEvents: "none" }} />
-        <img src={stitched} alt="" draggable={false} aria-hidden="true" style={{ display: "block", width: "100%", height: "auto", userSelect: "none", pointerEvents: "none" }} />
+        <picture>
+          <source srcSet={stitched.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+          <img src={stitched} alt="" draggable={false} loading="lazy" decoding="async" style={{ display: "block", width: "100%", height: "auto", userSelect: "none", pointerEvents: "none" }} />
+        </picture>
+        <picture>
+          <source srcSet={stitched.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+          <img src={stitched} alt="" draggable={false} aria-hidden="true" loading="lazy" decoding="async" style={{ display: "block", width: "100%", height: "auto", userSelect: "none", pointerEvents: "none" }} />
+        </picture>
       </div>
     </div>
   );
@@ -632,44 +638,54 @@ export function WorkCard({ project, disableAnimatedBg = false, previewAlign = "c
 
       {/* Project image */}
       {project.image && (
-        <img
-          src={project.image}
-          alt=""
-          style={{
-            position: "absolute",
-            inset: 0,
-            width: "100%",
-            height: "100%",
-            objectFit: "cover",
-            pointerEvents: "none",
-            zIndex: 1,
-          }}
-        />
+        <picture>
+          <source srcSet={project.image.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+          <img
+            src={project.image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            style={{
+              position: "absolute",
+              inset: 0,
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              pointerEvents: "none",
+              zIndex: 1,
+            }}
+          />
+        </picture>
       )}
 
       {/* Left-side graphic (e.g. Gotta Tennis characters) */}
       {project.leftGraphic && (
-        <img
-          src={project.leftGraphic}
-          alt=""
-          style={{
-            position: "absolute",
-            left: "0",
-            right: "55%",
-            bottom: "clamp(60px, 8vw, 100px)",
-            top: "10%",
-            width: "auto",
-            height: "auto",
-            maxHeight: "calc(100% - clamp(60px, 8vw, 100px))",
-            margin: "auto",
-            objectFit: "contain",
-            objectPosition: "center",
-            zIndex: 3,
-            pointerEvents: "none",
-            userSelect: "none",
-          }}
-          draggable={false}
-        />
+        <picture>
+          <source srcSet={project.leftGraphic.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+          <img
+            src={project.leftGraphic}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            style={{
+              position: "absolute",
+              left: "0",
+              right: "55%",
+              bottom: "clamp(60px, 8vw, 100px)",
+              top: "10%",
+              width: "auto",
+              height: "auto",
+              maxHeight: "calc(100% - clamp(60px, 8vw, 100px))",
+              margin: "auto",
+              objectFit: "contain",
+              objectPosition: "center",
+              zIndex: 3,
+              pointerEvents: "none",
+              userSelect: "none",
+            }}
+            draggable={false}
+          />
+        </picture>
       )}
 
       {/* Scrolling preview window */}

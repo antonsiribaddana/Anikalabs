@@ -1,9 +1,25 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function Hero() {
   const [showVideo, setShowVideo] = useState(false);
+  const [modalOpen, setModalOpen] = useState(false);
+  const modalVideoRef = useRef<HTMLVideoElement | null>(null);
+
+  useEffect(() => {
+    if (!modalOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setModalOpen(false);
+    };
+    document.addEventListener("keydown", onKey);
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [modalOpen]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -74,6 +90,40 @@ export default function Hero() {
 
           {/* Description — absolute bottom right on desktop, static on mobile */}
           <div className="absolute bottom-16 max-w-[450px] hidden md:block" style={{ right: "clamp(20px, 6vw, 112px)" }}>
+            <div className="flex justify-end mb-5">
+              <button
+                type="button"
+                onClick={() => setModalOpen(true)}
+                aria-label="Play showreel"
+                className="group inline-flex items-center gap-3 text-white/90 hover:text-white transition-colors"
+                style={{ fontFamily: "'PP Neue Montreal', sans-serif", cursor: "pointer" }}
+              >
+                <span
+                  className="relative inline-flex items-center justify-center rounded-full"
+                  style={{
+                    width: "52px",
+                    height: "52px",
+                    background: "rgba(241,119,82,0.15)",
+                    border: "1px solid rgba(241,119,82,0.6)",
+                    backdropFilter: "blur(6px)",
+                  }}
+                >
+                  <span
+                    className="absolute inset-0 rounded-full"
+                    style={{
+                      border: "1px solid rgba(241,119,82,0.5)",
+                      animation: "playPulse 2.2s ease-out infinite",
+                    }}
+                  />
+                  <svg width="14" height="16" viewBox="0 0 14 16" fill="none" style={{ marginLeft: "2px" }}>
+                    <path d="M0 0L14 8L0 16V0Z" fill="#F17752" />
+                  </svg>
+                </span>
+                <span style={{ fontSize: "13px", fontWeight: 500, letterSpacing: "0.18em", textTransform: "uppercase" }}>
+                  Watch Reel
+                </span>
+              </button>
+            </div>
             <p
               className="text-white/80 font-medium leading-[1.65] text-right"
               style={{ fontSize: "clamp(16px, 1.8vw, 20px)", fontFamily: "'PP Neue Montreal', sans-serif" }}
@@ -134,8 +184,86 @@ export default function Hero() {
             0%, 100% { opacity: 0.4; transform: scaleY(1); }
             50% { opacity: 1; transform: scaleY(1.3); }
           }
+          @keyframes playPulse {
+            0% { transform: scale(1); opacity: 0.8; }
+            100% { transform: scale(1.6); opacity: 0; }
+          }
         `}</style>
       </div>
+
+      {modalOpen && (
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-label="Showreel video"
+          onClick={() => setModalOpen(false)}
+          style={{
+            position: "fixed",
+            inset: 0,
+            zIndex: 100,
+            background: "rgba(2,2,30,0.85)",
+            backdropFilter: "blur(8px)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            padding: "clamp(16px, 4vw, 48px)",
+            animation: "modalFade 0.25s ease-out",
+          }}
+        >
+          <button
+            type="button"
+            onClick={() => setModalOpen(false)}
+            aria-label="Close video"
+            style={{
+              position: "absolute",
+              top: "24px",
+              right: "24px",
+              width: "44px",
+              height: "44px",
+              borderRadius: "9999px",
+              background: "rgba(255,255,255,0.08)",
+              border: "1px solid rgba(255,255,255,0.2)",
+              color: "white",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+              <path d="M2 2L14 14M14 2L2 14" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+            </svg>
+          </button>
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              position: "relative",
+              width: "100%",
+              maxWidth: "1200px",
+              aspectRatio: "16 / 9",
+              borderRadius: "12px",
+              overflow: "hidden",
+              boxShadow: "0 30px 80px rgba(0,0,0,0.6)",
+              background: "#000",
+            }}
+          >
+            <video
+              ref={modalVideoRef}
+              src="/videos/orange.mp4"
+              autoPlay
+              controls
+              playsInline
+              style={{ width: "100%", height: "100%", display: "block", objectFit: "contain", background: "#000" }}
+            />
+          </div>
+          <style>{`
+            @keyframes modalFade {
+              from { opacity: 0; }
+              to { opacity: 1; }
+            }
+          `}</style>
+        </div>
+      )}
 
     </section>
   );

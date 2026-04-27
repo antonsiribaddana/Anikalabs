@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef } from "react";
-import Image from "next/image";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { MotionPathPlugin } from "gsap/MotionPathPlugin";
@@ -200,7 +199,16 @@ export default function HorizontalCards() {
                 marginTop: `${card.mt}px`,
               }}
             >
-              <Image src={card.src} alt={card.alt} fill className="object-cover" sizes="(max-width: 768px) 280px, (max-width: 1200px) 35vw, 480px" />
+              <picture>
+                <source srcSet={card.src.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+                <img
+                  src={card.src}
+                  alt={card.alt}
+                  loading={i < 2 ? "eager" : "lazy"}
+                  decoding="async"
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </picture>
             </div>
           ))}
         </div>

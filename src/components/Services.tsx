@@ -263,22 +263,27 @@ export default function Services() {
                 >
                   <BrandBoxPattern />
 
-                  <img
-                    src="/images/brand-showcase.png"
-                    alt=""
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: "50%",
-                      transform: "translate(-50%, -50%)",
-                      width: "88%",
-                      height: "auto",
-                      maxHeight: "90%",
-                      objectFit: "contain",
-                      display: "block",
-                      zIndex: 2,
-                    }}
-                  />
+                  <picture>
+                    <source srcSet="/images/brand-showcase.avif" type="image/avif" />
+                    <img
+                      src="/images/brand-showcase.png"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-50%, -50%)",
+                        width: "88%",
+                        height: "auto",
+                        maxHeight: "90%",
+                        objectFit: "contain",
+                        display: "block",
+                        zIndex: 2,
+                      }}
+                    />
+                  </picture>
                 </div>
               )}
 
@@ -302,21 +307,26 @@ export default function Services() {
                   {/* Ribbon layer — behind laptop */}
                   <WebsiteBoxPattern />
 
-                  <img
-                    src="/images/websites-laptop.png"
-                    alt=""
-                    style={{
-                      position: "absolute",
-                      left: "50%",
-                      top: "50%",
-                      transform: "translate(-52%, -38%)",
-                      width: "165%",
-                      height: "auto",
-                      maxWidth: "none",
-                      display: "block",
-                      zIndex: 2,
-                    }}
-                  />
+                  <picture>
+                    <source srcSet="/images/websites-laptop.avif" type="image/avif" />
+                    <img
+                      src="/images/websites-laptop.png"
+                      alt=""
+                      loading="lazy"
+                      decoding="async"
+                      style={{
+                        position: "absolute",
+                        left: "50%",
+                        top: "50%",
+                        transform: "translate(-52%, -38%)",
+                        width: "165%",
+                        height: "auto",
+                        maxWidth: "none",
+                        display: "block",
+                        zIndex: 2,
+                      }}
+                    />
+                  </picture>
                 </div>
               )}
 
