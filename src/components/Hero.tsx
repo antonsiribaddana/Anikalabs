@@ -22,6 +22,48 @@ export default function Hero() {
   }, [modalOpen]);
 
   useEffect(() => {
+    if (!modalOpen) return;
+    const video = modalVideoRef.current;
+    if (!video) return;
+    const src = "/videos/hls/playlist.m3u8";
+    let hls: { destroy: () => void } | null = null;
+
+    const tryPlay = () => {
+      video.play().catch(() => {
+        video.muted = true;
+        video.play().catch(() => {});
+      });
+    };
+
+    if (video.canPlayType("application/vnd.apple.mpegurl")) {
+      video.src = src;
+      video.addEventListener("loadedmetadata", tryPlay, { once: true });
+    } else {
+      let cancelled = false;
+      import("hls.js").then(({ default: Hls }) => {
+        if (cancelled) return;
+        if (Hls.isSupported()) {
+          const instance = new Hls({ enableWorker: true, lowLatencyMode: false });
+          instance.loadSource(src);
+          instance.attachMedia(video);
+          instance.on(Hls.Events.MANIFEST_PARSED, tryPlay);
+          hls = instance;
+        } else {
+          video.src = src;
+          video.addEventListener("loadedmetadata", tryPlay, { once: true });
+        }
+      });
+      return () => {
+        cancelled = true;
+        if (hls) hls.destroy();
+      };
+    }
+    return () => {
+      if (hls) (hls as { destroy: () => void }).destroy();
+    };
+  }, [modalOpen]);
+
+  useEffect(() => {
     if (typeof window === "undefined") return;
     const ok =
       window.matchMedia("(min-width: 768px)").matches &&
@@ -249,7 +291,6 @@ export default function Hero() {
           >
             <video
               ref={modalVideoRef}
-              src="/videos/orange.mp4"
               autoPlay
               controls
               playsInline
