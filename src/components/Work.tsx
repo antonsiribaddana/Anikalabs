@@ -636,10 +636,12 @@ export function WorkCard({ project, disableAnimatedBg = false, previewAlign = "c
         </div>
       )}
 
-      {/* Project image */}
+      {/* Project image — skip AVIF for transparent PNGs (alpha unsupported by encoder) */}
       {project.image && (
         <picture>
-          <source srcSet={project.image.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+          {!/limitless-laptop\.png$/i.test(project.image) && (
+            <source srcSet={project.image.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
+          )}
           <img
             src={project.image}
             alt=""

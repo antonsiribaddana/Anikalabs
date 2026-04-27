@@ -264,7 +264,6 @@ export default function Services() {
                   <BrandBoxPattern />
 
                   <picture>
-                    <source srcSet="/images/brand-showcase.avif" type="image/avif" />
                     <img
                       src="/images/brand-showcase.png"
                       alt=""
@@ -308,7 +307,6 @@ export default function Services() {
                   <WebsiteBoxPattern />
 
                   <picture>
-                    <source srcSet="/images/websites-laptop.avif" type="image/avif" />
                     <img
                       src="/images/websites-laptop.png"
                       alt=""
