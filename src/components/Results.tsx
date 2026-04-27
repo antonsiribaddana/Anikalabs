@@ -341,15 +341,15 @@ export default function Results() {
           textAlign: "center",
         }}
       >
-        <h2 style={{
+        <h2 className="results-heading" style={{
           fontFamily: "'PP Neue Montreal', 'Inter', system-ui, sans-serif",
-          fontSize: "clamp(42px, 6vw, 88px)",
+          fontSize: "clamp(36px, 6vw, 88px)",
           fontWeight: 500,
           lineHeight: 1.02,
           letterSpacing: "-1.5px",
           color: "#111",
           margin: 0,
-          whiteSpace: "nowrap",
+          textAlign: "center",
         }}>
           We Build Systems That Work.
         </h2>

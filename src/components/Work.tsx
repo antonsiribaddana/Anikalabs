@@ -850,6 +850,13 @@ export default function Work() {
           </div>
         ))}
       </div>
+      <style>{`
+        @media (max-width: 767px) {
+          .work-row { flex-direction: column !important; }
+          .work-card,
+          .work-card-full { aspect-ratio: 4 / 3 !important; }
+        }
+      `}</style>
 
       {/* Show All — fat line + pill button */}
       <div style={{ padding: "0 clamp(20px, 5vw, 80px)", marginTop: "clamp(48px, 6vw, 80px)", position: "relative", zIndex: 1 }}>
