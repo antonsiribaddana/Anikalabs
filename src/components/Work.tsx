@@ -658,10 +658,9 @@ export function WorkCard({ project, disableAnimatedBg = false, previewAlign = "c
         </picture>
       )}
 
-      {/* Left-side graphic (e.g. Gotta Tennis characters) */}
+      {/* Left-side graphic (e.g. Gotta Tennis characters) — skip AVIF (transparency artifacts) */}
       {project.leftGraphic && (
         <picture>
-          <source srcSet={project.leftGraphic.replace(/\.(png|jpg|jpeg|webp)$/i, ".avif")} type="image/avif" />
           <img
             src={project.leftGraphic}
             alt=""

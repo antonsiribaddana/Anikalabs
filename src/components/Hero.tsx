@@ -88,6 +88,7 @@ export default function Hero() {
             poster="/images/hero-bg.png"
             className="absolute inset-0 h-full w-full object-cover scale-x-[-1]"
           >
+            <source src="/images/hero-bg.webm" type="video/webm" />
             <source src="/images/hero-bg.mp4" type="video/mp4" />
           </video>
         ) : (
